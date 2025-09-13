@@ -1,0 +1,12 @@
+FROM node:24-alpine AS serve
+# RUN curl -sL https://unpkg.com/@pnpm/self-installer | node
+RUN npm install -g pnpm
+# RUN mkdir -p /usr/app/frontend/node_modules /usr/app/frontend/mainstream-lib/node_modules /usr/app/frontend/mainstream-lib/dist
+# RUN chown node /usr/app/frontend/node_modules /usr/app/frontend/mainstream-lib/node_modules /usr/app/frontend/mainstream-lib/dist
+# USER node
+
+WORKDIR  /usr/app/frontend
+COPY . .
+RUN pnpm i
+EXPOSE 3000
+

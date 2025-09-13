@@ -1,0 +1,22 @@
+{
+  "name": "@local-monorepo/content",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "eslint": "^9.35.0",
+    "nuxt": "^4.1.1",
+    "typescript": "^5.9.2",
+    "vue": "latest",
+    "@local-monorepo/ui": "workspace:*"
+  }
+}

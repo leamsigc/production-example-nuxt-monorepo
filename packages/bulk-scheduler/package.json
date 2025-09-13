@@ -1,0 +1,26 @@
+{
+  "name": "@local-monorepo/bulk-scheduler",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@local-monorepo/db": "workspace:*",
+    "@local-monorepo/ui": "workspace:*",
+    "@local-monorepo/auth": "workspace:*"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "eslint": "^9.35.0",
+    "nuxt": "^4.1.1",
+    "typescript": "^5.9.2",
+    "vue": "latest"
+  }
+}

@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  site:
+    ports:
+      - "3000:3000"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.site.rule=Host(`${SUBDOMAIN}.${DOMAIN_NAME}`)
+      - traefik.http.routers.site.tls=true
+      - traefik.http.routers.site.entrypoints=web,websecure
+      - traefik.http.routers.site.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.site.headers.SSLRedirect=true
+      - traefik.http.middlewares.site.headers.STSSeconds=315360000
+      - traefik.http.middlewares.site.headers.browserXSSFilter=true
+      - traefik.http.middlewares.site.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.site.headers.forceSTSHeader=true
+      - traefik.http.middlewares.site.headers.SSLHost=${DOMAIN_NAME}
+      - traefik.http.middlewares.site.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.site.headers.STSPreload=true
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    command: ["pnpm", "site","dev"]
+
