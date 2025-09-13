@@ -4,15 +4,22 @@
   "description": "Social media scheduler using Nuxt layers",
   "scripts": {
     "packages": "dotenv -- pnpm --filter",
+    "install:all": "pnpm -r install",
     "site": "pnpm packages @local-monorepo/site build",
     "site:start": "pnpm packages @local-monorepo/site start",
     "site:dev": "pnpm packages @local-monorepo/site dev",
     "content": "pnpm packages @local-monorepo/content build",
     "content:start": "pnpm packages @local-monorepo/content start",
     "content:dev": "pnpm packages @local-monorepo/content dev",
+    "connect:start": "pnpm packages @local-monorepo/connect start",
+    "connect:dev": "pnpm packages @local-monorepo/connect dev",
+    "connect": "pnpm packages @local-monorepo/connect build",
     "ai-tools": "pnpm packages @local-monorepo/ai-tools build",
     "ai-tools:start": "pnpm packages @local-monorepo/ai-tools start",
     "ai-tools:dev": "pnpm packages @local-monorepo/ai-tools dev",
+    "tools": "pnpm packages @local-monorepo/tools build",
+    "tools:start": "pnpm packages @local-monorepo/tools start",
+    "tools:dev": "pnpm packages @local-monorepo/tools dev",
     "assets": "pnpm packages @local-monorepo/assets build",
     "assets:start": "pnpm packages @local-monorepo/assets start",
     "assets:dev": "pnpm packages @local-monorepo/assets dev",
@@ -39,6 +46,9 @@
   "devDependencies": {
     "dotenv-cli": "^7.3.0"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [],
   "author": "Ismael Garcia <leamsigc@leamsigc.com>",
   "license": "MIT",

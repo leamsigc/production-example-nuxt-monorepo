@@ -8,5 +8,23 @@ export default defineNuxtConfig({
       openAPI: true,
     }
   },
-  extends: ['@local-monorepo/ui',]
+  extends: ['@local-monorepo/ui'],
+  modules: ["@nuxtjs/seo", '@nuxt/content'],
+  content: {
+    build: {
+      markdown: {
+        highlight: {
+          theme: {
+            // Default theme (same as single string)
+            default: 'github-light',
+            // Theme used if `html.dark`
+            dark: 'monokai',
+            // Theme used if `html.sepia`
+            sepia: 'monokai'
+          }
+        }
+      }
+    }
+  },
+
 })

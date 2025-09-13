@@ -168,3 +168,26 @@
 
 > The documentation for the layers will be here
 > The documentation for the ui will be here
+
+
+
+## Setup
+
+
+1. Clone the repository
+2. Run `pnpm install`
+3. Run `pnpm dev`
+4. Run `pnpm build`
+5. Run `pnpm start`
+
+### Specific layer
+
+
+1. Run `pnpm packages [layer] install`
+2. Run `pnpm packages [layer] dev`
+3. Run `pnpm packages [layer] build`
+4. Run `pnpm packages [layer] start`
+
+Example : 
+
+`pnpm packages ui dev` for the dev server for the ui Layer 
