@@ -29,7 +29,7 @@ defineOgImageComponent('BlogOgImage', {
 <template>
   <article>
     <ContentRenderer v-if="page" :value="page" />
-    <NotFoundView v-else />
+    <BaseNotFoundView v-else />
   </article>
 </template>
 <style scoped></style>

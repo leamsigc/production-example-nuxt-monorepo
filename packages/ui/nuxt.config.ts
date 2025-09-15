@@ -1,12 +1,18 @@
 import { defineNuxtConfig } from 'nuxt/config'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   nitro: {
     experimental: {
       openAPI: true,
     }
+  },
+  $meta: {
+    name: 'BaseUI',
   },
   modules: [
     "@nuxt/eslint",
@@ -15,7 +21,17 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
   ],
-  css: ['~/assets/css/main.css']
-
+  /*
+    Nuxt UI RELATED CONFIGS
+   */
+  css: [
+    join(currentDir, './app/assets/css/main.css')
+  ],
+  ui: {
+    fonts: true,
+    colorMode: true,
+    content: true,
+    mdc: true
+  }
 
 })
