@@ -1,41 +1,52 @@
-# Hello From the  content vue
+---
+layout: default
+title: Social Media Success
+description: Streamline your social media, Google My Business, and content creation with our all-in-one platform for small businesses. Manage posts, reviews, and graphics effortlessly.
+
+ogImage:
+  component: BlogOgImage
+  props:
+    title: Social Media Success
+    description: Streamline your social media, Google My Business, and content creation with our all-in-one platform for small businesses.
+    heading: Social Media Success
+
+head:
+  htmlAttrs:
+    lang: en
+  bodyAttrs:
+    class: ""
+---
 
 
-Regular markdown with **bold** and *italic* text.
-
-::callout{icon="i-lucide-rocket" color="primary"}
-Use MDC components for rich interactions!
+::BaseBenefits
+---
+items:
+  - title: Streamlined Workflow
+    description: Effortlessly manage all your social media accounts, Google My Business, and content creation in one platform.
+    icon: "lucide:settings-2"
+  - title: Social Media Integration
+    description: Connect with multiple social media platforms, including Facebook, Instagram, and Twitter.
+    icon: "lucide:share-2" 
+  - title: AI-Powered Content
+    description: Generate bulk posts, holiday content, and smart review responses with advanced AI.
+    icon: "lucide:sparkles"
+  - title: Customizable Graphics
+    description: Design stunning graphics and remove backgrounds with our custom Konva-based image editor.
+    icon: "lucide:image-plus"
+  - title: Smart Review Management
+    description: Monitor, respond to, and leverage customer reviews to build trust and improve your online presence.
+    icon: "lucide:star"
+  - title: Automated Scheduling
+    description: Plan your content calendar, schedule posts, and track performance with ease.
+    icon: "lucide:calendar"
+  - title: Google My Business Management
+    description: Seamlessly manage your GMB profile, respond to reviews, and update business information.
+    icon: "lucide:map-pin" 
+---
+#title
+Why Choose MBSMM My Business Social Media Manager?
+#description
+Discover the benefits of MBSMM My Business Social Media Manager.
 ::
 
-::tabs
-
-:::tabs-item{label="Installation"}
-Use pnpm add @nuxt/ui to install
-:::
-
-:::tabs-item{label="Usage"}
-Import components and use them in your templates
-:::
-
-::
-
-::code-group
-
-```bash [pnpm]
-pnpm add @nuxt/ui
-```
-
-```bash [yarn]
-yarn add @nuxt/ui
-```
-
-```bash [npm]
-npm install @nuxt/ui
-```
-
-```bash [bun]
-bun add @nuxt/ui
-```
-
-::
 

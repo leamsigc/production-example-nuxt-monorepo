@@ -43,19 +43,13 @@ useSeoMeta({ title })
 </script>
 
 <template>
-  <div class="relative flex h-screen items-center">
-    <div
-      class="absolute h-screen w-full bg-[radial-gradient(theme(colors.border)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
-    <div class="container relative z-[1] flex flex-col items-center justify-center text-center">
-      <p class="mb-5 font-bold tracking-tight text-primary">
-        {{ statusCode }} error
-      </p>
-      <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">
-        {{ title }}
-      </h1>
-      <BaseButton class="mt-5" @click="clearError({ redirect: '/' })">
-        Take me home
-      </BaseButton>
-    </div>
-  </div>
+  <UError :error="{
+    statusCode: props.statusCode,
+    fatal: props.fatal,
+    unhandled: props.unhandled,
+    statusMessage: title,
+    message: props.message,
+    data: props.data,
+    cause: props.cause
+  }" />
 </template>

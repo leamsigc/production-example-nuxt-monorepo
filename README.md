@@ -1,5 +1,6 @@
 # Social media scheduling using Nuxt layers
 
+![Home](./HomePage.png)
 
 ## Project layers Structure using Monorepo
 
@@ -191,3 +192,119 @@
 Example : 
 
 `pnpm packages ui dev` for the dev server for the ui Layer 
+
+
+
+
+## Todos:
+- [x] Set up the UI Layer using Nuxt UI
+    - [x] Create the components that will be used in the Home page
+    - [ ] Create the components that will be used in the About page
+    - [ ] Create the components that will be used in the Contact page
+    - [ ] Create the components that will be used in the Privacy policy page
+    - [ ] Create the components that will be used in the Terms of service page
+    - [ ] Create the components that will be used in the Blog page
+    - [ ] Create the components that will be used in the Blog post page
+
+
+- [] Create the static content layer
+    - [ ] Create Home, About, Contact, Privacy policy, Terms of service
+    - [ ] Create Blog posts for each task that is done.
+
+
+- [ ] Create the tools layer
+    - [ ] Create the tools for social media
+    - [ ] Create the tools for email
+    - [ ] Create the tools for chat
+    - [ ] Create the tools for social media preview generator
+    - [ ] Create the tools for email preview generator
+    - [ ] Create the tools for transcription
+    - [ ] Create the tools for Text over image
+
+
+- [ ] Set up the Database Layer
+  - [ ] Create User model
+  - [ ] Create Post model
+  - [ ] Create Schedule model
+  - [ ] Create Task model
+  - [ ] Create Group model
+  - [ ] Create Message model
+  - [ ] Create Platform model
+
+
+
+- [ ] Set up the Email Layer
+    - [ ] Create template email for User Registration
+    - [ ] Create template email for User Password Reset
+    - [ ] Create template email for User Password Change
+    - [ ] Create template email for User confirmation
+    - [ ] Create template email for User Subscription
+    - [ ] Create template email for User Unsubscription
+    - [ ] Create template email for Post Schedule trigger
+    - [ ] Create template email for Post Schedule fail
+    - [ ] Create template email for Post Schedule reminder
+
+- [ ] Set up the Auth Layer
+    - [ ] Create login page
+    - [ ] Create signup page
+    - [ ] Create forgot password page
+    - [ ] Create reset password page
+    - [ ] Create confirm email page
+    - [ ] Create subscription page
+    - [ ] Create unsubscribe page
+    - [ ] Create profile page
+    - [ ] Create settings page
+    - [ ] Set up the middleware for the auth
+    - [ ] Set up the middleware for the admin
+    - [ ] Set up the middleware for the guest
+    - [ ] Set up the middleware for the user
+    - [ ] Set up the middleware for the subscription
+    - [ ] Set up the middleware for the schedule rights
+    - [ ] Set up the Better Auth package
+
+- [ ] Set up the Scheduler Layer
+    - [ ] Create the api for scheduling one or more post
+    - [ ] Create the UI for the scheduling
+    - [ ] Create the api for generating bulk post
+    - [ ] Create the UI for the bulk scheduling
+    - [ ] Create the api for generating bulk post with auto generated images
+    - [ ] Create the UI for the bulk scheduling with auto generated images
+    - [ ] Create the Calendar view for the schedules
+    - [ ] Create the List view for the schedules
+    - [ ] Create the api for exporting the schedules to a csv file
+    - [ ] Create the api for importing the schedules from a csv file
+
+
+- [ ] Set up the Connect Layer
+    -[ ] Create UI & API for supported platforms
+    -[ ] Create UI & API for connected platforms
+    -[ ] Create UI & API for groups
+    -[ ] Create UI & API for group details
+    -[ ] Create UI & API for group creation
+    -[ ] Create UI & API for group editing
+    -[ ] Create UI & API for group deleting
+    -[ ] Create UI & API for platform details
+    -[ ] Create UI & API for platform creation
+    -[ ] Create UI & API for platform editing
+    -[ ] Create UI & API for platform deleting
+    -[ ] Create UI & API for platform connection
+    -[ ] Create API for connecting to a platform
+    -[ ] Create API for disconnecting from a platform
+
+
+- [ ] Set up the AI Layer
+    - [ ] Create the api for generating post
+    - [ ] Create the UI for the post generation
+    - [ ] Create the api for generating bulk post
+    - [ ] Create the UI for the bulk post generation
+    - [ ] Create the api for generating bulk post with auto generated images
+    - [ ] Create the UI for the bulk post generation with auto generated images
+
+- [ ] Set up the Analytics Layer
+    - [ ] Create the api for analytics
+    - [ ] Create the UI for the analytics
+
+- [ ] Set up the assets Layer
+    - [ ] Create the api for CRUD operations for assets
+    - [ ] Create the UI for the CRUD operations for the assets
+    - [ ] Create UI & API to create template assets

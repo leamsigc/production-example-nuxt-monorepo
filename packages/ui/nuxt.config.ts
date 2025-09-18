@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxt/scripts",
     "@nuxt/test-utils",
+    '@vueuse/nuxt',
   ],
   /*
     Nuxt UI RELATED CONFIGS
