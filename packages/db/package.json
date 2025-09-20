@@ -4,15 +4,22 @@
   "version": "0.0.1",
   "main": "./nuxt.config.ts",
   "scripts": {
-    "dev": "nuxi dev .playground",
+    "dev": "nuxi dev .playground --dotenv ../../.env",
     "dev:prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
     "preview": "nuxt preview .playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "db:generate": "drizzle-kit generate --config ./config/drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config ./config/drizzle.config.ts",
+    "db:studio": "drizzle-kit studio --config ./config/drizzle.config.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.5"
   },
   "devDependencies": {
     "@nuxt/eslint": "latest",
+    "drizzle-kit": "^0.31.4",
     "eslint": "^9.35.0",
     "nuxt": "^4.1.1",
     "typescript": "^5.9.2",
