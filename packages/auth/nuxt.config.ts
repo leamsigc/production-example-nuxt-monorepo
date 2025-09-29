@@ -8,5 +8,8 @@ export default defineNuxtConfig({
       openAPI: true,
     }
   },
+  $meta: {
+    name: 'BaseAuth',
+  },
   extends: ['@local-monorepo/db', '@local-monorepo/ui']
 })

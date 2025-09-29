@@ -14,13 +14,15 @@
   "dependencies": {
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/auth": "workspace:*",
-    "@local-monorepo/ui": "workspace:*"
+    "@local-monorepo/ui": "workspace:*",
+    "mjml": "^4.15.3"
   },
   "devDependencies": {
     "@nuxt/eslint": "latest",
     "eslint": "^9.35.0",
     "nuxt": "^4.1.1",
     "typescript": "^5.9.2",
-    "vue": "latest"
+    "vue": "latest",
+    "@types/mjml": "^4.7.4"
   }
 }

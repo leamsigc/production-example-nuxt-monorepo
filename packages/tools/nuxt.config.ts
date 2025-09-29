@@ -8,5 +8,8 @@ export default defineNuxtConfig({
       openAPI: true,
     }
   },
+  $meta: {
+    name: 'BaseTools',
+  },
   extends: ['@local-monorepo/ui']
 })

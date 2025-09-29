@@ -11,6 +11,9 @@ export default defineNuxtConfig({
       openAPI: true,
     }
   },
+  $meta: {
+    name: 'BaseContent',
+  },
   extends: ['@local-monorepo/ui'],
   modules: ["@nuxtjs/seo", '@nuxt/content'],
   content: {
