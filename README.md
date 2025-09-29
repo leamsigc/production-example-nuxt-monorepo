@@ -20,6 +20,36 @@
 
 
 
+## Database Schema and Relationships
+
+The main application is a social media scheduling platform built using Nuxt in a monorepo structure, allowing users to manage multiple business profiles, connect social media accounts, schedule posts across platforms, handle media assets, track customer reviews, and manage subscriptions.
+
+Example relationships: A user can own multiple business profiles; each business profile can be linked to several social media accounts for cross-platform posting; posts can be associated with media assets uploaded by the user for richer content.
+
+```mermaid
+erDiagram
+  USER ||--o{ BUSINESS_PROFILES : has
+  USER ||--o{ SOCIAL_MEDIA_ACCOUNTS : owns
+  USER ||--o{ ASSETS : uploads
+  USER ||--o{ POSTS : creates
+  USER ||--o{ SUBSCRIPTIONS : has
+  BUSINESS_PROFILES ||--o{ SOCIAL_MEDIA_ACCOUNTS : manages
+  BUSINESS_PROFILES ||--o{ ASSETS : has
+  BUSINESS_PROFILES ||--o{ POSTS : creates_for
+  BUSINESS_PROFILES ||--o{ REVIEWS : receives
+  SOCIAL_MEDIA_ACCOUNTS ||--o{ PLATFORM_POSTS : publishes_to
+  POSTS ||--o{ PLATFORM_POSTS : transforms_to
+  ASSETS ||--|| USER : uploaded_by
+  ASSETS ||--|o BUSINESS_PROFILES : associated_with
+  POSTS ||--|| USER : created_by
+  POSTS ||--|| BUSINESS_PROFILES : created_for
+  PLATFORM_POSTS ||--|| POSTS : originates_from
+  PLATFORM_POSTS ||--|| SOCIAL_MEDIA_ACCOUNTS : belongs_to
+  REVIEWS ||--|| BUSINESS_PROFILES : for
+  SUBSCRIPTIONS ||--|| USER : for
+  TOOLS
+```
+
 ## Explanation for each layer
 
 

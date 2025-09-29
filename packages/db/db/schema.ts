@@ -20,6 +20,7 @@ export * from './posts/posts'
 export * from './reviews/reviews'
 export * from './socialMedia/socialMedia'
 export * from './subscriptions/subscriptions'
+export * from './templates/templates'
 
 /***
 * Custom table here
