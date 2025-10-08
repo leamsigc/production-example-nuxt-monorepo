@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   badge: () => ({ label: 'New', content: 'Design is out' }),
   heroImage: () => ({
     light: 'img/hero-image-light.jpg',
-    dark: 'img/hero-image-dark.jpg',
+    dark: 'img/hero-image-dark.png',
     alt: 'The best social media scheduler for small businesses'
   }),
   actions: () => [
@@ -62,7 +62,7 @@ const mode = useColorMode()
 <template>
   <BaseTyndallEffect :streak-color="mode.value === 'light' ? '#000000' : '#ffffff'">
     <section class="container mx-auto">
-      <div class="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-20 md:py-32">
+      <div class="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-24 md:py-32">
         <div class="text-center space-y-8">
           <UBadge variant="outline" class="text-sm py-2">
             <span class="mr-2 text-primary">
@@ -71,9 +71,9 @@ const mode = useColorMode()
             <span> {{ badge.content }} </span>
           </UBadge>
 
-          <div class="max-w-screen-md mx-auto text-center text-5xl md:text-6xl font-bold">
+          <div class="max-w-prose mx-auto text-center  text-5xl md:text-6xl font-bold">
             <h1>
-              <slot name="title">
+              <slot mdc-unwrap="p" name="title">
                 Free your time to focus on your business
                 <span class="gradient-text">Schedule your social media</span>
                 post automatically!
@@ -81,17 +81,17 @@ const mode = useColorMode()
             </h1>
           </div>
 
-          <p class="max-w-screen-sm mx-auto text-xl text-muted-foreground">
-            <slot name="description">
+          <p class="max-w-prose mx-auto text-xl text-muted-foreground my-12">
+            <slot mdc-unwrap="p" name="description">
               We help you to schedule your social media posts automatically and
               make your life easier.
             </slot>
           </p>
 
           <div class="space-y-4 md:space-y-0 md:space-x-4">
-            <slot name="actions">
+            <slot mdc-unwrap="p" name="actions">
               <UButton v-for="action in actions" :key="action.label" class="w-5/6 md:w-1/4 font-bold group/arrow"
-                :variant="action.variant" as-child :prefetch="false">
+                :variant="action.variant ? action.variant : 'outline'" as-child :prefetch="false">
                 <NuxtLink :href="action.href" :target="action.target || ''" :aria-label="action.label">
                   {{ action.label }}
                   <Icon v-if="action.icon" :name="action.icon"
@@ -108,7 +108,7 @@ const mode = useColorMode()
             class="absolute -top-6 right-12 w-[90%] h-12 lg:h-[80%] bg-primary/50 blur-3xl rounded-full img-shadow-animation" />
 
           <NuxtPicture
-            class="w-full md:w-[1200px] mx-auto rounded-lg relative rouded-lg leading-none flex items-center border border-t-2 border-t-primary/30 img-border-animation"
+            class="w-full lg:w-[1200px] mx-auto rounded-lg relative rounded-lg leading-none flex items-center border border-t-2 border-t-primary/30 img-border-animation"
             :src="mode.value == 'light' ? heroImage.light : heroImage.dark" :alt="heroImage.alt" width="1300"
             height="900" loading="lazy" />
 

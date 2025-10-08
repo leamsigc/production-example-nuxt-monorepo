@@ -23,21 +23,22 @@ badge:
   label: New!
   content: Boost your business
 actions:
-  - label: Get Started Free
+  - label: Get Started for Free
     href: /register
     icon: "lucide:arrow-right"
   - label: Learn More
     href: /#features
     variant: secondary
 heroImage:
-  light: "img/hero-image-light.jpg"
-  dark: "img/hero-image-dark.jpg"
+  light: "/img/hero-image-dark.png"
+  dark: "/img/hero-image-dark.png"
   alt: "Dashboard of MBSMM My Business Social Media Manager"
 
 ---
 #title
-Your All-in-One Platform for
-  <span class="gradient-text">Small Business Social Media Success</span>
+Your All-in-One Platform for </br>
+<span class="gradient-text">Small Business </span></br>
+Social Media Success
 
 #description
 Effortlessly manage all your social media, Google My Business, and content creation in one powerful platform. Save time, boost engagement, and grow your business.
