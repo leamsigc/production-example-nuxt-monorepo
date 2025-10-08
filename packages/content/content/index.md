@@ -17,6 +17,32 @@ head:
     class: ""
 ---
 
+::BaseHero
+---
+badge:
+  label: New!
+  content: Boost your business
+actions:
+  - label: Get Started Free
+    href: /register
+    icon: "lucide:arrow-right"
+  - label: Learn More
+    href: /#features
+    variant: secondary
+heroImage:
+  light: "img/hero-image-light.jpg"
+  dark: "img/hero-image-dark.jpg"
+  alt: "Dashboard of MBSMM My Business Social Media Manager"
+
+---
+#title
+Your All-in-One Platform for
+  <span class="gradient-text">Small Business Social Media Success</span>
+
+#description
+Effortlessly manage all your social media, Google My Business, and content creation in one powerful platform. Save time, boost engagement, and grow your business.
+::
+
 
 ::BaseBenefits
 ---

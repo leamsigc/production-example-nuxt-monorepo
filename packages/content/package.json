@@ -23,7 +23,8 @@
     "zod": "^3.25.76"
   },
   "dependencies": {
-    "zod-to-json-schema": "^3.24.6",
-    "better-sqlite3": "^12.2.0"
+    "better-sqlite3": "^12.2.0",
+    "sass": "^1.93.2",
+    "zod-to-json-schema": "^3.24.6"
   }
 }

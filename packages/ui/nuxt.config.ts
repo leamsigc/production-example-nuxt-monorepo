@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     "@nuxt/scripts",
     "@nuxt/test-utils",
     '@vueuse/nuxt',
+    '@vueuse/motion/nuxt'
   ],
   /*
     Nuxt UI RELATED CONFIGS
