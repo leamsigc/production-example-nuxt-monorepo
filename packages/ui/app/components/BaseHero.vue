@@ -15,7 +15,7 @@ interface Action {
   label: string
   href: string
   icon: string
-  variant?: string
+  variant?: "link" | "outline" | "solid" | "soft" | "subtle" | "ghost" | undefined
   target?: string
 }
 
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   badge: () => ({ label: 'New', content: 'Design is out' }),
   heroImage: () => ({
     light: 'img/hero-image-light.jpg',
-    dark: 'img/hero-image-dark.png',
+    dark: 'https://nuxt-better-auth.giessen.dev/_ipx/f_webp&q_75&s_1536x1063/img/hero-image-dark.jpg',
     alt: 'The best social media scheduler for small businesses'
   }),
   actions: () => [
@@ -60,10 +60,10 @@ const mode = useColorMode()
 </script>
 
 <template>
-  <BaseTyndallEffect :streak-color="mode.value === 'light' ? '#000000' : '#ffffff'">
+  <BaseTyndallEffect>
     <section class="container mx-auto">
       <div class="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-24 md:py-32">
-        <div class="text-center space-y-8">
+        <div class="text-center space-y-8" v-motion-fade-visible>
           <UBadge variant="outline" class="text-sm py-2">
             <span class="mr-2 text-primary">
               <UBadge>{{ badge.label }}</UBadge>
@@ -90,8 +90,8 @@ const mode = useColorMode()
 
           <div class="space-y-4 md:space-y-0 md:space-x-4">
             <slot mdc-unwrap="p" name="actions">
-              <UButton v-for="action in actions" :key="action.label" class="w-5/6 md:w-1/4 font-bold group/arrow"
-                :variant="action.variant ? action.variant : 'outline'" as-child :prefetch="false">
+              <UButton v-for="action in actions" :key="action.label" class="px-10 font-bold group/arrow"
+                :variant="action.variant ? action.variant : 'solid'" as-child :prefetch="false">
                 <NuxtLink :href="action.href" :target="action.target || ''" :aria-label="action.label">
                   {{ action.label }}
                   <Icon v-if="action.icon" :name="action.icon"
@@ -105,19 +105,19 @@ const mode = useColorMode()
         <div v-if="heroImage && showHeroImage" class="relative group mt-14">
           <!-- gradient shadow -->
           <div
-            class="absolute -top-6 right-12 w-[90%] h-12 lg:h-[80%] bg-primary/50 blur-3xl rounded-full img-shadow-animation" />
+            class="absolute -top-6 right-12 w-[90%] h-12 lg:h-[80%] bg-neutral-900 dark:bg-neutral-900 blur-3xl rounded-full img-shadow-animation" />
 
           <NuxtPicture
-            class="w-full lg:w-[1200px] mx-auto rounded-lg relative rounded-lg leading-none flex items-center border border-t-2 border-t-primary/30 img-border-animation"
+            class="w-full lg:w-[1200px] mx-auto rounded-lg relative leading-none flex items-center border border-t-2 border-t-primary/30 img-border-animation"
             :src="mode.value == 'light' ? heroImage.light : heroImage.dark" :alt="heroImage.alt" width="1300"
             height="900" loading="lazy" />
 
-          <!-- gradient effect img -->
-          <div
-            class="absolute bottom-0 left-0 w-full h-20 md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg" />
         </div>
       </div>
     </section>
+    <!-- gradient effect img -->
+    <div
+      class="absolute bottom-0 left-0 w-full h-20 md:h-28 bg-gradient-to-tl from-neutral-950/50 dark:from-neutral-900 to-transparent   blur-2xl " />
   </BaseTyndallEffect>
 </template>
 
@@ -152,11 +152,11 @@ const mode = useColorMode()
 
 @keyframes img-border-animation {
   from {
-    @apply border-t-primary/10;
+    @apply border-t-muted/10;
   }
 
   to {
-    @apply border-t-primary/60;
+    @apply border-t-muted/60;
   }
 }
 </style>

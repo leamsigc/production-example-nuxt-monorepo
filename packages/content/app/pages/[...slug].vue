@@ -12,18 +12,18 @@
  */
 const route = useRoute()
 
+const collectionType = route.path.startsWith('/blogs/') ? 'blog' : 'content'
+
 
 const { data: page } = await useAsyncData(route.path, () => {
-  return queryCollection("content").path(route.path).first()
+  return queryCollection(collectionType).path(route.path).first()
 })
 
 useHead(page.value?.head || {})
 useSeoMeta(page.value?.seo || {})
-defineOgImageComponent('BlogOgImage', {
-  title: `${page.value?.title.replace("NuxtZzle starterkit |", "").slice(0, 50)}...`,
-  description: `${page.value?.description.slice(0, 200)}...`,
-  headline: '👋 Hello from LEAMSIGC',
-})
+if (page.value?.ogImage) {
+  defineOgImage(page.value.ogImage)
+}
 </script>
 
 <template>

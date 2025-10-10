@@ -1,68 +1,77 @@
 <script lang="ts" setup>
 /**
  *
- * Component Description:Desc
+ * Component Description:A dynamic Tyndall effect component with customizable streak colors and particle slots, compatible with Tailwind CSS v4.
  *
- * @author Reflect-Media <reflect.media GmbH>
+ * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  *
  * @todo [ ] Test the component
  * @todo [ ] Integration test.
- * @todo [✔] Update the typescript.
+ * @todo [x] Update the typescript.
+ * @property {string} streakColor - The color of the streaks.
+ * @property {Array<Object>} streakPositions - An array of objects defining the position, rotation, opacity, scale, and duration for each streak.
  */
 const props = withDefaults(
   defineProps<{
-    streakColor: string
-    class?: any
+    streakColor?: string,
+    class?: any,
+    streakPositions?: {
+      left: string,
+      top: string,
+      rotate: string,
+      opacity: number,
+      scaleY: number,
+      duration: number
+    }[]
   }>(),
   {
-    streakColor: 'rgb(255, 255, 255)'
+    streakColor: 'rgb(255, 255, 255)',
+    streakPositions: () => [
+      { left: '-10vw', top: '18vw', rotate: '50deg', opacity: 0.8, scaleY: 2, duration: 2000 },
+      { left: '-15vw', top: '10vw', rotate: '55deg', opacity: 0.92, scaleY: 1, duration: 2000 },
+      { left: '-18vw', top: '20vw', rotate: '40deg', opacity: 0.8, scaleY: 1, duration: 2000 },
+      { left: '-15vw', top: '10vw', rotate: '45deg', opacity: 0.6, scaleY: 1, duration: 2000 },
+      { left: '-15vw', top: '2vw', rotate: '35deg', opacity: 0.8, scaleY: 1, duration: 2000 },
+    ]
   }
 )
 
-const { streakColor } = toRefs(props)
-
-const wrapperStyle = computed(() => {
-  return {
-    '--streak-color': streakColor.value
-  }
-})
 </script>
 
 <template>
   <div
-    class="sui-tyndall-effect relative flex gap-10 min-h-screen overflow-hidden h-auto w-full justify-start items-center"
-    :style="wrapperStyle">
-    <div v-motion
-      class="streak flex-none mix-blend-overlay overflow-hidden pointer-events-none absolute w-[200%] lg:w-[150%] h-24 lg:h-56 left-[-64vw] top-[48vw] lg:left-[-28vw] lg:top-[32vw] xl:left-[-16vw] xl:top-[21vw]"
-      :initial="{ opacity: 0, rotate: '40deg', scaleY: 0.5 }" :enter="{ opacity: 0.8, rotate: '40deg', scaleY: 1 }"
-      :duration="2000" />
-    <div v-motion
-      class="streak flex-none mix-blend-overlay overflow-hidden pointer-events-none absolute w-[200%] lg:w-[150%] h-12 lg:h-24 left-[-60vw] top-[40vw] lg:left-[-32vw] lg:top-[24vw] xl:left-[-12vw] xl:top-[17vw]"
-      :initial="{ opacity: 0, rotate: '32deg', scaleY: 0.5 }" :enter="{ opacity: 0.92, rotate: '32deg', scaleY: 1 }"
-      :duration="2000" />
-    <div v-motion
-      class="streak flex-none mix-blend-overlay overflow-hidden pointer-events-none absolute w-[200%] lg:w-[150%] h-20 lg:h-48 left-[-32vw] top-[32vw] lg:left-[-12vw] lg:top-[18vw] xl:left-[-10vw] xl:top-[10vw]"
-      :initial="{ opacity: 0, rotate: '24deg', scaleY: 0.5 }" :enter="{ opacity: 1, rotate: '24deg', scaleY: 1 }"
-      :duration="2000" />
-    <div class="overlay h-56 flex-none absolute left-0 right-0 top-0 z-10 overflow-hidden pointer-events-none" />
-    <div v-if="$slots.particles" class="particles-effect flex-none h-screen absolute left-0 top-0 right-0">
+    class="sui-tyndall-effect relative flex gap-10 min-h-screen overflow-hidden h-auto w-full justify-start items-center">
+    <div v-for="(streak, index) in props.streakPositions" :key="index"
+      class="streak flex-none mix-blend-overlay overflow-hidden pointer-events-none absolute w-[200%] lg:w-[150%] h-24 lg:h-56"
+      :style="{ left: streak.left, top: streak.top }" v-motion
+      :initial="{ opacity: 0, rotate: streak.rotate, scaleY: 0.5 }"
+      :enter="{ opacity: streak.opacity, rotate: streak.rotate, scaleY: streak.scaleY }" :duration="streak.duration" />
+    <div class="overlay h-56 flex-none absolute left-0 right-0 top-0 z-10 overflow-hidden pointer-events-none">
+    </div>
+    <div class="particles-effect flex-none h-screen absolute left-0 top-0 right-0" v-if="$slots.particles">
       <slot name="particles" />
     </div>
     <slot />
   </div>
 </template>
 
+
+
 <style scoped lang="scss">
 .sui-tyndall-effect {
-  --streak-color: rgb(0, 225, 255);
+  --streak-color: rgba(2, 21, 12, 0.945);
 }
 
-.theme-dark .sui-tyndall-effect .overlay {
+.dark .sui-tyndall-effect {
+  --streak-color: var(--ui-bg-muted);
+}
+
+.dark .sui-tyndall-effect .overlay {
 
   background: linear-gradient(180deg,
-      #000000 0%,
-      rgba(0, 0, 0, 0.32) 23%,
+      hsla(0, 0%, 0%, 0.137) 0%,
+      hsla(0, 0%, 0%, 0.32) 23%,
       rgba(0, 0, 0, 0.12) 70%,
       rgba(0, 0, 0, 0) 100%);
 }

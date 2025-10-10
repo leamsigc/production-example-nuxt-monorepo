@@ -30,8 +30,8 @@ actions:
     href: /#features
     variant: secondary
 heroImage:
-  light: "/img/hero-image-dark.png"
-  dark: "/img/hero-image-dark.png"
+  light: "https://nuxt-better-auth.giessen.dev/_ipx/f_webp&q_75&s_1536x1063/img/hero-image-dark.jpg"
+  dark: "https://nuxt-better-auth.giessen.dev/_ipx/f_webp&q_75&s_1536x1063/img/hero-image-dark.jpg"
   alt: "Dashboard of MBSMM My Business Social Media Manager"
 
 ---

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @source "../../../content/**/*";
+@source "../../../../../**/*";
 @theme {
   --font-sans: 'Poppins ', system-ui, sans-serif;
   --font-mono: 'Josefin Sans', monospace;
@@ -51,6 +52,8 @@ html {
   --input: 20 5.9% 90%;
   --ring: 24.6 95% 53.1%;
   --radius: 0.5rem;
+
+  --reka-navigation-menu-viewport-width:900px;
 }
 
 .dark {

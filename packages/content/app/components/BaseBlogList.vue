@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-
 /**
  *
- * Default layout for the application
+ * Component Description:Desc
  *
  * @author Reflect-Media <reflect.media GmbH>
  * @version 0.0.1
@@ -11,15 +10,13 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
-
-
 </script>
 
 <template>
-  <main class="default">
-    <BaseHeader />
-    <slot />
-  </main>
+  <section class="py-8 md:py-16">
+    <section class="mx-auto max-w-6xl px-6">
+      <BaseBlogFeatured />
+    </section>
+  </section>
 </template>
-
 <style scoped></style>

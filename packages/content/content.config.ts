@@ -22,11 +22,34 @@ const mainLink = linkZodDefinition.and(
   })
 );
 export const collections = {
-  content: defineCollection({
+  content: defineCollection(asSeoCollection({
     type: 'page',
     source: {
-      include: '**/*.md',
+      include: '**/**.md',
     },
+    schema: z.object({
+      layout: z.enum(['default', 'blog-layout']).default('default'),
+      title: z.string(),
+      description: z.string(),
+      head: z.object({
+        meta: z.array(z.object({
+          name: z.string(),
+          content: z.string()
+        })),
+        htmlAttrs: z.object({
+          lang: z.string()
+        }).optional(),
+        bodyAttrs: z.object({
+          class: z.string()
+        }).optional(),
+      })
+    })
+  })),
+
+  blog: defineCollection(asSeoCollection({
+    type: 'page',
+    source: 'blogs/**/**.md',
+
     schema: z.object({
       layout: z.enum(['default', 'blog-layout']).default('blog-layout'),
       title: z.string(),
@@ -67,7 +90,7 @@ export const collections = {
         })
       })
     })
-  }),
+  })),
   navigation: defineCollection({
     type: 'data',
     source: 'nav/**.yml',
