@@ -6,6 +6,7 @@
       "login": "Login",
       "continue_with_email": "Continue with Email",
       "continue_with_google": "Continue with Google",
+      "continue_with_github": "Continue with GitHub",
       "back_to_options": "Back to login options"
     },
     "form": {
@@ -14,6 +15,10 @@
       "remember_me": "Remember me",
       "forgot_password": "Forgot password?"
     },
+    "placeholders": {
+      "email": "Enter your email",
+      "password": "Enter your password"
+    },
     "links": {
       "register": "Don't have an account?",
       "register_link": "Register"
@@ -21,6 +26,10 @@
     "messages": {
       "login_error": "Please try again",
       "check_credentials": "Please check your email and password"
+    },
+    "coming_soon": {
+      "title": "Coming Soon",
+      "description": "GitHub login will be available soon"
     }
   },
   "es": {
@@ -30,6 +39,7 @@
       "login": "Iniciar Sesión",
       "continue_with_email": "Continuar con Correo",
       "continue_with_google": "Continuar con Google",
+      "continue_with_github": "Continuar con GitHub",
       "back_to_options": "Volver a opciones de inicio"
     },
     "form": {
@@ -38,6 +48,10 @@
       "remember_me": "Recordarme",
       "forgot_password": "¿Olvidaste tu contraseña?"
     },
+    "placeholders": {
+      "email": "Ingresa tu correo",
+      "password": "Ingresa tu contraseña"
+    },
     "links": {
       "register": "¿No tienes una cuenta?",
       "register_link": "Registrarse"
@@ -45,6 +59,10 @@
     "messages": {
       "login_error": "Por favor, inténtalo de nuevo",
       "check_credentials": "Por favor, verifica tu correo y contraseña"
+    },
+    "coming_soon": {
+      "title": "Próximamente",
+      "description": "El inicio de sesión con GitHub estará disponible pronto"
     }
   },
   "de": {
@@ -54,6 +72,7 @@
       "login": "Anmelden",
       "continue_with_email": "Mit E-Mail fortfahren",
       "continue_with_google": "Mit Google fortfahren",
+      "continue_with_github": "Mit GitHub fortfahren",
       "back_to_options": "Zurück zu Anmeldeoptionen"
     },
     "form": {
@@ -62,6 +81,10 @@
       "remember_me": "Angemeldet bleiben",
       "forgot_password": "Passwort vergessen?"
     },
+    "placeholders": {
+      "email": "Ihre E-Mail eingeben",
+      "password": "Ihr Passwort eingeben"
+    },
     "links": {
       "register": "Haben Sie noch kein Konto?",
       "register_link": "Registrieren"
@@ -69,6 +92,10 @@
     "messages": {
       "login_error": "Bitte versuchen Sie es erneut",
       "check_credentials": "Bitte überprüfen Sie Ihre E-Mail und Ihr Passwort"
+    },
+    "coming_soon": {
+      "title": "Bald verfügbar",
+      "description": "GitHub-Anmeldung wird bald verfügbar sein"
     }
   },
   "fr": {
@@ -78,6 +105,7 @@
       "login": "Se Connecter",
       "continue_with_email": "Continuer avec Email",
       "continue_with_google": "Continuer avec Google",
+      "continue_with_github": "Continuer avec GitHub",
       "back_to_options": "Retour aux options de connexion"
     },
     "form": {
@@ -86,6 +114,10 @@
       "remember_me": "Se souvenir de moi",
       "forgot_password": "Mot de passe oublié ?"
     },
+    "placeholders": {
+      "email": "Entrez votre email",
+      "password": "Entrez votre mot de passe"
+    },
     "links": {
       "register": "Vous n'avez pas de compte ?",
       "register_link": "S'inscrire"
@@ -93,6 +125,10 @@
     "messages": {
       "login_error": "Veuillez réessayer",
       "check_credentials": "Veuillez vérifier votre email et mot de passe"
+    },
+    "coming_soon": {
+      "title": "Bientôt disponible",
+      "description": "La connexion GitHub sera bientôt disponible"
     }
   }
 }

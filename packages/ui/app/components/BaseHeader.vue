@@ -84,7 +84,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 </script>
 
 <template>
-  <UHeader class="bg-transparent border-0">
+  <UHeader class="dark:bg-transparent  border-0">
     <template #left>
       <UTooltip text="Home" :kbds="['meta', 'H']">
         <UButton color="neutral" variant="ghost" to="/" icon="fxemoji:flaginhole" aria-label="Home">
@@ -93,13 +93,17 @@ const items = computed<NavigationMenuItem[]>(() => [
       </UTooltip>
     </template>
     <UNavigationMenu :items="items" :ui="{
-      childLinkDescription: 'text-balance line-clamp-2'
-    }" orientation="horizontal" class="w-full justify-center " highlight highlight-color="info" />
+      childLinkDescription: 'text-balance line-clamp-2 ',
+      linkLabel: 'dark:text-white',
+    }" orientation="horizontal" class="w-full justify-center " highlight highlight-color="success" />
     <template #right>
       <UColorModeButton />
 
+      <UTooltip text="Login" :kbds="['meta', 'L']">
+        <UButton color="primary" variant="ghost" to="/login" icon="i-lucide-user" aria-label="Login" />
+      </UTooltip>
       <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
-        <UButton color="primary" variant="ghost" to="https://github.com/leamsigc/production-example-nuxt-monorepo"
+        <UButton color="neutral" variant="ghost" to="https://github.com/leamsigc/production-example-nuxt-monorepo"
           target="_blank" icon="i-simple-icons-github" aria-label="GitHub" />
       </UTooltip>
     </template>

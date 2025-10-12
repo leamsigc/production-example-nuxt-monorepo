@@ -46,17 +46,17 @@ const fields = computed<AuthFormField[]>(() => [{
 }])
 
 const providers = [{
-  label: 'Google',
+  label: t('buttons.continue_with_google'),
   icon: 'i-simple-icons-google',
   onClick: signInWithGoogle
 }, {
-  label: 'GitHub',
+  label: t('buttons.continue_with_github'),
   icon: 'i-simple-icons-github',
   onClick: () => {
     // TODO: Implement GitHub login
     add({
-      title: 'Coming Soon',
-      description: 'GitHub login will be available soon',
+      title: t('coming_soon.title'),
+      description: t('coming_soon.description'),
       color: 'info'
     })
   }
@@ -110,7 +110,11 @@ async function signInWithGoogle() {
 <template>
   <div class="flex flex-col items-center justify-center gap-4 p-4">
     <UToaster />
-    <UPageCard class="w-full max-w-lg lg:min-w-lg">
+    <div class="absolute inset-0">
+      <BaseBeams :beam-width="2" :beam-height="35" :beam-number="24" :light-color="'#ffffff'" :speed="1"
+        :noise-intensity="2" :scale="0.2" :rotation="45" />
+    </div>
+    <UPageCard class="w-full max-w-lg lg:min-w-lg bg-default dark:bg-black/50" variant="ghost">
       <UAuthForm :schema="schema" :title="t('title')" :description="t('description')" icon="i-lucide-user"
         :fields="fields" :providers="providers" @submit="onSubmit" />
     </UPageCard>
