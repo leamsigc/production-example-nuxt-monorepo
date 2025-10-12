@@ -1,0 +1,158 @@
+{
+  "en": {
+    "title": "Register",
+    "description": "Create your account",
+    "buttons": {
+      "register": "Register",
+      "continue_with_email": "Continue with Email",
+      "continue_with_google": "Continue with Google",
+      "continue_with_github": "Continue with GitHub",
+      "back_to_options": "Back to login options"
+    },
+    "form": {
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?"
+    },
+    "placeholders": {
+      "first_name": "Enter your first name",
+      "last_name": "Enter your last name",
+      "email": "Enter your email",
+      "password": "Enter your password",
+      "password_confirm": "Confirm your password"
+    },
+    "links": {
+      "login": "Already have an account?",
+      "login_link": "Login"
+    },
+    "messages": {
+      "register_error": "Please try again",
+      "check_information": "Please check your information and try again"
+    },
+    "coming_soon": {
+      "title": "Coming Soon",
+      "description": "GitHub registration will be available soon"
+    }
+  },
+  "es": {
+    "title": "Registrarse",
+    "description": "Crea tu cuenta",
+    "buttons": {
+      "register": "Registrarse",
+      "continue_with_email": "Continuar con Correo",
+      "continue_with_google": "Continuar con Google",
+      "continue_with_github": "Continuar con GitHub",
+      "back_to_options": "Volver a opciones de registro"
+    },
+    "form": {
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "remember_me": "Recordarme",
+      "forgot_password": "¿Olvidaste tu contraseña?"
+    },
+    "placeholders": {
+      "first_name": "Ingresa tu nombre",
+      "last_name": "Ingresa tu apellido",
+      "email": "Ingresa tu correo",
+      "password": "Ingresa tu contraseña",
+      "password_confirm": "Confirma tu contraseña"
+    },
+    "links": {
+      "login": "¿Ya tienes una cuenta?",
+      "login_link": "Iniciar Sesión"
+    },
+    "messages": {
+      "register_error": "Por favor, inténtalo de nuevo",
+      "check_information": "Por favor, verifica tu información e inténtalo de nuevo"
+    },
+    "coming_soon": {
+      "title": "Próximamente",
+      "description": "El registro con GitHub estará disponible pronto"
+    }
+  },
+  "de": {
+    "title": "Registrieren",
+    "description": "Erstellen Sie Ihr Konto",
+    "buttons": {
+      "register": "Registrieren",
+      "continue_with_email": "Mit E-Mail fortfahren",
+      "continue_with_google": "Mit Google fortfahren",
+      "continue_with_github": "Mit GitHub fortfahren",
+      "back_to_options": "Zurück zu Registrierungsoptionen"
+    },
+    "form": {
+      "first_name": "Vorname",
+      "last_name": "Nachname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "password_confirm": "Passwort bestätigen",
+      "remember_me": "Angemeldet bleiben",
+      "forgot_password": "Passwort vergessen?"
+    },
+    "placeholders": {
+      "first_name": "Ihren Vornamen eingeben",
+      "last_name": "Ihren Nachnamen eingeben",
+      "email": "Ihre E-Mail eingeben",
+      "password": "Ihr Passwort eingeben",
+      "password_confirm": "Ihr Passwort bestätigen"
+    },
+    "links": {
+      "login": "Haben Sie bereits ein Konto?",
+      "login_link": "Anmelden"
+    },
+    "messages": {
+      "register_error": "Bitte versuchen Sie es erneut",
+      "check_information": "Bitte überprüfen Sie Ihre Informationen und versuchen Sie es erneut"
+    },
+    "coming_soon": {
+      "title": "Bald verfügbar",
+      "description": "GitHub-Registrierung wird bald verfügbar sein"
+    }
+  },
+  "fr": {
+    "title": "S'inscrire",
+    "description": "Créez votre compte",
+    "buttons": {
+      "register": "S'inscrire",
+      "continue_with_email": "Continuer avec Email",
+      "continue_with_google": "Continuer avec Google",
+      "continue_with_github": "Continuer avec GitHub",
+      "back_to_options": "Retour aux options d'inscription"
+    },
+    "form": {
+      "first_name": "Prénom",
+      "last_name": "Nom de famille",
+      "email": "Email",
+      "password": "Mot de passe",
+      "password_confirm": "Confirmer le mot de passe",
+      "remember_me": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?"
+    },
+    "placeholders": {
+      "first_name": "Entrez votre prénom",
+      "last_name": "Entrez votre nom de famille",
+      "email": "Entrez votre email",
+      "password": "Entrez votre mot de passe",
+      "password_confirm": "Confirmez votre mot de passe"
+    },
+    "links": {
+      "login": "Vous avez déjà un compte ?",
+      "login_link": "Se Connecter"
+    },
+    "messages": {
+      "register_error": "Veuillez réessayer",
+      "check_information": "Veuillez vérifier vos informations et réessayer"
+    },
+    "coming_soon": {
+      "title": "Bientôt disponible",
+      "description": "L'inscription GitHub sera bientôt disponible"
+    }
+  }
+}

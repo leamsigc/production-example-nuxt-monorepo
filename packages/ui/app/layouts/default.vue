@@ -16,7 +16,7 @@
 </script>
 
 <template>
-  <main class="default">
+  <main class="default relative">
     <BaseHeader />
     <slot />
   </main>
