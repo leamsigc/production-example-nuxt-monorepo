@@ -40,7 +40,7 @@ export const useMailgun = (): EmailService => {
       const unencodedCredential = `api:${MAILGUN_API_KEY}`
       const encodedCredentials = typeof Buffer !== 'undefined'
         ? Buffer.from(unencodedCredential).toString('base64')
-      // Use `btoa` in non-Node environments
+        // Use `btoa` in non-Node environments
         : btoa(unencodedCredential)
 
       await $fetch(MAILGUN_API_URL, {

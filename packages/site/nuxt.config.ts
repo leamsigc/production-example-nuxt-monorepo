@@ -12,13 +12,11 @@ export default defineNuxtConfig({
   },
 
   extends: [
-    '@local-monorepo/ai-tools',
-    '@local-monorepo/assets',
+    '@local-monorepo/ui',
+    '@local-monorepo/db',
     '@local-monorepo/auth',
-    '@local-monorepo/bulk-scheduler',
     '@local-monorepo/email',
-    '@local-monorepo/scheduler',
-    '@local-monorepo/ui'
+    '@local-monorepo/content'
   ],
 
   modules: ['@nuxtjs/seo']

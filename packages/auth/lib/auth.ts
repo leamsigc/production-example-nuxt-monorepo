@@ -4,7 +4,6 @@ import { admin } from 'better-auth/plugins'
 import * as schema from '#layers/BaseDB/db/schema'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 
-import { sendUserPasswordResetEmail, sendUserVerificationEmail } from '#layers/BaseEmail/server/utils/email'
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || process.env.NUXT_BETTER_AUTH_URL || 'http://localhost:3000',

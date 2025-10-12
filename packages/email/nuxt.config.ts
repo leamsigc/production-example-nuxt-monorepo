@@ -11,5 +11,5 @@ export default defineNuxtConfig({
   $meta: {
     name: 'BaseEmail',
   },
-  extends: ['@local-monorepo/db', '@local-monorepo/ui', '@local-monorepo/auth']
+  extends: ['@local-monorepo/db', '@local-monorepo/ui']
 })

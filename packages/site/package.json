@@ -17,11 +17,12 @@
     "@local-monorepo/email": "workspace:*",
     "@local-monorepo/scheduler": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
-    "nuxt": "^4.1.1",
-    "vue": "^3.5.21",
+    "@local-monorepo/content": "workspace:*",
+    "nuxt": "^4.1.3",
+    "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxtjs/seo": "^3.1.0"
+    "@nuxtjs/seo": "^3.2.2"
   }
 }

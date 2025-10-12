@@ -1,0 +1,98 @@
+{
+  "en": {
+    "title": "Login",
+    "description": "Sign in to your account",
+    "buttons": {
+      "login": "Login",
+      "continue_with_email": "Continue with Email",
+      "continue_with_google": "Continue with Google",
+      "back_to_options": "Back to login options"
+    },
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?"
+    },
+    "links": {
+      "register": "Don't have an account?",
+      "register_link": "Register"
+    },
+    "messages": {
+      "login_error": "Please try again",
+      "check_credentials": "Please check your email and password"
+    }
+  },
+  "es": {
+    "title": "Iniciar Sesión",
+    "description": "Inicia sesión en tu cuenta",
+    "buttons": {
+      "login": "Iniciar Sesión",
+      "continue_with_email": "Continuar con Correo",
+      "continue_with_google": "Continuar con Google",
+      "back_to_options": "Volver a opciones de inicio"
+    },
+    "form": {
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "remember_me": "Recordarme",
+      "forgot_password": "¿Olvidaste tu contraseña?"
+    },
+    "links": {
+      "register": "¿No tienes una cuenta?",
+      "register_link": "Registrarse"
+    },
+    "messages": {
+      "login_error": "Por favor, inténtalo de nuevo",
+      "check_credentials": "Por favor, verifica tu correo y contraseña"
+    }
+  },
+  "de": {
+    "title": "Anmelden",
+    "description": "Melden Sie sich in Ihrem Konto an",
+    "buttons": {
+      "login": "Anmelden",
+      "continue_with_email": "Mit E-Mail fortfahren",
+      "continue_with_google": "Mit Google fortfahren",
+      "back_to_options": "Zurück zu Anmeldeoptionen"
+    },
+    "form": {
+      "email": "E-Mail",
+      "password": "Passwort",
+      "remember_me": "Angemeldet bleiben",
+      "forgot_password": "Passwort vergessen?"
+    },
+    "links": {
+      "register": "Haben Sie noch kein Konto?",
+      "register_link": "Registrieren"
+    },
+    "messages": {
+      "login_error": "Bitte versuchen Sie es erneut",
+      "check_credentials": "Bitte überprüfen Sie Ihre E-Mail und Ihr Passwort"
+    }
+  },
+  "fr": {
+    "title": "Connexion",
+    "description": "Connectez-vous à votre compte",
+    "buttons": {
+      "login": "Se Connecter",
+      "continue_with_email": "Continuer avec Email",
+      "continue_with_google": "Continuer avec Google",
+      "back_to_options": "Retour aux options de connexion"
+    },
+    "form": {
+      "email": "Email",
+      "password": "Mot de Passe",
+      "remember_me": "Se souvenir de moi",
+      "forgot_password": "Mot de passe oublié ?"
+    },
+    "links": {
+      "register": "Vous n'avez pas de compte ?",
+      "register_link": "S'inscrire"
+    },
+    "messages": {
+      "login_error": "Veuillez réessayer",
+      "check_credentials": "Veuillez vérifier votre email et mot de passe"
+    }
+  }
+}

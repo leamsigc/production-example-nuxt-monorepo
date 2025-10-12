@@ -1,6 +1,7 @@
 # Social media scheduling using Nuxt layers
 
 ![Home](./HomePage.png)
+![Home-v2](./HomePage-2.png)
 
 ## Project layers Structure using Monorepo
 
