@@ -1,0 +1,229 @@
+<i18n src="./Menu.json"></i18n>
+
+<script lang="ts" setup>
+/**
+ *
+ * Component Description: User navigation dropdown for the dashboard header with complex menu structure including themes, templates, and account management.
+ *
+ * @author Ismael Garcia <leamsigc@leamsigc.com>
+ * @version 0.1.0
+ *>
+ * @todo [ ] Test the component
+ * @todo [ ] Integration test.
+ * @todo [✔] Update the typescript.
+ * @todo [✔] Implement complex UDropdownMenu structure
+ * @todo [✔] Add theme customization logic
+ * @todo [✔] Add appearance mode toggles
+ * @todo [✔] Configure template links section
+ * @todo [✔] Add documentation and GitHub links
+ */
+const { t } = useI18n();
+const colorMode = useColorMode();
+
+// Reactive state for appearance preference
+const currentAppearance = ref('system');
+
+// Computed items structure for the complex dropdown menu
+const items = computed(() => [
+  [
+    {
+      label: 'satnaing',
+      name: 'Ismael Garcia',
+      email: 'satnaingdev@gmail.com',
+      avatar: {
+        src: "https://avatars.githubusercontent.com/u/739984?v=4",
+        alt: "Avatar"
+      },
+      slot: 'account',
+      disabled: true
+    }
+  ],
+  [
+    {
+      label: t('userNav.upgradeToPro'),
+      icon: 'i-heroicons-sparkles',
+      to: '/app/upgrade',
+      badge: 'Pro'
+    },
+    {
+      label: t('userNav.account'),
+      icon: 'i-heroicons-user',
+      to: '/app/user/profile'
+    },
+    {
+      label: t('userNav.settings'),
+      icon: 'i-heroicons-cog-6-tooth',
+      children: [
+        {
+          label: t('userNav.billingSettings'),
+          icon: 'i-heroicons-credit-card',
+          to: '/app/billing'
+        },
+        {
+          label: t('userNav.paymentMethods'),
+          icon: 'i-heroicons-credit-card',
+          to: '/app/billing/payment-methods'
+        },
+        {
+          label: t('userNav.invoices'),
+          icon: 'i-heroicons-document-text',
+          to: '/app/billing/invoices'
+        }
+      ]
+    }
+  ],
+  [
+    {
+      label: t('userNav.appearance'),
+      icon: 'i-heroicons-eye',
+      children: [
+        {
+          label: t('userNav.lightMode'),
+          icon: 'i-heroicons-sun',
+          click: () => setAppearance('light')
+        },
+        {
+          label: t('userNav.darkMode'),
+          icon: 'i-heroicons-moon',
+          click: () => setAppearance('dark')
+        },
+        {
+          label: t('userNav.systemPreference'),
+          icon: 'i-heroicons-computer-desktop',
+          click: () => setAppearance('system')
+        }
+      ]
+    },
+    {
+      label: t('userNav.templates'),
+      icon: 'i-heroicons-squares-2x2',
+      children: [
+        {
+          label: t('userNav.templateGallery'),
+          icon: 'i-heroicons-squares-2x2',
+          to: '/app/templates'
+        },
+        {
+          label: t('userNav.createTemplate'),
+          icon: 'i-heroicons-plus',
+          to: '/app/templates/create'
+        }
+      ]
+    }
+  ],
+  [
+    {
+      label: t('userNav.documentation'),
+      icon: 'i-heroicons-book-open',
+      to: '/docs',
+      target: '_blank'
+    },
+    {
+      label: t('userNav.apiDocs'),
+      icon: 'i-heroicons-code-bracket',
+      to: '/api-docs',
+      target: '_blank'
+    },
+    {
+      label: t('userNav.helpCenter'),
+      icon: 'i-heroicons-lifebuoy',
+      to: '/help',
+      target: '_blank'
+    },
+    {
+      label: t('userNav.support'),
+      icon: 'i-heroicons-chat-bubble-left-right',
+      to: '/support',
+      target: '_blank'
+    },
+    {
+      label: t('userNav.github'),
+      icon: 'i-heroicons-mark-github',
+      to: 'https://github.com/leamsigc/production-example-nuxt-monorepo',
+      target: '_blank'
+    },
+    {
+      label: t('userNav.changelog'),
+      icon: 'i-heroicons-document-text',
+      to: '/changelog',
+      target: '_blank'
+    }
+  ],
+  [
+    {
+      label: t('userNav.logout'),
+      icon: 'i-heroicons-arrow-right-on-rectangle',
+      click: () => handleSignOut()
+    }
+  ]
+]);
+
+// Appearance management function
+const setAppearance = (mode: string) => {
+  currentAppearance.value = mode;
+  updateAppearance(mode);
+};
+
+const updateAppearance = (mode: string) => {
+  // Use Nuxt color mode for switching
+  if (mode === 'system') {
+    colorMode.preference = 'system';
+  } else {
+    colorMode.value = mode;
+  }
+};
+
+const handleSignOut = () => {
+  // Implement sign out logic
+  console.log('User signed out');
+};
+</script>
+
+<template>
+  <UDropdownMenu :items="items">
+
+    <UButton color="neutral" variant="ghost" size="lg" class="w-full">
+      <div class="flex items-center gap-3 p-3">
+        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" size="2xl" />
+        <div class="text-left min-w-0 flex-1">
+          <p class="truncate font-medium text-sm">
+            Username
+          </p>
+          <p class="truncate text-xs text-gray-500 dark:text-gray-400">
+            user@email.com
+          </p>
+        </div>
+      </div>
+    </UButton>
+
+    <template #account="{ item }">
+      <div class="flex items-center gap-3 p-3">
+        <UAvatar :src="item.avatar?.src" :alt="item.avatar?.alt" size="2xl" />
+        <div class="text-left min-w-0 flex-1">
+          <p class="truncate font-medium text-sm">
+            {{ item.name }}
+          </p>
+          <p class="truncate text-xs text-gray-500 dark:text-gray-400">
+            {{ item.email }}
+          </p>
+        </div>
+      </div>
+    </template>
+
+
+
+    <template #item="{ item }">
+      <div class="flex items-center gap-2">
+        <UIcon v-if="'icon' in item" :name="item.icon" class="flex-shrink-0 h-4 w-4 text-gray-500" />
+        <span class="truncate">{{ item.label }}</span>
+        <UBadge v-if="'badge' in item" :label="item.badge" variant="subtle" size="xs" class="ml-auto" />
+      </div>
+    </template>
+
+    <template #item-leading="{ item }">
+      <UIcon v-if="'icon' in item" :name="item.icon" class="flex-shrink-0 h-4 w-4 text-gray-500" />
+    </template>
+  </UDropdownMenu>
+</template>
+
+<style scoped></style>
