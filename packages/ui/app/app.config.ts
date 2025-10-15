@@ -229,7 +229,7 @@ export default defineAppConfig({
       slots: {
         root: 'relative flex gap-1.5 [&>div]:min-w-0',
         list: 'isolate min-w-0',
-        label: 'w-full flex items-center gap-1.5 font-semibold text-md text-muted px-2.5 py-2',
+        label: 'w-full flex items-center gap-1.5 font-semibold text-sm text-neutral-500  px-2.5 py-2',
         item: 'min-w-0 my-px',
         link: 'group relative w-full flex items-center gap-1.5 font-medium text-xs before:absolute before:z-[-1] before:rounded-md focus:outline-none focus-visible:outline-none dark:focus-visible:outline-none focus-visible:before:ring-inset focus-visible:before:ring-2',
         linkLeadingIcon: 'shrink-0 size-5',
@@ -249,7 +249,7 @@ export default defineAppConfig({
         childLinkIcon: 'size-5 shrink-0',
         childLinkLabel: 'truncate',
         childLinkLabelExternalIcon: 'inline-block size-3 align-top text-dimmed',
-        childLinkDescription: 'text-muted',
+        childLinkDescription: 'text-gray-700 dark:text-neutral-200',
         separator: 'px-2 h-px bg-border',
         viewportWrapper: 'absolute top-full left-0 flex w-full',
         viewport: 'relative overflow-hidden bg-default shadow-lg rounded-md ring ring-default h-(--reka-navigation-menu-viewport-height) w-full transition-[width,height,left] duration-200 origin-[top_center] data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] z-[1]',
@@ -334,8 +334,8 @@ export default defineAppConfig({
             childLinkIcon: 'text-default'
           },
           false: {
-            link: 'dark:text-white text-dark/80',
-            linkLeadingIcon: 'text-black dark:text-muted',
+            link: 'text-gray-600 dark:text-neutral-200',
+            linkLeadingIcon: 'text-neutral-500 dark:text-neutral-200',
             childLink: [
               'hover:before:bg-elevated/50 text-default hover:text-highlighted',
               'transition-colors before:transition-colors'
@@ -503,7 +503,7 @@ export default defineAppConfig({
           variant: 'link',
           class: {
             link: [
-              'hover:text-highlighted',
+              'hover:text-highlighted hover:before:bg-elevated/50',
               'transition-colors'
             ],
             linkLeadingIcon: [
