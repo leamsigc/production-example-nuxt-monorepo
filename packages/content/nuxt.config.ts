@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     name: 'BaseContent',
   },
   extends: ['@local-monorepo/ui'],
-  modules: ["@nuxtjs/seo", '@nuxt/content', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n', "@nuxtjs/seo", '@nuxt/content'],
   content: {
     build: {
       markdown: {
@@ -43,6 +43,7 @@ export default defineNuxtConfig({
       { code: 'fr', language: 'fr-FR', name: 'Français' }
     ],
     defaultLocale: 'en',
+    strategy: 'prefix_except_default',
     // bundle: ''
   },
   hooks: {

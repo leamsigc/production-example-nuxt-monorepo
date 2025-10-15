@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Collections } from '@nuxt/content'
+
 /**
  *
  * Render the content from nuxt content folder
@@ -10,25 +12,41 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+import { withLeadingSlash } from 'ufo'
 const route = useRoute()
-
 const collectionType = route.path.startsWith('/blogs/') ? 'blog' : 'content'
+const { locale, localeProperties } = useI18n()
+const slug = computed(() => withLeadingSlash(String(route.params.slug)))
 
 
-const { data: page } = await useAsyncData(route.path, () => {
-  return queryCollection(collectionType).path(route.path).first()
+
+const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
+  const collection = (`${collectionType}_${locale.value}`) as keyof Collections
+  let content = await queryCollection(collection).path(`${slug.value}`).first()
+
+  // Fallback to default locale if content is missing
+  if (!content && locale.value !== 'en') {
+    const defaultCollection = (`${collectionType}_en`) as keyof Collections;
+    content = await queryCollection(defaultCollection).path(`${slug.value}`).first()
+  }
+
+  return content
+}, {
+  watch: [locale],
 })
-
-useHead(page.value?.head || {})
-useSeoMeta(page.value?.seo || {})
-if (page.value?.ogImage) {
-  defineOgImage(page.value.ogImage)
+if (!page.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
+useHead(page.value?.meta || {})
+useSeoMeta(page.value?.seo || {})
+// if (page.value?.ogImage) {
+//   defineOgImage(page.value.ogImage)
+// }
 </script>
 
 <template>
   <article>
-    <ContentRenderer v-if="page" :value="page" />
+    <ContentRenderer v-if="page" :value="page" :dir="localeProperties?.dir ?? 'ltr'" />
     <BaseNotFoundView v-else />
   </article>
 </template>

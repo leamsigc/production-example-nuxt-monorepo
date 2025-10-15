@@ -33,9 +33,9 @@ head:
 
 featured: true
 tags:
-  - "Nuxt"
-  - "Better Auth"
-  - "Vue"
+  - Nuxt
+  - Better Auth
+  - Vue
 author:
   name: Leamsigc
   role: Full Stack Developer

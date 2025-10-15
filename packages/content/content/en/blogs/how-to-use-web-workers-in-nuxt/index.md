@@ -3,40 +3,12 @@ layout: blog-layout
 title: "Must Know Resources | The easy way of  using Web Worker in Nuxt."
 description: "Looking for a way to use Web Worker in Nuxt? This blog post will show you how to do it in a simple way."
 
-head:
-  htmlAttrs:
-    lang: en
-  bodyAttrs:
-    class: ""
-  meta:
-    - name: keywords
-      content: Easy way to use Web Worker in Nuxt v3/v4 | Must Know Resources
-    - name: robots
-      content: index, follow
-    - name: author
-      content: Easy way to use Web Worker in Nuxt v3/v4 | Must Know Resources
-    - name: description
-      content: Easy way to use Web Worker in Nuxt v3/v4
-    - name: og:image
-      content: /media/easy-service-worker-nuxt.png
-    - name: twitter:image
-      content: /media/easy-service-worker-nuxt.png
-    - name: twitter:title
-      content: Easy way to use Web Worker in Nuxt v3/v4 | Must Know Resources
-    - name: twitter:card
-      content: summary_large_image
-    - name: twitter:title
-      content: Easy way to use Web Worker in Nuxt v3/v4 | Must Know Resources
-    - name: twitter:description
-      content: Easy way to use Web Worker in Nuxt v3/v4
-
 featured: true
 tags:
-  - "Nuxt"
-  - "Web Worker"
-  - "Vue"
-  - "Vite"
-  - "Web Workers"
+  - Nuxt
+  - Web Worker
+  - Vue
+  - Vite
 author:
   name: Leamsigc
   role: Full Stack Developer

@@ -10,9 +10,17 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+
+import type { Collections } from '@nuxt/content';
+import { withLeadingSlash } from 'ufo'
+const { locale, localeProperties } = useI18n()
+
+const collection = (`blog_${locale.value}`) as keyof Collections
+
 // Get the articles that have the flag of featured to true from nuxt content
 const { data: featuredArticles } = await useAsyncData("featured_posts", () =>
-  queryCollection("blog")
+
+  queryCollection(collection)
     .where('featured', '=', 1)
     .select('path', 'title', 'tags', 'publishedAt', 'image', 'author')
     .order('publishedAt', 'DESC')
