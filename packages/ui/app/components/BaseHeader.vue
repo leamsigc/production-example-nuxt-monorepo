@@ -99,9 +99,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     <template #right>
       <UColorModeButton />
 
+
       <UTooltip text="Login" :kbds="['meta', 'L']">
         <UButton color="primary" variant="ghost" to="/login" icon="i-lucide-user" aria-label="Login" />
       </UTooltip>
+      <BaseTranslationMenu />
       <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
         <UButton color="neutral" variant="ghost" to="https://github.com/leamsigc/production-example-nuxt-monorepo"
           target="_blank" icon="i-simple-icons-github" aria-label="GitHub" />

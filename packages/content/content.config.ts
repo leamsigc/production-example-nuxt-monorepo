@@ -1,8 +1,12 @@
 import { defineContentConfig, defineCollection, z } from '@nuxt/content'
-
-
 import { asSeoCollection } from '@nuxtjs/seo/content'
 
+
+/*
+ * @see https://content.nuxtjs.org/api/configuration
+ * To add new languages to the content, you can add a new collection for each language.
+ *
+ */
 
 const blogSchema = z.object({
   layout: z.enum(['default', 'blog-layout']).default('blog-layout'),
@@ -59,6 +63,23 @@ export const collections = {
     type: 'page',
     source: {
       include: 'en/blogs/**',
+      prefix: '',
+    },
+    schema: blogSchema
+  })),
+  content_es: defineCollection(asSeoCollection({
+    type: 'page',
+    source: {
+      include: 'es/**',
+      prefix: '',
+    },
+    schema: blogSchema
+  })),
+
+  blog_es: defineCollection(asSeoCollection({
+    type: 'page',
+    source: {
+      include: 'es/blogs/**',
       prefix: '',
     },
     schema: blogSchema
