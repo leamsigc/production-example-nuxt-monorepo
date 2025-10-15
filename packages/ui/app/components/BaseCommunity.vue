@@ -31,14 +31,14 @@ const { icon, url, label } = toRefs(props);
         <UCard class="bg-background shadow-none text-center flex flex-col items-center justify-center border-0">
           <template #header>
             <h2 class="text-4xl md:text-5xl font-bold">
-              <slot name="title">
+              <slot name="title" mdc-unwrap="p">
                 Ready to join this
                 <span class="gradient-text"> Community? </span>
               </slot>
             </h2>
           </template>
           <div class="lg:w-[80%] text-xl text-muted-foreground">
-            <slot name="content">
+            <slot name="content" mdc-unwrap="p">
               Join our vibrant Discord community! Connect, share, and grow with
               like-minded enthusiasts. Click to dive in! 🚀
             </slot>

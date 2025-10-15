@@ -80,11 +80,11 @@ const { list } = toRefs(props);
   <section id="testimonials" class="container mx-auto py-24 sm:py-32" v-motion-fade-visible-once>
     <div class="text-center mb-8">
       <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-        <slot name="title"> Testimonials </slot>
+        <slot name="title" mdc-unwrap="p"> Testimonials </slot>
       </h2>
 
       <h3 class="text-3xl md:text-4xl text-center font-bold mb-4">
-        <slot name="subtitle">
+        <slot name="subtitle" mdc-unwrap="p">
           Hear from Small Businesses We've Helped Succeed
         </slot>
       </h3>

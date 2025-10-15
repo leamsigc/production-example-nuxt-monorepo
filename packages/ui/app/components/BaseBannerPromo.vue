@@ -26,12 +26,12 @@ const toggle = () => {
       <div class="corner-ribbon__ribbon bg-red-500"></div>
     </div>
     <h3 class="text-xl md:text-2xl font-bold mb-4">
-      <slot name="subtitle">
+      <slot name="subtitle" mdc-unwrap="p">
         Free tools 👀🔥🔥🔥
       </slot>
     </h3>
     <section class="text-sm dark:text-muted-foreground ">
-      <slot name="description">
+      <slot name="description" mdc-unwrap="p">
         <ul class="list-disc list-inside my-4">
           <li>Background remover</li>
           <li>Text behind image</li>

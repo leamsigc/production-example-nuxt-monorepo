@@ -25,7 +25,7 @@
     <div class="px-6 relative z-10">
       <div class="text-center relative z-10 max-w-3xl mx-auto">
         <h1 class="text-white text-3xl lg:text-4xl xl:text-6xl font-semibold leading-snug text-balance">
-          <slot name="title"> Blog </slot>
+          <slot name="title" mdc-unwrap="p"> Blog </slot>
         </h1>
       </div>
     </div>

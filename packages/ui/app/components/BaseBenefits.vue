@@ -37,18 +37,18 @@ const { items } = toRefs(props)
     <div class="grid lg:grid-cols-2 place-items-center lg:gap-24">
       <div>
         <h2 class="text-lg text-primary mb-2 tracking-wider">
-          <slot name="title">
+          <slot name="title" mdc-unwrap="p">
             Benefits
           </slot>
         </h2>
 
         <h3 class="text-3xl md:text-4xl font-bold mb-4">
-          <slot name="subtitle">
+          <slot name="subtitle" mdc-unwrap="p">
             Your Shortcut to Success
           </slot>
         </h3>
         <p class="text-xl text-muted-foreground mb-8">
-          <slot name="description">
+          <slot name="description" mdc-unwrap="p">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non ducimus
             reprehenderit architecto rerum similique facere odit deleniti necessitatibus
             quo quae.

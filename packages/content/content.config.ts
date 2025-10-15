@@ -3,25 +3,8 @@ import { defineContentConfig, defineCollection, z } from '@nuxt/content'
 
 import { asSeoCollection } from '@nuxtjs/seo/content'
 
-const pageSchema = z.object({
-  layout: z.enum(['default', 'blog-layout']).default('default'),
-  title: z.string(),
-  description: z.string(),
-  head: z.object({
-    meta: z.array(z.object({
-      name: z.string(),
-      content: z.string()
-    })),
-    htmlAttrs: z.object({
-      lang: z.string()
-    }).optional(),
-    bodyAttrs: z.object({
-      class: z.string()
-    }).optional(),
-  })
-})
+
 const blogSchema = z.object({
-  tags: z.array(z.string()).optional(),
   layout: z.enum(['default', 'blog-layout']).default('blog-layout'),
   title: z.string(),
   description: z.string(),
@@ -29,6 +12,7 @@ const blogSchema = z.object({
     src: z.string(),
     alt: z.string()
   }),
+  tags: z.array(z.string()).optional(),
   date: z.string(),
   publishedAt: z.string(),
   head: z.object({
@@ -68,7 +52,7 @@ export const collections = {
       include: 'en/**',
       prefix: '',
     },
-    schema: pageSchema
+    schema: blogSchema
   })),
 
   blog_en: defineCollection(asSeoCollection({

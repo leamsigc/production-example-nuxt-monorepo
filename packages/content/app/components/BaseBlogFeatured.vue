@@ -11,18 +11,17 @@
  * @todo [✔] Update the typescript.
  */
 
-import type { Collections } from '@nuxt/content';
-import { withLeadingSlash } from 'ufo'
-const { locale, localeProperties } = useI18n()
+import type { BlogEnCollectionItem, Collections } from '@nuxt/content';
+const { locale } = useI18n()
 
-const collection = (`blog_${locale.value}`) as keyof Collections
+const blogCollection = (`blog_${locale.value}`) as keyof Collections
 
 // Get the articles that have the flag of featured to true from nuxt content
 const { data: featuredArticles } = await useAsyncData("featured_posts", () =>
 
-  queryCollection(collection)
+  queryCollection(blogCollection as "blog_en")
     .where('featured', '=', 1)
-    .select('path', 'title', 'tags', 'publishedAt', 'image', 'author')
+    .select('path', 'title', 'publishedAt', 'image', 'author', 'tags')
     .order('publishedAt', 'DESC')
     .all()
 );
@@ -33,18 +32,18 @@ const { data: featuredArticles } = await useAsyncData("featured_posts", () =>
   <section class="grid gap-6 md:grid-cols-2 md:gap-12 mb-6 md:mb-12">
     <div v-for="article in featuredArticles" :key="article.path"
       class="group flex flex-col space-y-3 md:space-y-6  transition-transform">
-      <NuxtLink
+      <NuxtLinkLocale
         class="object-contain aspect-video rounded-xl overflow-hidden flex items-center justify-center transition-all dark:group-hover:opacity-80 hover:hue-rotate-90"
-        :href="article.path" :title="article.title">
+        :to="`/blogs${article.path}`" :title="article.title">
         <NuxtPicture loading="lazy" class="w-full h-full" :src="article.image.src" :alt="article.image.alt" width="600"
           height="300" />
-      </NuxtLink>
+      </NuxtLinkLocale>
       <div class="space-y-3 md:space-y-5 pr-3 flex-1">
-        <NuxtLink :href="article.path" :title="article.title">
+        <NuxtLinkLocale :to="`/blogs${article.path}`" :title="article.title">
           <h3 class="group-hover:text-primary transition-colors text-2xl font-semibold leading-tight">
             {{ article.title }}
           </h3>
-        </NuxtLink>
+        </NuxtLinkLocale>
         <div class="flex justify-between mt-auto">
           <div class="flex flex-col md:flex-row gap-3 md:gap-5">
             <div class="flex items-center space-x-2.5">

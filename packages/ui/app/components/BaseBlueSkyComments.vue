@@ -166,11 +166,11 @@ watch(() => props.url, (newUrl) => {
     <USeparator v-if="url" class="my-4" show-buckle />
     <div class="text-center mb-20">
       <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-        <slot name="title"> Comments </slot>
+        <slot name="title" mdc-unwrap="p"> Comments </slot>
       </h2>
 
       <h3 class="text-3xl md:text-4xl text-center font-bold">
-        <slot name="subtitle">
+        <slot name="subtitle" mdc-unwrap="p">
           Be part of the conversation
           <Icon name="logos:bluesky" />
         </slot>

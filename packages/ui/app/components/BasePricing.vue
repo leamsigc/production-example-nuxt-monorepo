@@ -80,15 +80,15 @@ const { plans } = toRefs(props);
 <template>
   <section class="container mx-auto py-24 sm:py-32" v-motion-fade-visible-once>
     <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-      <slot name="title"> Your All-in-One Platform for </slot>
+      <slot name="title" mdc-unwrap="p"> Your All-in-One Platform for </slot>
     </h2>
 
     <h3 class="text-3xl md:text-4xl text-center font-bold mb-4">
-      <slot name="subtitle"> Small Business Social Media Success </slot>
+      <slot name="subtitle" mdc-unwrap="p"> Small Business Social Media Success </slot>
     </h3>
 
     <h4 class="md:w-1/2 mx-auto text-xl text-center text-muted-foreground pb-14">
-      <slot name="description">
+      <slot name="description" mdc-unwrap="p">
         Effortlessly manage all your social media, Google My Business, and content creation in one powerful platform.
         Save time, boost engagement, and grow your business.
       </slot>

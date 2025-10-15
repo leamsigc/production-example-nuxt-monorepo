@@ -35,6 +35,7 @@ export default defineNuxtConfig({
       { code: 'fr', language: 'fr-FR', name: 'Français' }
     ],
     defaultLocale: 'en',
+    strategy: 'prefix_except_default',
     // bundle: ''
   },
   hooks: {

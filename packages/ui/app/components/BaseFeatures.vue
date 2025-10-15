@@ -60,17 +60,17 @@ const { list } = toRefs(props);
 <template>
   <section id="features" class="container mx-auto  py-24 sm:py-32" v-motion-fade-visible-once>
     <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-      <slot name="title"> Features </slot>
+      <slot name="title" mdc-unwrap="p"> Features </slot>
     </h2>
 
     <h3 class="text-3xl md:text-4xl text-center font-bold mb-4">
-      <slot name="subtitle">
+      <slot name="subtitle" mdc-unwrap="p">
         What Makes Us Different
       </slot>
     </h3>
 
     <h4 class="md:w-1/2 mx-auto text-xl text-center text-muted-foreground mb-8">
-      <slot name="description">
+      <slot name="description" mdc-unwrap="p">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem fugiat, odit
         similique quasi sint reiciendis quidem iure veritatis optio facere tenetur.
       </slot>

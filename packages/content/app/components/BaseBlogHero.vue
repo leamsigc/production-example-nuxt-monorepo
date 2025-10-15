@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Collections } from '@nuxt/content';
+
 /**
  *
  * Component Description:Desc
@@ -11,10 +13,14 @@
  * @todo [✔] Update the typescript.
  */
 const router = useRouter();
-const { data } = await useAsyncData(`${router.currentRoute.value.path}-blog-hero`, () =>
-  queryCollection('blog').path(router.currentRoute.value.path)
+const { locale } = useI18n()
+const blogCollection = (`blog_${locale.value}`) as keyof Collections
+const path = router.currentRoute.value.path.replace('/blogs', '');
+const { data } = await useAsyncData(`${path}-blog-hero`, () =>
+  queryCollection(blogCollection as "blog_en").path(path)
     .select('title', 'description', 'image', 'publishedAt', 'author')
     .first())
+
 </script>
 
 <template>

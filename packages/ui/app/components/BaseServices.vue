@@ -57,14 +57,14 @@ const { list } = toRefs(props);
 <template>
   <section id="services" class="container mx-auto py-24 sm:py-32" v-motion-fade-visible-once>
     <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-      <slot name="title"> Features </slot>
+      <slot name="title" mdc-unwrap="p"> Features </slot>
     </h2>
 
     <h3 class="text-3xl md:text-4xl text-center font-bold mb-4">
-      <slot name="subtitle"> Empower Your Social Media Success </slot>
+      <slot name="subtitle" mdc-unwrap="p"> Empower Your Social Media Success </slot>
     </h3>
     <h4 class="md:w-1/2 mx-auto text-xl text-center text-muted-foreground mb-8">
-      <slot name="description">
+      <slot name="description" mdc-unwrap="p">
         Discover powerful tools designed to streamline your social media management, content creation, and business
         growth.
       </slot>

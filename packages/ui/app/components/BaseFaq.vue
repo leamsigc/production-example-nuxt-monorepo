@@ -49,11 +49,11 @@ const { list } = toRefs(props);
     :duration="1200">
     <div class="text-center mb-8">
       <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-        <slot name="title"> FAQS </slot>
+        <slot name="title" mdc-unwrap="p"> FAQS </slot>
       </h2>
 
       <h3 class="text-3xl md:text-4xl text-center font-bold">
-        <slot name="subtitle"> Common Questions </slot>
+        <slot name="subtitle" mdc-unwrap="p"> Common Questions </slot>
       </h3>
     </div>
 

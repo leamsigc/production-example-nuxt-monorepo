@@ -121,11 +121,11 @@ const socialIcon = (socialName: string) => {
   <section id="team" class="container mx-auto lg:w-[75%] py-24 sm:py-32">
     <div class="text-center mb-8">
       <h2 class="text-lg text-primary text-center mb-2 tracking-wider">
-        <slot name="title"> Experts </slot>
+        <slot name="title" mdc-unwrap="p"> Experts </slot>
       </h2>
 
       <h3 class="text-3xl md:text-4xl text-center font-bold">
-        <slot name="subtitle">
+        <slot name="subtitle" mdc-unwrap="p">
           Meet the Social Media Strategy Experts
         </slot>
       </h3>
