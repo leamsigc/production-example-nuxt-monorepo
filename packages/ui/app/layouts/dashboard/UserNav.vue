@@ -17,6 +17,13 @@
  * @todo [✔] Configure template links section
  * @todo [✔] Add documentation and GitHub links
  */
+
+interface Props {
+  collapsed?: boolean
+}
+const props = withDefaults(defineProps<Props>(), {
+  collapsed: false
+})
 const { t } = useI18n();
 const colorMode = useColorMode();
 
@@ -180,10 +187,12 @@ const handleSignOut = () => {
 </script>
 
 <template>
-  <UDropdownMenu :items="items">
-
-    <UButton color="neutral" variant="ghost" size="lg" class="w-full">
-      <div class="flex items-center gap-3 p-3">
+  <UDropdownMenu :items="items" placement="bottom-end">
+    <UButton color="neutral" variant="ghost">
+      <div v-if="props.collapsed">
+        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />
+      </div>
+      <div class="flex items-center gap-3 p-3" v-else>
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" size="2xl" />
         <div class="text-left min-w-0 flex-1">
           <p class="truncate font-medium text-sm">

@@ -25,9 +25,12 @@ const { t } = useI18n();
     </div>
     <div class="flex items-center space-x-4">
       <UInput icon="i-heroicons-magnifying-glass" placeholder="Search..." />
-      <UButton icon="i-heroicons-sun" variant="ghost" />
+      <UColorModeButton />
       <UButton icon="i-heroicons-bell" variant="ghost" />
-      <DashboardUserNav />
+
+
+      <BaseTranslationMenu />
+      <DashboardUserNav collapsed />
     </div>
   </header>
 </template>

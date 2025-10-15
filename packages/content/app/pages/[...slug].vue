@@ -25,11 +25,6 @@ const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
   const collection = (`${collectionType}_${locale.value}`) as keyof Collections
   const path = collectionType === 'blog' ? `${route.path.replace('/blogs', '')}` : slug.value
 
-  console.log({
-    collection,
-    path
-  });
-
 
   let content = await queryCollection(collection).path(`${path}`).first()
 

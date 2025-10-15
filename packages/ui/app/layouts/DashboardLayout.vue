@@ -18,7 +18,8 @@ import UserNav from './dashboard/UserNav.vue';
 
 <template>
   <UDashboardGroup>
-    <UDashboardSidebar collapsible resizable class="bg-gray-50 dark:bg-gray-950">
+    <UDashboardSidebar collapsible resizable class="bg-gray-50 dark:bg-gray-950 max-w-md" :max-size="15" :min-size="5"
+      :ui="{ footer: 'p-0' }">
       <template #header="{ collapsed }">
         <NuxtLink v-if="!collapsed" to="/" class="text-xl font-bold text-gray-900 dark:text-white">Social Magic
         </NuxtLink>
@@ -35,7 +36,7 @@ import UserNav from './dashboard/UserNav.vue';
 
     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 dark:bg-gray-950">
       <DashboardHeader />
-      <div class="container mx-auto px-6 py-8">
+      <div class="p-6">
         <slot />
       </div>
     </main>
