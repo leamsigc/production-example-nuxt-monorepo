@@ -25,7 +25,8 @@
     "eslint": "^9.37.0",
     "nuxt": "^4.1.3",
     "typescript": "^5.9.3",
-    "vue": "latest"
+    "vue": "latest",
+    "echarts": "^6.0.0"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.11.4",

@@ -87,17 +87,17 @@ const items = computed(() => [
         {
           label: t('userNav.lightMode'),
           icon: 'i-heroicons-sun',
-          click: () => setAppearance('light')
+          onSelect: () => setAppearance('light')
         },
         {
           label: t('userNav.darkMode'),
           icon: 'i-heroicons-moon',
-          click: () => setAppearance('dark')
+          onSelect: () => setAppearance('dark')
         },
         {
           label: t('userNav.systemPreference'),
           icon: 'i-heroicons-computer-desktop',
-          click: () => setAppearance('system')
+          onSelect: () => setAppearance('system')
         }
       ]
     },
@@ -160,18 +160,22 @@ const items = computed(() => [
     {
       label: t('userNav.logout'),
       icon: 'i-heroicons-arrow-right-on-rectangle',
-      click: () => handleSignOut()
+      onSelect: () => handleSignOut()
     }
   ]
 ]);
 
 // Appearance management function
 const setAppearance = (mode: string) => {
+  console.log("mode", mode);
+  console.log("currentAppearance", colorMode.value);
+
   currentAppearance.value = mode;
   updateAppearance(mode);
 };
 
 const updateAppearance = (mode: string) => {
+
   // Use Nuxt color mode for switching
   if (mode === 'system') {
     colorMode.preference = 'system';
@@ -187,7 +191,7 @@ const handleSignOut = () => {
 </script>
 
 <template>
-  <UDropdownMenu :items="items" placement="bottom-end">
+  <UDropdownMenu :items="items" placement="bottom-end" :ui="{ content: 'bg-gray-50 dark:bg-gray-950' }">
     <UButton color="neutral" variant="ghost">
       <div v-if="props.collapsed">
         <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />

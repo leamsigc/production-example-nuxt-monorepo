@@ -250,7 +250,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
   <div>
     <!-- Main Navigation Menu -->
     <UNavigationMenu :items="navigationItems[0]" orientation="vertical" popover :collapsed="collapsed" color="primary"
-      class="data-[orientation=vertical]:space-y-4" />
+      class="data-[orientation=vertical]:space-y-4" type="single" variant="link" />
 
     <!-- Secondary Navigation Menu -->
     <UNavigationMenu :items="navigationItems[1]" orientation="vertical" popover :collapsed="collapsed" color="primary"

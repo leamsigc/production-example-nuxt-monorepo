@@ -11,5 +11,5 @@ export default defineNuxtRouteMiddleware(async (to) => {
     layout = 'dashboard-layout';
   }
 
-  setPageLayout(layout as any);
+  setPageLayout(layout as any,);
 });
