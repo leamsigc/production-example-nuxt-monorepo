@@ -14,7 +14,7 @@ const chartRef = ref<HTMLDivElement | null>(null)
 let chartInstance: echarts.ECharts | null = null
 
 const initializeChart = () => {
-  if (chartRef.value) {
+  if (chartRef.value && !chartInstance) {
     chartInstance = echarts.init(chartRef.value)
     chartInstance.setOption(props.chartOptions)
   }
@@ -32,9 +32,18 @@ onMounted(() => {
   })
 })
 
-watch(() => props.chartOptions, () => {
+watch(props, () => {
   updateChart()
 }, { deep: true })
+
+// Watcher to initialize chart when chartRef becomes available
+watch(chartRef, () => {
+  if (chartRef.value && !chartInstance) {
+    initializeChart()
+  }
+})
+
+
 
 onBeforeUnmount(() => {
   if (chartInstance) {

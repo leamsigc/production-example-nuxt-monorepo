@@ -57,7 +57,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
           },
           {
             label: menuData.menu.all,
-            to: '/app/media/all'
+            to: '/app/media'
           },
           {
             label: menuData.menu.bulkCreate,
@@ -71,7 +71,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.view,
-            to: '/app/calendar/view'
+            to: '/app/calendar'
           },
           {
             label: menuData.menu.weeks,
@@ -101,7 +101,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
           },
           {
             label: menuData.menu.new,
-            to: '/app/integrations/new'
+            to: '/app/integrations'
           }
         ]
       },
@@ -173,7 +173,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.all,
-            to: '/app/analytics/all'
+            to: '/app/analytics'
           }
         ]
       },
@@ -205,19 +205,19 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.login,
-            to: '/auth/login'
+            to: '/login'
           },
           {
             label: menuData.menu.register,
-            to: '/auth/register'
+            to: '/register'
           },
           {
             label: menuData.menu.passwordReset,
-            to: '/auth/password-reset'
+            to: '/password-reset'
           },
           {
             label: menuData.menu.inviteUser,
-            to: '/auth/invite-user'
+            to: '/invite-user'
           }
         ]
       },
@@ -227,7 +227,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.featured,
-            to: '/app/blogs/featured'
+            to: '/blog'
           }
         ]
       },
@@ -237,7 +237,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.all,
-            to: '/app/components/all'
+            to: '/ui-preview'
           }
         ]
       }

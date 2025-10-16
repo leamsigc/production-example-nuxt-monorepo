@@ -13,12 +13,6 @@
 */
 import { type EChartsOption } from 'echarts'
 
-definePageMeta({
-  layout: "blog-layout",
-  props: {
-    showPanel: true
-  }
-})
 
 const { t } = useI18n()
 const { metrics, chartData, getLineChartConfig, getBarChartConfig, getPieChartConfig } = useDashboardMetrics()
@@ -67,13 +61,6 @@ const contentOptions = computed((): EChartsOption => {
       :chart-options="reviewOptions" />
     <BaseChart :title="t('aiContent')" :description="t('generatedContent')" icon="lucide:sparkles"
       :chart-options="contentOptions" />
-    <ClientOnly>
-      <Teleport to="#panel-content">
-        <section>
-          Hello from the app
-        </section>
-      </Teleport>
-    </ClientOnly>
   </BaseDashboardOverviewCards>
 
 </template>

@@ -3,13 +3,6 @@ import DashboardHeader from './dashboard/Header.vue';
 import DashboardSidebar from './dashboard/Sidebar.vue';
 import UserNav from './dashboard/UserNav.vue';
 
-const props = defineProps({
-  showPanel: {
-    type: Boolean,
-    default: false,
-  },
-});
-
 /**
  *
  * Component Description: Dashboard layout for authenticated users.
@@ -47,13 +40,6 @@ const props = defineProps({
           <slot />
         </div>
       </main>
-
-      <UDashboardPanel v-if="props.showPanel" id="DashboardPanel" :max-size="15"
-        class="bg-gray-50 dark:bg-gray-950 max-w-xs">
-        <template #body>
-          <section id="panel-content"></section>
-        </template>
-      </UDashboardPanel>
     </section>
 
   </UDashboardGroup>
