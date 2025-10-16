@@ -1,0 +1,174 @@
+{
+  "en": {
+    "menu": {
+      "main": {
+        "new": "New",
+        "save": "Save",
+        "export": "Export"
+      },
+      "vertical": {
+        "select": "Select",
+        "draw": "Draw",
+        "eraser": "Eraser",
+        "zoomIn": "Zoom In",
+        "zoomOut": "Zoom Out",
+        "crop": {
+          "crop": "Crop",
+          "custom": "Custom",
+          "square": "Square"
+        },
+        "text": {
+          "text": "Text",
+          "heading1": "Heading 1",
+          "heading2": "Heading 2",
+          "heading3": "Heading 3",
+          "heading4": "Heading 4",
+          "paragraph": "Paragraph"
+        },
+        "frame": {
+          "frame": "Frame",
+          "custom": "Custom",
+          "facebook": "Facebook",
+          "instagram": "Instagram",
+          "twitter": "Twitter"
+        }
+      },
+      "rightMenu": {
+        "ai": "Ai",
+        "tools": "Tools",
+        "layers": "Layers",
+        "adjust": "Adjust",
+        "filter": "Filter"
+      }
+    }
+  },
+  "es": {
+    "menu": {
+      "main": {
+        "new": "Nuevo",
+        "save": "Guardar",
+        "export": "Exportar"
+      },
+      "vertical": {
+        "select": "Seleccionar",
+        "draw": "Dibujar",
+        "eraser": "Borrador",
+        "zoomIn": "Acercar",
+        "zoomOut": "Alejar",
+        "crop": {
+          "crop": "Cortar",
+          "custom": "Personalizado",
+          "square": "Cuadrado"
+        },
+        "text": {
+          "text": "Texto",
+          "heading1": "Título 1",
+          "heading2": "Título 2",
+          "heading3": "Título 3",
+          "heading4": "Título 4",
+          "paragraph": "Párrafo"
+        },
+        "frame": {
+          "frame": "Marco",
+          "custom": "Personalizado",
+          "facebook": "Facebook",
+          "instagram": "Instagram",
+          "twitter": "Twitter"
+        }
+      },
+      "rightMenu": {
+        "ai": "Ai",
+        "tools": "Herramientas",
+        "layers": "Capas",
+        "adjust": "Ajustar",
+        "filter": "Filtro"
+      }
+    }
+  },
+  "de": {
+    "menu": {
+      "main": {
+        "new": "Neu",
+        "save": "Speichern",
+        "export": "Exportieren"
+      },
+      "vertical": {
+        "select": "Auswählen",
+        "draw": "Zeichnen",
+        "eraser": "Radierer",
+        "zoomIn": "Vergrößern",
+        "zoomOut": "Verkleinern",
+        "crop": {
+          "crop": "Zuschneiden",
+          "custom": "Benutzerdefiniert",
+          "square": "Quadrat"
+        },
+        "text": {
+          "text": "Text",
+          "heading1": "Überschrift 1",
+          "heading2": "Überschrift 2",
+          "heading3": "Überschrift 3",
+          "heading4": "Überschrift 4",
+          "paragraph": "Absatz"
+        },
+        "frame": {
+          "frame": "Rahmen",
+          "custom": "Benutzerdefiniert",
+          "facebook": "Facebook",
+          "instagram": "Instagram",
+          "twitter": "Twitter"
+        }
+      },
+      "rightMenu": {
+        "ai": "Ai",
+        "tools": "Werkzeuge",
+        "layers": "Ebenen",
+        "adjust": "Anpassen",
+        "filter": "Filter"
+      }
+    }
+  },
+  "fr": {
+    "menu": {
+      "main": {
+        "new": "Nouveau",
+        "save": "Sauvegarder",
+        "export": "Exporter"
+      },
+      "vertical": {
+        "select": "Sélectionner",
+        "draw": "Dessiner",
+        "eraser": "Effaceur",
+        "zoomIn": "Zoom avant",
+        "zoomOut": "Zoom arrière",
+        "crop": {
+          "crop": "Rogner",
+          "custom": "Personnalisé",
+          "square": "Carré"
+        },
+        "text": {
+          "text": "Texte",
+          "heading1": "Titre 1",
+          "heading2": "Titre 2",
+          "heading3": "Titre 3",
+          "heading4": "Titre 4",
+          "paragraph": "Paragraphe"
+        },
+        "frame": {
+          "frame": "Cadre",
+          "custom": "Personnalisé",
+          "facebook": "Facebook",
+          "instagram": "Instagram",
+          "twitter": "Twitter"
+        }
+      },
+      "rightMenu": {
+        "ai": "Ai",
+        "tools": "Outils",
+        "layers": "Calques",
+        "adjust": "Ajuster",
+        "filter": "Filtre"
+      }
+    }
+  }
+}

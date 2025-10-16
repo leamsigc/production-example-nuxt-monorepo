@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
   showUploader: true,
   filterType: 'all'
 })
-
+const router = useRouter()
 const emit = defineEmits<Emits>()
 const { t } = useI18n()
 
@@ -237,7 +237,13 @@ watch(() => props.businessId, (newBusinessId) => {
 })
 
 const handleOpedEditModal = (asset: Asset) => {
-  emit('open-edit-modal', asset)
+  // router push
+  router.push({
+    path: '/tools/image-editor',
+    query: {
+      imageId: asset.id
+    }
+  })
 }
 const handleOpenInNewTab = (asset: Asset) => {
   const url = asset.url

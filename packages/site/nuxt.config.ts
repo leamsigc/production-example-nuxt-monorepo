@@ -22,7 +22,8 @@ export default defineNuxtConfig({
     '@local-monorepo/auth',
     '@local-monorepo/email',
     '@local-monorepo/assets',
-    '@local-monorepo/content'
+    '@local-monorepo/content',
+    '@local-monorepo/tools'
   ],
 
   modules: ['@nuxtjs/seo', '@nuxtjs/i18n'],

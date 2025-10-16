@@ -15,6 +15,7 @@
   "dependencies": {
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ai-tools": "workspace:*",
+    "@local-monorepo/tools": "workspace:*",
     "@local-monorepo/assets": "workspace:*",
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/bulk-scheduler": "workspace:*",

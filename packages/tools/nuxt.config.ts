@@ -1,5 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { NuxtPage } from 'nuxt/schema'
+import type { NuxtPage } from 'nuxt/schema'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   $meta: {
     name: 'BaseTools',
   },
-  extends: ['@local-monorepo/ui'],
+  extends: ['@local-monorepo/ui', '@local-monorepo/db', '@local-monorepo/assets',],
   modules: ['@nuxtjs/i18n'],
   i18n: {
     vueI18n: join(currentDir, './translations/i18n.config.ts'),
