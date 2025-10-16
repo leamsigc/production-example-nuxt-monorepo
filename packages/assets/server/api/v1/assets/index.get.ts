@@ -1,5 +1,6 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from "#layers/BaseAuth/lib/auth"
+
 
 export default defineEventHandler(async (event) => {
   try {

@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     '@local-monorepo/db',
     '@local-monorepo/auth',
     '@local-monorepo/email',
+    '@local-monorepo/assets',
     '@local-monorepo/content'
   ],
 

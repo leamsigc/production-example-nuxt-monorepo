@@ -1,5 +1,6 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from '#layers/BaseAuth/lib/auth';
+
 
 export default defineEventHandler(async (event) => {
   try {
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
     // Handle asset IDs search
     if (assetIds) {
       const ids = assetIds.split(',').filter(id => id.trim().length > 0)
-      
+
       if (ids.length === 0) {
         throw createError({
           statusCode: 400,
@@ -62,7 +63,7 @@ export default defineEventHandler(async (event) => {
 
     // Build filters
     const filters: any = {}
-    
+
     if (mimeType) {
       filters.mimeType = mimeType
     } else if (assetType) {
@@ -104,7 +105,7 @@ export default defineEventHandler(async (event) => {
     if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

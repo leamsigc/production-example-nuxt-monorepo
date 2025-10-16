@@ -1,6 +1,6 @@
+import { auth } from '#layers/BaseAuth/lib/auth'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-import { auth } from '~~/lib/auth'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
     // Get the file path from the route parameters
     const path = getRouterParam(event, 'path')
-    
+
     if (!path) {
       throw createError({
         statusCode: 400,
@@ -30,19 +30,19 @@ export default defineEventHandler(async (event) => {
     // Security: Ensure the path is within the user's folder
     const userFolder = `userFiles/${session.user.id}`
     const safePath = path.replace(/\.\./g, '') // Remove any path traversal attempts
-    
+
     // Build the full file path
-    const fileStorageMount = process.env.FILE_STORAGE_MOUNT || './server/files'
+    const fileStorageMount = process.env.FILE_STORAGE_MOUNT || './upload/files'
     const fullPath = join(fileStorageMount, userFolder, safePath)
 
     try {
       // Read the file
       const fileBuffer = await readFile(fullPath)
-      
+
       // Determine content type based on file extension
       const ext = safePath.split('.').pop()?.toLowerCase()
       let contentType = 'application/octet-stream'
-      
+
       if (ext) {
         const mimeTypes: Record<string, string> = {
           'jpg': 'image/jpeg',
@@ -59,11 +59,11 @@ export default defineEventHandler(async (event) => {
         }
         contentType = mimeTypes[ext] || contentType
       }
-      
+
       // Set appropriate headers
       setHeader(event, 'Content-Type', contentType)
       setHeader(event, 'Cache-Control', 'public, max-age=31536000') // Cache for 1 year
-      
+
       return fileBuffer
     } catch (fileError) {
       throw createError({
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
     if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
-    
+
     console.error('File serving error:', error)
     throw createError({
       statusCode: 500,

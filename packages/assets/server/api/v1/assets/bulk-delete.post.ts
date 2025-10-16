@@ -1,6 +1,5 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
-
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from '#layers/BaseAuth/lib/auth';
 export default defineEventHandler(async (event) => {
   try {
     // Get authenticated user
@@ -54,7 +53,7 @@ export default defineEventHandler(async (event) => {
     if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

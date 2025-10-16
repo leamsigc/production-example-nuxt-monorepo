@@ -1,5 +1,5 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from '#layers/BaseAuth/lib/auth';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
     // Get asset ID from route parameters
     const assetId = getRouterParam(event, 'id')
-    
+
     if (!assetId) {
       throw createError({
         statusCode: 400,
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
           statusMessage: 'Asset not found'
         })
       }
-      
+
       throw createError({
         statusCode: 400,
         statusMessage: result.error
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
     if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

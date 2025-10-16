@@ -1,5 +1,6 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from '#layers/BaseAuth/lib/auth';
+
 
 export default defineEventHandler(async (event) => {
   try {
@@ -40,11 +41,11 @@ export default defineEventHandler(async (event) => {
     // Convert bytes to more readable format
     const formatBytes = (bytes: number) => {
       if (bytes === 0) return { value: 0, unit: 'B' }
-      
+
       const k = 1024
       const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
       const i = Math.floor(Math.log(bytes) / Math.log(k))
-      
+
       return {
         value: parseFloat((bytes / Math.pow(k, i)).toFixed(2)),
         unit: sizes[i]
@@ -68,7 +69,7 @@ export default defineEventHandler(async (event) => {
     if (error && typeof error === 'object' && 'statusCode' in error) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

@@ -17,7 +17,10 @@ export default defineNuxtConfig({
     name: 'BaseAssets',
   },
   extends: ['@local-monorepo/db', '@local-monorepo/ui', '@local-monorepo/auth'],
-  modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n', 'nuxt-file-storage'],
+  fileStorage: {
+    mount: process.env.FILE_STORAGE_MOUNT || './upload/files'
+  },
   i18n: {
     vueI18n: join(currentDir, './translations/i18n.config.ts'),
     baseUrl: process.env.NUXT_APP_URL,

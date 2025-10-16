@@ -1,0 +1,295 @@
+{
+  "en": {
+    "title": "Asset Gallery",
+    "search_assets": "Search assets...",
+    "file_count_badge": "{count} files ({size})",
+    "filters": "Filters",
+    "optimize": "Optimize",
+    "folders": "Folders",
+    "new_folder": "New Folder",
+    "sort_by": "Sort by:",
+    "date": "Date",
+    "name": "Name",
+    "size": "Size",
+    "type": "Type",
+    "tags": "Tags:",
+    "clear_filters": "Clear",
+    "toolbar": {
+      "select_all": "Select All",
+      "deselect_all": "Deselect All",
+      "selected_count": "{count} selected",
+      "delete_selected": "Delete Selected"
+    },
+    "upload_dialog": {
+      "title": "Upload Assets",
+      "description": "Upload images, videos, and documents for {business}"
+    },
+    "folder_dialog": {
+      "title": "Create New Folder",
+      "description": "Create a new folder to organize your assets.",
+      "folder_name_label": "Folder Name",
+      "folder_name_placeholder": "Enter folder name",
+      "cancel": "Cancel",
+      "create": "Create Folder"
+    },
+    "optimization_dialog": {
+      "title": "Optimizing Images",
+      "description": "Optimizing your images for better performance.",
+      "progress": "Progress",
+      "converting_webp": "Converting to WebP format",
+      "converting_webp_desc": "Reduces file size by up to 30%",
+      "compressing": "Compressing images",
+      "compressing_desc": "Optimizing quality while reducing size",
+      "thumbnails": "Generating thumbnails",
+      "thumbnails_desc": "Creating optimized previews",
+      "run_background": "Run in Background"
+    },
+    "states": {
+      "loading": "Loading assets...",
+      "error_title": "Error Loading Assets",
+      "try_again": "Try Again",
+      "no_assets_title": "No Assets Found",
+      "no_assets_search": "No assets match your search.",
+      "no_assets_empty": "Upload your first asset to get started."
+    },
+    "buttons": {
+      "load_more": "Load More Assets",
+      "download": "Download",
+      "edit": "Edit"
+    },
+    "delete_dialog": {
+      "title": "Delete Assets",
+      "description": "Are you sure you want to delete {count} asset(s)? This action cannot be undone and will permanently remove the files from your gallery.",
+      "cancel": "Cancel",
+      "delete": "Delete Forever"
+    },
+    "preview_modal": {
+      "size": "Size:",
+      "type": "Type:",
+      "created": "Created:",
+      "dimensions": "Dimensions:",
+      "tags": "Tags:"
+    },
+    "asset_quality": "Optimized"
+  },
+  "es": {
+    "title": "Galería de Activos",
+    "search_assets": "Buscar activos...",
+    "file_count_badge": "{count} archivos ({size})",
+    "filters": "Filtros",
+    "optimize": "Optimizar",
+    "folders": "Carpetas",
+    "new_folder": "Nueva Carpeta",
+    "sort_by": "Ordenar por:",
+    "date": "Fecha",
+    "name": "Nombre",
+    "size": "Tamaño",
+    "type": "Tipo",
+    "tags": "Etiquetas:",
+    "clear_filters": "Limpiar",
+    "toolbar": {
+      "select_all": "Seleccionar Todo",
+      "deselect_all": "Deseleccionar Todo",
+      "selected_count": "{count} seleccionados",
+      "delete_selected": "Eliminar Seleccionados"
+    },
+    "upload_dialog": {
+      "title": "Subir Activos",
+      "description": "Subir imágenes, videos y documentos para {business}"
+    },
+    "folder_dialog": {
+      "title": "Crear Nueva Carpeta",
+      "description": "Crear una nueva carpeta para organizar tus activos.",
+      "folder_name_label": "Nombre de Carpeta",
+      "folder_name_placeholder": "Ingresa el nombre de la carpeta",
+      "cancel": "Cancelar",
+      "create": "Crear Carpeta"
+    },
+    "optimization_dialog": {
+      "title": "Optimizando Imágenes",
+      "description": "Optimizando tus imágenes para un mejor rendimiento.",
+      "progress": "Progreso",
+      "converting_webp": "Convirtiendo a formato WebP",
+      "converting_webp_desc": "Reduce el tamaño del archivo hasta un 30%",
+      "compressing": "Comprimiendo imágenes",
+      "compressing_desc": "Optimizando calidad mientras se reduce el tamaño",
+      "thumbnails": "Generando miniaturas",
+      "thumbnails_desc": "Creando vistas previas optimizadas",
+      "run_background": "Ejecutar en Segundo Plano"
+    },
+    "states": {
+      "loading": "Cargando activos...",
+      "error_title": "Error al Cargar Activos",
+      "try_again": "Intentar de Nuevo",
+      "no_assets_title": "No se Encontraron Activos",
+      "no_assets_search": "Ningún activo coincide con tu búsqueda.",
+      "no_assets_empty": "Sube tu primer activo para comenzar."
+    },
+    "buttons": {
+      "load_more": "Cargar Más Activos",
+      "download": "Descargar",
+      "edit": "Editar"
+    },
+    "delete_dialog": {
+      "title": "Eliminar Activos",
+      "description": "¿Estás seguro de que quieres eliminar {count} activo(s)? Esta acción no se puede deshacer y eliminará permanentemente los archivos de tu galería.",
+      "cancel": "Cancelar",
+      "delete": "Eliminar Para Siempre"
+    },
+    "preview_modal": {
+      "size": "Tamaño:",
+      "type": "Tipo:",
+      "created": "Creado:",
+      "dimensions": "Dimensiones:",
+      "tags": "Etiquetas:"
+    },
+    "asset_quality": "Optimizado"
+  },
+  "de": {
+    "title": "Asset-Galerie",
+    "search_assets": "Assets suchen...",
+    "file_count_badge": "{count} Dateien ({size})",
+    "filters": "Filter",
+    "optimize": "Optimieren",
+    "folders": "Ordner",
+    "new_folder": "Neuer Ordner",
+    "sort_by": "Sortieren nach:",
+    "date": "Datum",
+    "name": "Name",
+    "size": "Größe",
+    "type": "Typ",
+    "tags": "Tags:",
+    "clear_filters": "Löschen",
+    "toolbar": {
+      "select_all": "Alle Auswählen",
+      "deselect_all": "Alle Abwählen",
+      "selected_count": "{count} ausgewählt",
+      "delete_selected": "Ausgewählte Löschen"
+    },
+    "upload_dialog": {
+      "title": "Assets Hochladen",
+      "description": "Bilder, Videos und Dokumente für {business} hochladen"
+    },
+    "folder_dialog": {
+      "title": "Neuen Ordner Erstellen",
+      "description": "Erstellen Sie einen neuen Ordner, um Ihre Assets zu organisieren.",
+      "folder_name_label": "Ordnername",
+      "folder_name_placeholder": "Geben Sie den Ordnernamen ein",
+      "cancel": "Abbrechen",
+      "create": "Ordner Erstellen"
+    },
+    "optimization_dialog": {
+      "title": "Bilder Optimeren",
+      "description": "Optimierung Ihrer Bilder für bessere Leistung.",
+      "progress": "Fortschritt",
+      "converting_webp": "Konvertierung in WebP-Format",
+      "converting_webp_desc": "Reduziert Dateigröße um bis zu 30%",
+      "compressing": "Bilder komprimieren",
+      "compressing_desc": "Qualität optimieren und Größe reduzieren",
+      "thumbnails": "Thumbnails generieren",
+      "thumbnails_desc": "Optimierte Vorschauen erstellen",
+      "run_background": "Im Hintergrund Ausführen"
+    },
+    "states": {
+      "loading": "Lade Assets...",
+      "error_title": "Fehler beim Laden der Assets",
+      "try_again": "Erneut Versuchen",
+      "no_assets_title": "Keine Assets Gefunden",
+      "no_assets_search": "Keine Assets entsprechen Ihrer Suche.",
+      "no_assets_empty": "Laden Sie Ihr erstes Asset hoch, um zu beginnen."
+    },
+    "buttons": {
+      "load_more": "Weitere Assets Laden",
+      "download": "Downloaden",
+      "edit": "Bearbeiten"
+    },
+    "delete_dialog": {
+      "title": "Assets Löschen",
+      "description": "Sind Sie sicher, dass Sie {count} Asset(s) löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden und entfernt die Dateien dauerhaft aus Ihrer Galerie.",
+      "cancel": "Abbrechen",
+      "delete": "Endgültig Löschen"
+    },
+    "preview_modal": {
+      "size": "Größe:",
+      "type": "Typ:",
+      "created": "Erstellt:",
+      "dimensions": "Abmessungen:",
+      "tags": "Tags:"
+    },
+    "asset_quality": "Optimiert"
+  },
+  "fr": {
+    "title": "Galerie d'Assets",
+    "search_assets": "Rechercher des ressources...",
+    "file_count_badge": "{count} fichiers ({size})",
+    "filters": "Filtres",
+    "optimize": "Optimiser",
+    "folders": "Dossiers",
+    "new_folder": "Nouveau Dossier",
+    "sort_by": "Trier par:",
+    "date": "Date",
+    "name": "Nom",
+    "size": "Taille",
+    "type": "Type",
+    "tags": "Étiquettes:",
+    "clear_filters": "Effacer",
+    "toolbar": {
+      "select_all": "Tout Sélectionner",
+      "deselect_all": "Tout Désélectionner",
+      "selected_count": "{count} sélectionnés",
+      "delete_selected": "Supprimer Sélectionnés"
+    },
+    "upload_dialog": {
+      "title": "Télécharger des Ressources",
+      "description": "Télécharger des images, vidéos et documents pour {business}"
+    },
+    "folder_dialog": {
+      "title": "Créer un Nouveau Dossier",
+      "description": "Créez un nouveau dossier pour organiser vos ressources.",
+      "folder_name_label": "Nom du Dossier",
+      "folder_name_placeholder": "Entrez le nom du dossier",
+      "cancel": "Annuler",
+      "create": "Créer un Dossier"
+    },
+    "optimization_dialog": {
+      "title": "Optimisation des Images",
+      "description": "Optimisation de vos images pour de meilleures performances.",
+      "progress": "Progrès",
+      "converting_webp": "Conversion au format WebP",
+      "converting_webp_desc": "Réduit la taille du fichier jusqu'à 30%",
+      "compressing": "Compression des images",
+      "compressing_desc": "Optimisation de la qualité tout en réduisant la taille",
+      "thumbnails": "Génération des miniatures",
+      "thumbnails_desc": "Création d'aperçus optimisés",
+      "run_background": "Exécuter en Arrière-Plan"
+    },
+    "states": {
+      "loading": "Chargement des ressources...",
+      "error_title": "Erreur de Chargement des Ressources",
+      "try_again": "Réessayer",
+      "no_assets_title": "Aucune Ressource Trouvée",
+      "no_assets_search": "Aucune ressource ne correspond à votre recherche.",
+      "no_assets_empty": "Téléchargez votre première ressource pour commencer."
+    },
+    "buttons": {
+      "load_more": "Charger Plus de Ressources",
+      "download": "Télécharger",
+      "edit": "Modifier"
+    },
+    "delete_dialog": {
+      "title": "Supprimer les Ressources",
+      "description": "Êtes-vous sûr de vouloir supprimer {count} ressource(s) ? Cette action ne peut pas être annulée et supprimera définitivement les fichiers de votre galerie.",
+      "cancel": "Annuler",
+      "delete": "Supprimer Définitivement"
+    },
+    "preview_modal": {
+      "title": "Aperçu de l'Asset",
+      "size": "Taille:",
+      "type": "Type:",
+      "created": "Créé:",
+      "dimensions": "Dimensions:",
+      "tags": "Étiquettes:"
+    },
+    "asset_quality": "Optimisé"
+  }
+}

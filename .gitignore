@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 .vite/
 .data
 *.db
+
+upload/

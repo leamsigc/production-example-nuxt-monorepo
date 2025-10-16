@@ -1,5 +1,5 @@
-import { assetService } from '~~/server/services/asset.service'
-import { auth } from '~~/lib/auth'
+import { assetService } from '#layers/BaseAssets/server/services/asset.service';
+import { auth } from '#layers/BaseAuth/lib/auth';
 import { type ServerFile } from 'nuxt-file-storage'
 
 export default defineEventHandler(async (event) => {

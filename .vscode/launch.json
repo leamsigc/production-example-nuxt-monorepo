@@ -1,0 +1,270 @@
+{
+    "version": "0.2.1",
+    "configurations": [
+        {
+            "type": "node",
+            "name": "Launch Nuxt Dev Server",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Site Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "site",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Assets Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "assets",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Auth Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "auth",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "UI Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "ui",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Content Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "content",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Doc Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "doc",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "AI Tools Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "ai-tools",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Tools Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "tools",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Bulk Scheduler Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "bulk-scheduler",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Scheduler Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "scheduler",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Email Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "email",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "Connect Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "connect",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        },
+        {
+            "name": "DB Package (Development)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "pnpm",
+            "runtimeArgs": [
+                "packages",
+                "db",
+                "dev"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "NODE_ENV": "development"
+            }
+        }
+    ]
+}
