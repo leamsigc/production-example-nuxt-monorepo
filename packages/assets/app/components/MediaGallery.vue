@@ -1,6 +1,7 @@
 <!--  Translation file -->
 <i18n src="./MediaGallery.json"></i18n>
 <script lang="ts" setup>
+import type { header } from '#build/ui'
 import type { Asset } from '#layers/BaseDB/db/schema'
 
 /**
@@ -81,6 +82,8 @@ const newFolderName = ref('')
 const folders = ref<string[]>(['all', 'favorites', 'social', 'logos', 'banners'])
 const isOptimizing = ref(false)
 const optimizationProgress = ref(0)
+
+const isPreviewFullscreen = ref(false)
 
 // Computed
 const filteredAssets = computed(() => {
@@ -183,10 +186,7 @@ const handleAssetClick = (asset: Asset) => {
   }
 }
 
-const handleFileUpload = (files: File[]) => {
-  uploadFiles(files, props.businessId)
-  emit('upload', files)
-}
+
 
 const handleDeleteSelected = () => {
   assetsToDelete.value = [...selectedAssets.value]
@@ -280,6 +280,11 @@ const createNewFolder = () => {
     showFolderDialog.value = false
   }
 }
+
+const handleDeleteAsset = (asset: Asset) => {
+  assetsToDelete.value = [asset]
+  showDeleteDialog.value = true
+}
 </script>
 
 <template>
@@ -297,13 +302,13 @@ const createNewFolder = () => {
           </div>
           <UBadge variant="outline" class="glass-badge animate-scale-in animate-stagger-1">
             <Icon name="lucide:image" class="w-3 h-3 mr-1" />
-            {{ $t('file_count_badge', { count: storageUsage.count, size: storageUsage.formattedSize }) }}
+            {{ t('file_count_badge', { count: storageUsage.count, size: storageUsage.formattedSize }) }}
           </UBadge>
         </div>
 
         <div class="flex items-center gap-3">
           <!-- Advanced Search -->
-          <UInput v-model="searchQuery" :placeholder="$t('search_assets')" trailing-icon="i-lucide-search"
+          <UInput v-model="searchQuery" :placeholder="t('search_assets')" trailing-icon="i-lucide-search"
             class="w-64" />
 
           <!-- Filters Toggle -->
@@ -401,20 +406,20 @@ const createNewFolder = () => {
     <div v-if="props.selectable" class="flex items-center justify-between mb-4 p-3 bg-muted rounded-lg">
       <div class="flex items-center gap-2">
         <UButton variant="outline" size="sm" @click="selectAllAssets">
-          Select All
+          {{ t('toolbar.select_all') }}
         </UButton>
         <UButton variant="outline" size="sm" @click="deselectAllAssets" :disabled="!hasSelectedAssets">
-          Deselect All
+          {{ t('toolbar.deselect_all') }}
         </UButton>
         <span class="text-sm text-muted-foreground">
-          {{ selectedAssets.length }} selected
+          {{ t('file_count_badge', { count: selectedAssets.length }) }}
         </span>
       </div>
 
       <div class="flex items-center gap-2">
         <UButton variant="outline" size="sm" :disabled="!hasSelectedAssets" @click="handleDeleteSelected">
           <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-          Delete Selected
+          {{ t('toolbar.delete_selected') }}
         </UButton>
       </div>
     </div>
@@ -425,7 +430,7 @@ const createNewFolder = () => {
       :description="t('upload_dialog.description', { business: 'Business' })">
       <!-- v-if="selectedBusinessId" -->
       <div class="mb-6">
-        <MediaUploader :business-id="props.businessId" @upload="handleFileUpload" />
+        <MediaUploader :business-id="props.businessId" />
       </div>
     </UModal>
 
@@ -455,8 +460,7 @@ const createNewFolder = () => {
         {{ searchQuery ? t('states.no_assets_search') : t('states.no_assets_empty') }}
       </p>
     </div>
-
-    <!-- Premium Masonry Layout with Luxury Effects -->
+    <!-- Galley view -->
     <div v-if="viewMode === 'masonry'" class="masonry-grid ">
       <div v-for="(asset, index) in filteredAssets" :key="asset.id"
         class="masonry-item group cursor-pointer animate-fade-in-up hover-lift"
@@ -515,6 +519,11 @@ const createNewFolder = () => {
                   class="asset-overlay-button glass-button hover-scale-110 backdrop-blur-md"
                   @click.stop="handleOpedEditModal(asset)">
                   <Icon name="lucide:edit" class="w-4 h-4" />
+                </UButton>
+                <UButton size="sm" variant="outline"
+                  class="asset-overlay-button glass-button hover-scale-110 backdrop-blur-md"
+                  @click.stop="handleDeleteAsset(asset)">
+                  <Icon name="lucide:trash-2" class="w-4 h-4" />
                 </UButton>
               </div>
             </div>
@@ -585,7 +594,6 @@ const createNewFolder = () => {
       </div>
     </div>
 
-    <!-- Premium Grid View -->
     <div v-else-if="viewMode === 'grid'" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
       <div v-for="(asset, index) in filteredAssets" :key="asset.id"
         class="group cursor-pointer animate-fade-in-up hover-translate-y-1 rounded-2xl bg-neutral-700/30 hover-glow"
@@ -632,7 +640,6 @@ const createNewFolder = () => {
       </div>
     </div>
 
-    <!-- List View -->
     <div v-else class="space-y-2">
       <div v-for="asset in filteredAssets" :key="asset.id"
         class="flex items-center gap-4 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer" :class="{
@@ -664,25 +671,27 @@ const createNewFolder = () => {
       </div>
     </div>
 
+    <!-- Galley view end -->
     <!-- Load More -->
     <div v-if="pagination.page < pagination.totalPages" class="text-center mt-8">
       <UButton variant="outline" :disabled="isLoading" @click="loadMore">
         <Icon v-if="isLoading" name="lucide:loader-2" class="w-4 h-4 animate-spin mr-2" />
-        Load More Assets
+        {{ t('buttons.load_more') }}
       </UButton>
     </div>
 
     <!-- Premium Asset Preview Modal -->
-    <UModal v-model:open="showPreviewModal">
+    <UModal v-model:open="showPreviewModal" :ui="{ body: 'border-0', header: 'border-0' }"
+      :fullscreen="isPreviewFullscreen">
       <template #header>
-        <div class="flex items-center justify-between p-6 border-b glass-border">
+        <div class="flex items-center justify-between w-full">
           <div class="flex items-center gap-3">
             <UBadge v-if="previewAsset" variant="outline" class="glass-badge">
               {{ getAssetType(previewAsset.mimeType) }}
             </UBadge>
             <h3 class="text-lg font-semibold">{{ previewAsset ? getAssetDisplayName(previewAsset) : '' }}</h3>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 ml-auto">
             <UButton v-if="previewAsset" variant="ghost" size="sm" class="glass-button">
               <Icon name="lucide:download" class="w-4 h-4 mr-2" />
               {{ t('buttons.download') }}
@@ -692,12 +701,15 @@ const createNewFolder = () => {
               <Icon name="lucide:edit" class="w-4 h-4 mr-2" />
               {{ t('buttons.edit') }}
             </UButton>
+            <UButton variant="ghost" size="sm" class="glass-button" @click="isPreviewFullscreen = !isPreviewFullscreen">
+              <Icon name="lucide:fullscreen" class="w-4 h-4" />
+            </UButton>
           </div>
         </div>
       </template>
 
       <template #body>
-        <div class="flex-1 flex items-center justify-center p-6 bg-gradient-to-br from-background to-muted/20">
+        <div class="flex-1 flex items-center justify-center">
           <div class="max-w-full max-h-full">
             <img v-if="previewAsset && getAssetType(previewAsset.mimeType) === 'image'"
               :src="getAssetPreviewUrl(previewAsset)" :alt="getAssetDisplayName(previewAsset)"
@@ -713,24 +725,24 @@ const createNewFolder = () => {
         </div>
 
         <!-- Asset Details -->
-        <div class="p-6 border-t glass-border bg-background/50 backdrop-blur-sm">
-          <div v-if="previewAsset" class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div class="py-6 space-y-4">
+          <div v-if="previewAsset" class="grid grid-cols-2  gap-2 text-sm">
             <div>
-              <span class="text-muted-foreground">{{ t('asset_info.size') }}:</span>
+              <span class="text-muted-foreground">{{ t('preview_modal.size') }}</span>
               <span class="ml-2 font-medium">{{ formatFileSize(previewAsset.size) }}</span>
             </div>
             <div>
-              <span class="text-muted-foreground">{{ t('asset_info.type') }}:</span>
+              <span class="text-muted-foreground">{{ t('preview_modal.type') }}</span>
               <span class="ml-2 font-medium">{{ previewAsset.mimeType }}</span>
             </div>
             <div>
-              <span class="text-muted-foreground">{{ t('asset_info.created') }}:</span>
+              <span class="text-muted-foreground">{{ t('preview_modal.created') }}</span>
               <span class="ml-2 font-medium">{{ new Date(previewAsset.createdAt).toLocaleDateString() }}</span>
             </div>
             <div v-if="parseAssetMetadata(previewAsset).width">
-              <span class="text-muted-foreground">{{ t('asset_info.dimensions') }}:</span>
+              <span class="text-muted-foreground">{{ t('preview_modal.dimensions') }}</span>
               <span class="ml-2 font-medium">
-                {{ parseAssetMetadata(previewAsset).width }} × {{ parseAssetMetadata(previewAsset).height }}
+                {{ parseAssetMetadata(previewAsset).width }} x {{ parseAssetMetadata(previewAsset).height }}
               </span>
             </div>
           </div>
@@ -749,32 +761,35 @@ const createNewFolder = () => {
       </template>
 
       <template #footer="{ close }">
-        <div class="flex gap-2 p-6 border-t">
+        <div class="flex gap-2 ">
           <UButton variant="outline" @click="close">
-            {{ t('buttons.close') }}
+            {{ t('common.close') }}
           </UButton>
         </div>
       </template>
     </UModal>
 
     <!-- Delete Confirmation Modal -->
-    <UModal v-model:open="showDeleteDialog">
+    <UModal v-model:open="showDeleteDialog" :ui="{ body: 'border-0', header: 'border-0' }">
       <template #header>
-        <div class="flex items-center gap-3 p-6 border-b glass-border">
+        <div class="flex items-center gap-3 ">
           <Icon name="lucide:trash-2" class="w-6 h-6 text-destructive" />
           <div>
-            <h3 class="text-lg font-semibold">{{ t('delete_dialog.title') }}</h3>
-            <p class="text-muted-foreground">{{ t('delete_dialog.description', { count: assetsToDelete.length }) }}</p>
+            <h3 class="font-semibold">{{ t('delete_dialog.title') }}</h3>
           </div>
         </div>
       </template>
+      <template #body>
+        <p class="text-muted-foreground">{{ t('delete_dialog.description', { count: assetsToDelete.length }) }}</p>
+      </template>
 
       <template #footer="{ close }">
-        <div class="flex justify-end gap-2 p-6 border-t">
-          <UButton variant="outline" @click="close">{{ t('buttons.cancel') }}</UButton>
-          <UButton variant="solid" style="background-color: rgb(239 68 68); color: white;" @click="confirmDelete">
+        <div class="flex items-center gap-2 ">
+          <UButton variant="outline" @click="close">{{ t('delete_dialog.cancel') }}</UButton>
+          <UButton variant="solid" style="background-color: rgb(239 68 68); color: white;" @click="confirmDelete"
+            class="cursor-pointer">
             <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-            {{ t('delete_dialog.confirm') }}
+            {{ t('delete_dialog.delete') }}
           </UButton>
         </div>
       </template>
@@ -786,8 +801,8 @@ const createNewFolder = () => {
         <div class="flex items-center gap-3 p-6 border-b glass-border">
           <Icon name="lucide:folder-plus" class="w-6 h-6 text-primary" />
           <div>
-            <h3 class="text-lg font-semibold">Create New Folder</h3>
-            <p class="text-muted-foreground">Create a new folder to organize your assets.</p>
+            <h3 class="text-lg font-semibold">{{ t('folder_dialog.title') }}</h3>
+            <p class="text-muted-foreground">{{ t('folder_dialog.description') }}</p>
           </div>
         </div>
       </template>
@@ -796,8 +811,9 @@ const createNewFolder = () => {
         <div class="p-6">
           <div class="space-y-4">
             <div class="space-y-2">
-              <label for="folder-name">Folder Name</label>
-              <UInput id="folder-name" v-model="newFolderName" placeholder="Enter folder name" class="glass-input" />
+              <label for="folder-name">{{ t('folder_name_label') }}</label>
+              <UInput id="folder-name" v-model="newFolderName" :placeholder="t('folder_name_placeholder')"
+                class="glass-input" />
             </div>
           </div>
         </div>
@@ -805,7 +821,7 @@ const createNewFolder = () => {
 
       <template #footer="{ close }">
         <div class="flex justify-end gap-2 p-6 border-t">
-          <UButton variant="outline" @click="close">Cancel</UButton>
+          <UButton variant="outline" @click="close">{{ t('folder_dialog.cancel') }}</UButton>
           <UButton class="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
             :disabled="!newFolderName.trim()" @click="createNewFolder">
             <Icon name="lucide:folder-plus" class="w-4 h-4 mr-2" />
@@ -821,8 +837,8 @@ const createNewFolder = () => {
         <div class="flex items-center gap-3 p-6 border-b glass-border">
           <Icon name="lucide:sparkles" class="w-6 h-6 text-primary" />
           <div>
-            <h3 class="text-lg font-semibold">Optimizing Images</h3>
-            <p class="text-muted-foreground">Optimizing your images for better performance.</p>
+            <h3 class="text-lg font-semibold">{{ t('optimization_dialog.title') }}</h3>
+            <p class="text-muted-foreground">{{ t('optimization_dialog.description') }}</p>
           </div>
         </div>
       </template>
@@ -832,7 +848,7 @@ const createNewFolder = () => {
           <div class="space-y-6">
             <div class="space-y-2">
               <div class="flex items-center justify-between">
-                <span class="text-sm font-medium">Progress</span>
+                <span class="text-sm font-medium">{{ t('optimization_dialog.progress') }}</span>
                 <span class="text-sm text-primary font-medium">{{ optimizationProgress }}%</span>
               </div>
               <div class="h-2 bg-muted rounded-full overflow-hidden">
@@ -849,8 +865,8 @@ const createNewFolder = () => {
                   <Icon name="lucide:check" class="w-4 h-4 text-primary" />
                 </div>
                 <div>
-                  <p class="text-sm font-medium">Converting to WebP format</p>
-                  <p class="text-xs text-muted-foreground">Reduces file size by up to 30%</p>
+                  <p class="text-sm font-medium">{{ t('optimization_dialog.converting_webp') }}</p>
+                  <p class="text-xs text-muted-foreground">{{ t('optimization_dialog.converting_webp_desc') }}</p>
                 </div>
               </div>
 
@@ -859,8 +875,8 @@ const createNewFolder = () => {
                   <Icon name="lucide:check" class="w-4 h-4 text-primary" />
                 </div>
                 <div>
-                  <p class="text-sm font-medium">Compressing images</p>
-                  <p class="text-xs text-muted-foreground">Optimizing quality while reducing size</p>
+                  <p class="text-sm font-medium">{{ t('optimization_dialog.compressing') }}</p>
+                  <p class="text-xs text-muted-foreground">{{ t('optimization_dialog.compressing_desc') }}</p>
                 </div>
               </div>
 
@@ -869,8 +885,8 @@ const createNewFolder = () => {
                   <Icon name="lucide:loader-2" class="w-4 h-4 text-primary animate-spin" />
                 </div>
                 <div>
-                  <p class="text-sm font-medium">Generating thumbnails</p>
-                  <p class="text-xs text-muted-foreground">Creating optimized previews</p>
+                  <p class="text-sm font-medium">{{ t('optimization_dialog.thumbnails') }}</p>
+                  <p class="text-xs text-muted-foreground">{{ t('optimization_dialog.thumbnails_desc') }}</p>
                 </div>
               </div>
             </div>
@@ -880,7 +896,7 @@ const createNewFolder = () => {
 
       <template #footer="{ close }">
         <div class="flex justify-end p-6 border-t">
-          <UButton variant="outline" @click="close">Run in Background</UButton>
+          <UButton variant="outline" @click="close">{{ t('optimization_dialog.run_background') }}</UButton>
         </div>
       </template>
     </UModal>

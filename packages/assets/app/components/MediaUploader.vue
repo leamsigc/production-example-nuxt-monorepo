@@ -103,6 +103,9 @@ const handleFilesUpload = async (files: File | File[] | null | undefined) => {
   // Upload valid files
   if (validFiles.length > 0) {
     try {
+      // Upload files
+      console.log("Upload files");
+
       await uploadFiles(validFiles, props.businessId)
       emit('upload', validFiles)
       // Clear after successful upload

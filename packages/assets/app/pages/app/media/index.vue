@@ -22,6 +22,7 @@ import MediaStats from './components/MediaStats.vue'
 
 // Translation composable
 const { t } = useI18n()
+const toast = useToast()
 
 // Composables
 const {
@@ -173,6 +174,14 @@ const handleOpenEditModal = (asset: Asset) => {
   selectedAssetForEdit.value = asset
   showEditor.value = true
 }
+const handleDeleteAsset = (asset: Asset[]) => {
+  // Show toast
+  toast.add({
+    title: 'Success',
+    description: 'Deleted media content successfully.',
+    color: 'success'
+  })
+}
 </script>
 
 <template>
@@ -220,7 +229,7 @@ const handleOpenEditModal = (asset: Asset) => {
         <MediaGallery :business-id="selectedBusinessId" :selectable="true" :multi-select="true" :show-uploader="false"
           :filter-type="filterType" @select="(asset: Asset) => console.log('Selected:', asset)"
           @deselect="(asset: Asset) => console.log('Deselected:', asset)" @upload="handleFileUpload"
-          @delete="(assets: Asset[]) => console.log('Deleted:', assets)" @open-edit-modal="handleOpenEditModal" />
+          @delete="handleDeleteAsset" @open-edit-modal="handleOpenEditModal" />
       </UCard>
     </div>
 
