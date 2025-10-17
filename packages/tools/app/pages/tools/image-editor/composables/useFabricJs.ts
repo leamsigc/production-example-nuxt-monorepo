@@ -16,6 +16,7 @@ import {
   Group,
   ClipPathLayout,
   LayoutManager,
+  Point,
 } from 'fabric';
 
 // Define a type that extends FabricObject to include a 'name' property
@@ -32,8 +33,8 @@ const activeLayer = ref<FabricObjectWithName | null>(null);
 const mainBgColor = ref('#f0f0f0');
 const textColor = ref('#000000');
 const mainFrameSize = ref<{ width: number; height: number }>({
-  width: 800,
-  height: 600,
+  width: 1242,
+  height: 1660,
 });
 const globalSettings = ref<{ width: number; height: number, fill: string, stroke: string, strokeWidth: number }>({
   width: 1200,
@@ -49,15 +50,14 @@ export const useFabricJs = () => {
     onMounted(async () => {
       if (elementRef.value) {
         canvas.value = new Canvas(elementRef.value, {
-          width: window.innerWidth,
-          height: window.innerHeight,
-          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          backgroundColor: "rgba(0,0,0,.1)",
           // controlsAboveOverlay: true,
           // enablePointerEvents: true,
           fireRightClick: true,
-          targetFindTolerance: 5,
-          selectionColor: '#ff0000',
-          selectionLineWidth: 2,
+          stopContextMenu: true,
+          controlsAboveOverlay: true,
+          imageSmoothingEnabled: false,
+          preserveObjectStacking: true,
         });
         InteractiveFabricObject.ownDefaults = {
           ...InteractiveFabricObject.ownDefaults,
@@ -70,6 +70,7 @@ export const useFabricJs = () => {
           borderColor: 'orange',
           borderDashArray: [3, 1, 3],
           borderScaleFactor: 2,
+
         };
         editorState.value = 'New';
         console.log('Fabricjs canvas.value initialized:', canvas.value);
@@ -90,9 +91,17 @@ export const useFabricJs = () => {
               cornerSize: 10,
               transparentCorners: false,
             });
-            canvas.value.renderAll();
+            canvas.value.setDimensions({
+              width: mainFrameSize.value.width,
+              height: mainFrameSize.value.height,
+            })
+            canvas.value.setZoom(0.5);
+
+
+            canvas.value.requestRenderAll();
           }
         });
+        canvas.value.on("mouse:wheel", bindMouseWheel);
       }
     });
 
@@ -105,6 +114,23 @@ export const useFabricJs = () => {
     });
   };
 
+  const bindMouseWheel = (opt: any) => {
+    if (canvas.value) {
+      const delta = opt.e.deltaY;
+
+      // console.log(opt.e);
+
+      let zoom = canvas.value.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 5) zoom = 5;
+      if (zoom < 0.01) zoom = 0.1;
+
+      canvas.value.zoomToPoint(new Point(opt.e.offsetX, opt.e.offsetY), zoom);
+      canvas.value.requestRenderAll();
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+    }
+  };
   const createChildCanvasAsFrameAndSetActive = () => {
     if (canvas.value) {
       // Remove any existing frame if it has a specific name
@@ -116,23 +142,25 @@ export const useFabricJs = () => {
       }
 
       const frameRect = new Rect({
-        left: (canvas.value.width! - mainFrameSize.value.width) / 2,
-        top: (canvas.value.height! - mainFrameSize.value.height) / 2,
+        left: canvas.value.width * 2,
+        top: canvas.value.height,
         width: mainFrameSize.value.width,
         height: mainFrameSize.value.height,
         fill: 'white',
         stroke: '#ccc', // Optional: add a light border for visibility
         strokeWidth: 1,
         selectable: false,
-        evented: true,
+        evented: false,
         name: 'mainFrame', // Unique name for this frame
         hasControls: false,
         hasBorders: true,
       });
-
       canvas.value.add(frameRect);
+      canvas.value.clipPath = frameRect;
+      // center(frameRect);
       // canvas.value.setActiveObject(frameRect);
-      // canvas.value.requestRenderAll();
+      canvas.value.requestRenderAll();
+
     }
   };
 
@@ -399,15 +427,19 @@ export const useFabricJs = () => {
     canvas.value?.requestRenderAll();
   };
 
-  const addImageLayer = async (imageFile: File) => {
+  const addImageLayerFromUrl = async (url: string) => {
     if (canvas.value) {
-      const imageUrl = URL.createObjectURL(imageFile);
-
-      const fabricImage = await FabricImage.fromURL(imageUrl);
+      const fabricImage = await FabricImage.fromURL(url);
       if (fabricImage) {
         canvas.value?.add(fabricImage);
         canvas.value?.setActiveObject(fabricImage);
       }
+    }
+  };
+  const addImageLayer = async (imageFile: File) => {
+    if (canvas.value) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      addImageLayerFromUrl(imageUrl);
     }
   };
 
@@ -612,6 +644,7 @@ export const useFabricJs = () => {
         console.warn('Main frame not found for download.');
         return;
       }
+      canvas.value.setViewportTransform([1, 0, 0, 1, 0, 0]);
       const dataURL = canvas.value.toDataURL({
         format,
         quality,
@@ -660,9 +693,9 @@ export const useFabricJs = () => {
     }
   };
 
-  const loadTemplateFromJson = (json: string) => {
+  const loadTemplateFromJson = async (json: string) => {
     if (canvas.value) {
-      canvas.value.loadFromJSON(json, () => {
+      await canvas.value.loadFromJSON(json, () => {
         canvas.value?.requestRenderAll();
       });
       const currentMainFrame = canvas.value
@@ -671,37 +704,58 @@ export const useFabricJs = () => {
       if (currentMainFrame) {
         canvas.value?.centerObject(currentMainFrame);
         canvas.value?.requestRenderAll();
+      } else {
+        console.log("No mainframe");
+
+        createChildCanvasAsFrameAndSetActive();
       }
+
     } else {
       console.warn('Canvas not initialized.');
     }
   };
   const exportCurrentCanvas = () => {
-
     if (canvas.value) {
-      const groupLayer = canvas.value
-        .getObjects()
-        .find((obj: FabricObjectWithName) => obj.type === 'Group');
+      const groupLayer = groupLayers();
+      // @ts-ignore
+      groupLayer.name = 'mainFrame';
+      canvas.value.add(groupLayer);
 
       if (!groupLayer) {
         console.warn('Group layer not found.');
         return;
       }
-      const json = groupLayer.toJSON(
+      canvas.value.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      const json = canvas.value.toObject(['id',
+        'gradientAngle',
+        'selectable',
+        'hasControls',
+        'linkData',
+        'editable',
+        'extensionType',
+        'extension',
+        'verticalAlign',
+        'roundValue',]);
+      const fileStr = `data:text/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(json, null, '\t')
+      )}`;
 
-      );
-      const jsonString = JSON.stringify(json);
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'canvas.json';
-      link.click();
-      URL.revokeObjectURL(url);
+      downFile(fileStr, 'json');
+      canvas.value?.add(groupLayer);
+
+      canvas.value?.requestRenderAll();
     } else {
       console.warn('Canvas not initialized.');
     }
   };
+  const downFile = (fileStr: string, fileType: string) => {
+    const anchorEl = document.createElement('a');
+    anchorEl.href = fileStr;
+    anchorEl.download = `${Date.now()}.${fileType}`;
+    document.body.appendChild(anchorEl); // required for firefox
+    anchorEl.click();
+    anchorEl.remove();
+  }
   const groupLayers = () => {
     const otherLayers = canvas.value
       ?.getObjects()
@@ -723,8 +777,11 @@ export const useFabricJs = () => {
       }
     });
 
-    canvas.value?.add(group);
+    return group;
+  };
+  const center = (layer: FabricObjectWithName) => {
 
+    canvas.value?.centerObject(layer);
     canvas.value?.requestRenderAll();
   };
 
@@ -769,6 +826,7 @@ export const useFabricJs = () => {
     zoomOut,
     loadTemplateFromJson,
     exportCurrentCanvas,
-    groupLayers
+    groupLayers,
+    addImageLayerFromUrl
   };
 };
