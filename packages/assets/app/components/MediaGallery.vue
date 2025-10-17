@@ -241,7 +241,7 @@ const handleOpedEditModal = (asset: Asset) => {
   router.push({
     path: '/tools/image-editor',
     query: {
-      imageId: asset.id
+      imageId: asset.filename
     }
   })
 }

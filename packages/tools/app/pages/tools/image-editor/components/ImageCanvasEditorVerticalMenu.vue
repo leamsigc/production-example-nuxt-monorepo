@@ -36,7 +36,7 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: t('menu.vertical.select'),
     icon: 'lucide:pointer',
-    onSelect: () => ({}),
+    onSelect: () => selectLayer(),
   },
   {
     label: t('menu.vertical.crop.crop'),

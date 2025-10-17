@@ -13,7 +13,7 @@
 
 import { useFabricJs } from '../composables/useFabricJs'
 
-const { getLayers, selectLayer, deleteLayer, toggleLayerVisibility, canvas } = useFabricJs()
+const { getLayers, setActiveLayer, deleteLayer, toggleLayerVisibility, canvas } = useFabricJs()
 // Reactive layers list
 const layers = ref([...getLayers()])
 
@@ -57,7 +57,7 @@ const activeLayer = computed(() => canvas.value?.getActiveObject())
 
 // Handle layer selection
 const handleLayerClick = (layer: any) => {
-  selectLayer(layer)
+  setActiveLayer(layer)
 }
 
 // Handle layer deletion

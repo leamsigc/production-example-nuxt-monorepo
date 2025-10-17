@@ -18,7 +18,27 @@ const canvas = useTemplateRef('canvas');
 
 const files = ref<File>();
 
+const route = useRoute();
+
 run(canvas);
+
+onMounted(async () => {
+  const imageId = route.query.imageId as string;
+  console.log("image id ", imageId);
+
+  if (imageId) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/assets/serve/${imageId}.png`);
+      if (response.ok) {
+        const blob = await response.blob();
+        const file = new File([blob], `${imageId}.png`, { type: 'image/png' });
+        onFileDrop(file);
+      }
+    } catch (error) {
+      console.error('Failed to load image from query param:', error);
+    }
+  }
+});
 
 const onFileDrop = async (f: File | File[] | null | undefined) => {
   if (files.value) return;

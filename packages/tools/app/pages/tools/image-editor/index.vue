@@ -17,6 +17,7 @@ import ImageCanvasEditorMainMenu from './components/ImageCanvasEditorMainMenu.vu
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+
 </script>
 
 <template>

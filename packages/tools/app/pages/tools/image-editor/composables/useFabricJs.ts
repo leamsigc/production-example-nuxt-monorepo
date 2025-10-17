@@ -13,8 +13,10 @@ import {
   filters,
   type FabricObjectProps,
   type ITextProps,
+  Group,
+  ClipPathLayout,
+  LayoutManager,
 } from 'fabric';
-import { ca } from 'zod/v4/locales';
 
 // Define a type that extends FabricObject to include a 'name' property
 interface FabricObjectWithName extends FabricObject {
@@ -32,6 +34,13 @@ const textColor = ref('#000000');
 const mainFrameSize = ref<{ width: number; height: number }>({
   width: 800,
   height: 600,
+});
+const globalSettings = ref<{ width: number; height: number, fill: string, stroke: string, strokeWidth: number }>({
+  width: 1200,
+  height: 675,
+  fill: '#1DA1F2',
+  stroke: '#ccc',
+  strokeWidth: 1,
 });
 
 const { start, run: imageRun } = useImageTransformer();
@@ -149,8 +158,15 @@ export const useFabricJs = () => {
     editorState.value = 'Export';
   };
 
-  const selectLayer = (layer: FabricObject) => {
+  const selectLayer = () => {
     if (canvas.value) {
+      canvas.value.isDrawingMode = false;
+      canvas.value.requestRenderAll();
+    }
+  };
+  const setActiveLayer = (layer: FabricObject) => {
+    if (canvas.value) {
+      canvas.value.isDrawingMode = false;
       canvas.value.setActiveObject(layer);
       canvas.value.requestRenderAll();
     }
@@ -255,7 +271,7 @@ export const useFabricJs = () => {
 
   const eraseLayer = (width: number = 10) => {
     if (canvas.value) {
-      canvas.value.isDrawingMode = true;
+      canvas.value.isDrawingMode = false;
       // Fabricjs v6 uses a different approach for eraser brush.
       // For now, we'll just enable drawing mode.
       // A proper eraser implementation would involve a custom brush or composite operations.
@@ -290,21 +306,28 @@ export const useFabricJs = () => {
     stroke?: string;
     strokeWidth?: number;
   }) => {
+    globalSettings.value = {
+      width: settings.width || globalSettings.value.width,
+      height: settings.height || globalSettings.value.height,
+      fill: settings.fill || globalSettings.value.fill,
+      stroke: settings.stroke || globalSettings.value.stroke,
+      strokeWidth: settings.strokeWidth || globalSettings.value.strokeWidth,
+    };
     mainFrameSize.value = {
-      width: settings.width || mainFrameSize.value.width,
-      height: settings.height || mainFrameSize.value.height,
+      width: globalSettings.value.width || mainFrameSize.value.width,
+      height: globalSettings.value.height || mainFrameSize.value.height,
     };
     if (canvas.value) {
       const frame = canvas.value
         .getObjects()
         .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
       if (frame) {
-        frame.set('width', mainFrameSize.value.width);
-        frame.set('height', mainFrameSize.value.height);
-        if (settings.fill !== undefined) frame.set('fill', settings.fill);
-        if (settings.stroke !== undefined) frame.set('stroke', settings.stroke);
+        frame.set('width', globalSettings.value.width);
+        frame.set('height', globalSettings.value.height);
+        if (settings.fill !== undefined) frame.set('fill', globalSettings.value.fill);
+        if (settings.stroke !== undefined) frame.set('stroke', globalSettings.value.stroke);
         if (settings.strokeWidth !== undefined)
-          frame.set('strokeWidth', settings.strokeWidth);
+          frame.set('strokeWidth', globalSettings.value.strokeWidth);
         canvas.value.centerObject(frame);
         canvas.value.requestRenderAll();
       }
@@ -530,11 +553,6 @@ export const useFabricJs = () => {
     if (canvas.value) {
       const activeObject = canvas.value.getActiveObject();
       if (activeObject instanceof FabricImage) {
-        // Convert the active image to a data URL or Blob to send to the worker
-        // For simplicity, we'll get the image element's src if it's already loaded
-        // or render it to a temporary canvas.value if it's a complex Fabricjs image.
-        // For now, let's assume the image has a src that can be used.
-        // A more robust solution would involve rendering the Fabricjs image to a temporary canvas.value.
         const imageElement = activeObject.getElement();
         if (imageElement instanceof HTMLImageElement && imageElement.src) {
           fetch(imageElement.src)
@@ -543,6 +561,9 @@ export const useFabricJs = () => {
               const file = new File([blob], 'image_for_bg_removal.png', {
                 type: blob.type,
               });
+              console.log("Removing image background");
+
+              imageRun(file);
             })
             .catch((error) =>
               console.error(
@@ -584,12 +605,23 @@ export const useFabricJs = () => {
     quality: number = 1,
   ) => {
     if (canvas.value) {
-      // Get the mainFrame layer  then group all layers
+      const frame = canvas.value
+        .getObjects()
+        .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+      if (!frame) {
+        console.warn('Main frame not found for download.');
+        return;
+      }
       const dataURL = canvas.value.toDataURL({
-        format: format,
-        quality: quality,
-        multiplier: 2, // Increase resolution for better quality download
+        format,
+        quality,
+        multiplier: 1,
+        left: frame.left,
+        top: frame.top,
+        width: frame.width,
+        height: frame.height,
       });
+
       const link = document.createElement('a');
       link.href = dataURL;
       link.download = `canvas_image.${format}`;
@@ -637,6 +669,7 @@ export const useFabricJs = () => {
     setEditingState,
     setExportState,
     selectLayer,
+    setActiveLayer,
     deleteLayer,
     cropLayer,
     rotateLayer,
