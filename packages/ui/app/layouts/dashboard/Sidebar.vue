@@ -49,7 +49,7 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         children: [
           {
             label: menuData.menu.editImage,
-            to: '/app/media/edit'
+            to: '/tools/image-editor'
           },
           {
             label: menuData.menu.upload,

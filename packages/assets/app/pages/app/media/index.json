@@ -51,6 +51,10 @@
       "upload_complete": "Successfully uploaded {count} file{plural}",
       "assets_deleted": "Successfully deleted {count} asset{plural}",
       "delete_confirm": "Are you sure you want to delete {count} asset{plural}?"
+    },
+    "upload": {
+      "title": "Upload Assets",
+      "description": "Upload images, videos and documents"
     }
   },
   "es": {

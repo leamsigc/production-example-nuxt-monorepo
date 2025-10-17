@@ -93,19 +93,15 @@ const loadAssets = async () => {
 }
 
 const handleFileUpload = async (files: File[]) => {
-  if (!selectedBusinessId.value) return
 
-  const success = await uploadFiles(files, selectedBusinessId.value)
-  if (success) {
-    showUploader.value = false
-    useToast().add({
-      title: t('messages.upload_complete', {
-        count: files.length,
-        plural: files.length !== 1 ? 's' : ''
-      }),
-      color: 'success'
-    })
-  }
+  useToast().add({
+    title: t('messages.upload_complete', {
+      count: files.length,
+      plural: files.length !== 1 ? 's' : ''
+    }),
+    color: 'success'
+  })
+  // showUploader.value = false
 }
 
 const handleDeleteSelected = async () => {
