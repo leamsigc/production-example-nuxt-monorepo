@@ -660,6 +660,74 @@ export const useFabricJs = () => {
     }
   };
 
+  const loadTemplateFromJson = (json: string) => {
+    if (canvas.value) {
+      canvas.value.loadFromJSON(json, () => {
+        canvas.value?.requestRenderAll();
+      });
+      const currentMainFrame = canvas.value
+        ?.getObjects()
+        .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+      if (currentMainFrame) {
+        canvas.value?.centerObject(currentMainFrame);
+        canvas.value?.requestRenderAll();
+      }
+    } else {
+      console.warn('Canvas not initialized.');
+    }
+  };
+  const exportCurrentCanvas = () => {
+
+    if (canvas.value) {
+      const groupLayer = canvas.value
+        .getObjects()
+        .find((obj: FabricObjectWithName) => obj.type === 'Group');
+
+      if (!groupLayer) {
+        console.warn('Group layer not found.');
+        return;
+      }
+      const json = groupLayer.toJSON(
+
+      );
+      const jsonString = JSON.stringify(json);
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'canvas.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    } else {
+      console.warn('Canvas not initialized.');
+    }
+  };
+  const groupLayers = () => {
+    const otherLayers = canvas.value
+      ?.getObjects()
+      .filter((obj: FabricObjectWithName) => obj.name !== 'mainFrame');
+    const layers = otherLayers ? otherLayers : [];
+    const mainLayer = canvas.value
+      ?.getObjects()
+      .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+    if (mainLayer) layers.unshift(mainLayer);
+
+
+    const group = new Group(layers);
+    group.clipPath = mainLayer?.clipPath
+
+    // remove all other layer
+    canvas.value?.getObjects().forEach((obj: FabricObjectWithName) => {
+      if (obj.name !== 'mainFrame') {
+        canvas.value?.remove(obj);
+      }
+    });
+
+    canvas.value?.add(group);
+
+    canvas.value?.requestRenderAll();
+  };
+
   return {
     canvas,
     editorState,
@@ -699,5 +767,8 @@ export const useFabricJs = () => {
     updateCanvasDimensions,
     zoomIn,
     zoomOut,
+    loadTemplateFromJson,
+    exportCurrentCanvas,
+    groupLayers
   };
 };

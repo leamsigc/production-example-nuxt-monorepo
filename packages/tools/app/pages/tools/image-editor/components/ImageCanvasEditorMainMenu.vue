@@ -2,7 +2,9 @@
 <i18n src="../ImageEditor.json"></i18n>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { useFabricJs } from '../composables/useFabricJs';
+import ToolsImageTemplate from './ToolsImageTemplate.vue';
 
 /**
  *
@@ -15,8 +17,9 @@ import { useFabricJs } from '../composables/useFabricJs';
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
-const { newEditor, downloadCanvasImage } = useFabricJs();
+const { newEditor, downloadCanvasImage, exportCurrentCanvas } = useFabricJs();
 const { t } = useI18n();
+const isOpen = ref(false);
 const menu = [
   {
     icon: 'lucide:plus',
@@ -33,7 +36,7 @@ const menu = [
   {
     icon: 'lucide:download',
     translationKey: 'menu.main.export',
-    action: () => { },
+    action: () => exportCurrentCanvas(),
   },
   {
     icon: 'lucide:circle-arrow-left',
@@ -42,6 +45,13 @@ const menu = [
   {
     icon: 'lucide:circle-arrow-right',
     action: () => { },
+  },
+  {
+    icon: 'lucide:layout-template',
+    translationKey: 'menu.main.templates',
+    action: () => {
+      isOpen.value = !isOpen.value;
+    },
   },
 ];
 </script>
@@ -55,11 +65,19 @@ const menu = [
         <NuxtLink to="/">
           <UButton variant="link">Magic Social</UButton>
         </NuxtLink>
-        <UButton v-for="(item, index) in menu" :key="`${item.icon}-${index}`" size="sm" color="neutral" variant="link"
-          @click="item.action">
-          <Icon :name="item.icon" class="w-5 h-5" />
-          <span v-if="item.translationKey">{{ t(item.translationKey) }}</span>
-        </UButton>
+        <template v-for="(item, index) in menu" :key="`${item.icon}-${index}`">
+          <UModal v-if="item.translationKey === 'menu.main.templates'" v-model:open="isOpen">
+            <UButton :label="t('menu.main.templates')" color="neutral" size="sm" variant="link" />
+
+            <template #content>
+              <ToolsImageTemplate />
+            </template>
+          </UModal>
+          <UButton size="sm" color="neutral" variant="link" @click="item.action" v-else>
+            <Icon :name="item.icon" class="w-5 h-5" />
+            <span v-if="item.translationKey">{{ t(item.translationKey) }}</span>
+          </UButton>
+        </template>
       </section>
     </section>
   </header>

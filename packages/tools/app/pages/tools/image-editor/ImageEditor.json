@@ -4,7 +4,8 @@
       "main": {
         "new": "New",
         "save": "Save",
-        "export": "Export"
+        "export": "Export",
+        "templates": "Templates"
       },
       "vertical": {
         "select": "Select",
@@ -47,7 +48,8 @@
       "main": {
         "new": "Nuevo",
         "save": "Guardar",
-        "export": "Exportar"
+        "export": "Exportar",
+        "templates": "Templates"
       },
       "vertical": {
         "select": "Seleccionar",
@@ -90,7 +92,8 @@
       "main": {
         "new": "Neu",
         "save": "Speichern",
-        "export": "Exportieren"
+        "export": "Exportieren",
+        "templates": "Vorlagen"
       },
       "vertical": {
         "select": "Auswählen",
@@ -133,7 +136,8 @@
       "main": {
         "new": "Nouveau",
         "save": "Sauvegarder",
-        "export": "Exporter"
+        "export": "Exporter",
+        "templates": "Modèles"
       },
       "vertical": {
         "select": "Sélectionner",
