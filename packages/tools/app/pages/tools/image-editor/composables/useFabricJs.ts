@@ -13,6 +13,7 @@ import {
   filters,
   type FabricObjectProps,
   type ITextProps,
+  type TextStyleDeclaration,
   Group,
   ClipPathLayout,
   LayoutManager,
@@ -44,6 +45,19 @@ const globalSettings = ref<{ width: number; height: number, fill: string, stroke
   strokeWidth: 1,
 });
 
+const textSettings = ref({
+  fontSize: 20,
+  fontFamily: 'Arial',
+  fill: '#000000',
+  fontWeight: 'normal',
+  fontStyle: 'normal',
+  underline: false,
+  linethrough: false,
+  overline: false,
+  textAlign: 'left',
+  // Add other relevant ITextProps defaults here
+});
+
 const { start, run: imageRun } = useImageTransformer();
 export const useFabricJs = () => {
   const run = (elementRef: Ref<HTMLCanvasElement | null>) => {
@@ -73,7 +87,6 @@ export const useFabricJs = () => {
 
         };
         editorState.value = 'New';
-        console.log('Fabricjs canvas.value initialized:', canvas.value);
         createChildCanvasAsFrameAndSetActive();
         start(); // Create the initial frame
 
@@ -170,7 +183,6 @@ export const useFabricJs = () => {
       editorState.value = 'Init';
     }
   };
-
   const newEditor = () => {
     if (canvas.value) {
       canvas.value.clear();
@@ -185,6 +197,14 @@ export const useFabricJs = () => {
   const setExportState = () => {
     editorState.value = 'Export';
   };
+  const mainFrame = () => {
+    if (canvas.value) {
+      return canvas.value
+        .getObjects()
+        .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+
+    }
+  };
 
   const selectLayer = () => {
     if (canvas.value) {
@@ -197,6 +217,7 @@ export const useFabricJs = () => {
       canvas.value.isDrawingMode = false;
       canvas.value.setActiveObject(layer);
       canvas.value.requestRenderAll();
+      activeLayer.value = layer;
     }
   };
 
@@ -234,17 +255,27 @@ export const useFabricJs = () => {
     }
   };
 
+
+  const updateTextSettings = (settings: Partial<ITextProps>) => {
+    if (canvas.value && activeLayer.value instanceof IText) {
+      activeLayer.value.set(settings);
+      canvas.value.requestRenderAll();
+    }
+  };
+
   const addTextLayer = (text: string = 'New Text', options?: any) => {
     // Using any as a workaround for Fabricjs v6 type issues
     if (canvas.value) {
+      const main = mainFrame();
       const textObject = new IText(text, {
-        left: canvas.value.width! / 2,
-        top: canvas.value.height! / 2,
-        fontSize: 16,
-        fontFamily: 'Arial',
-        fill: '#000000',
+        ...textSettings.value, // Use base settings
         ...options,
       });
+      if (main) {
+
+        const center = main.getCenterPoint();
+        textObject.set({ left: (center.x - textObject.width / 2), top: (center.y - textObject.height / 2) });
+      }
       canvas.value.add(textObject);
       canvas.value.setActiveObject(textObject);
       canvas.value.requestRenderAll();
@@ -431,6 +462,15 @@ export const useFabricJs = () => {
     if (canvas.value) {
       const fabricImage = await FabricImage.fromURL(url);
       if (fabricImage) {
+        const mainFrame = canvas.value
+          .getObjects()
+          .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+        if (mainFrame) {
+          const center = mainFrame.getCenterPoint();
+          fabricImage.set({ left: (center.x - fabricImage.width / 2), top: (center.y - fabricImage.height / 2) });
+          fabricImage.set('name', 'mainImage')
+        }
+
         canvas.value?.add(fabricImage);
         canvas.value?.setActiveObject(fabricImage);
       }
@@ -675,7 +715,27 @@ export const useFabricJs = () => {
       console.warn('Canvas not initialized.');
     }
   };
+  const updateFrameSettingsToImageDimension = () => {
+    if (canvas.value) {
+      const frame = canvas.value
+        .getObjects()
+        .find((obj: FabricObjectWithName) => obj.name === 'mainFrame');
+      const mainImage = canvas.value
+        .getObjects()
+        .find((obj: FabricObjectWithName) => obj.name === 'mainImage');
+      if (mainImage && frame) {
+        frame.width = mainImage.width;
+        frame.height = mainImage.height;
+        frame.left = mainImage.left;
+        frame.top = mainImage.top;
 
+        canvas.value.requestRenderAll();
+
+      }
+    } else {
+      console.warn('Canvas not initialized.');
+    }
+  }
   const zoomIn = () => {
     if (canvas.value) {
       canvas.value.setZoom(canvas.value.getZoom() * 1.1);
@@ -822,11 +882,15 @@ export const useFabricJs = () => {
     triggerRemoveBackground,
     downloadCanvasImage,
     updateCanvasDimensions,
+    updateFrameSettingsToImageDimension,
     zoomIn,
     zoomOut,
     loadTemplateFromJson,
     exportCurrentCanvas,
     groupLayers,
-    addImageLayerFromUrl
+    addImageLayerFromUrl,
+    textSettings,
+    updateTextSettings,
+    activeLayer, // Expose activeLayer
   };
 };

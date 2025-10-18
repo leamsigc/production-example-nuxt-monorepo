@@ -25,6 +25,7 @@ const {
   undo, // Assuming undo/redo are for general actions, not just menu
   redo,
   clearCanvas,
+  updateFrameSettingsToImageDimension,
   zoomIn,
   zoomOut, // For "New" action
 } = useFabricJs();
@@ -112,13 +113,12 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: t('menu.vertical.frame.frame'),
     icon: 'lucide:frame',
-    onSelect: () => updateFrameSettings({}), // Placeholder, needs specific frame logic
     children: [
       [
         {
           label: t('menu.vertical.frame.custom'),
           icon: 'lucide:frame',
-          onSelect: () => updateFrameSettings({}),
+          onSelect: () => updateFrameSettingsToImageDimension(),
         },
         {
           label: t('menu.vertical.frame.facebook'),
