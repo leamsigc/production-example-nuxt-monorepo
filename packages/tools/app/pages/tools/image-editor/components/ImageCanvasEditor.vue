@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import { CorePlugin } from '../composables/editor/CorePlugin';
+import { GroupPlugin } from '../composables/editor/GroupPlugin';
+import { HistoryPlugin } from '../composables/editor/HistoryPlugin';
+import { HooksPlugin } from '../composables/editor/HooksPlugin';
+import { ToolsPlugin } from '../composables/editor/ToolsPlugin';
 import { useFabricJs } from '../composables/useFabricJs';
 
 
@@ -13,17 +18,26 @@ import { useFabricJs } from '../composables/useFabricJs';
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
-const { run, addImageLayer, addImageLayerFromUrl } = useFabricJs();
+const { run, addImageLayer, addImageLayerFromUrl, getCanvasPlugin, editor } = useFabricJs();
 const canvas = useTemplateRef('canvas');
 
 const files = ref<File>();
 
 const route = useRoute();
-
 run(canvas);
 
+
+
 onMounted(async () => {
+  if (editor.value) {
+    editor.value.use(CorePlugin);
+    editor.value.use(ToolsPlugin);
+    editor.value.use(HistoryPlugin);
+    editor.value.use(HooksPlugin);
+    editor.value.use(GroupPlugin);
+  }
   const imageId = route.query.imageId as string;
+
 
   if (imageId) {
     try {

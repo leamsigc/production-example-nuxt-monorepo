@@ -27,6 +27,7 @@ const {
   clearCanvas,
   zoomIn,
   zoomOut, // For "New" action
+  editor
 } = useFabricJs();
 
 import type { DropdownMenuItem } from '@nuxt/ui'
@@ -112,7 +113,6 @@ const menuItems = computed<DropdownMenuItem[]>(() => [
   {
     label: t('menu.vertical.frame.frame'),
     icon: 'lucide:frame',
-    onSelect: () => updateFrameSettings({}), // Placeholder, needs specific frame logic
     children: [
       [
         {
