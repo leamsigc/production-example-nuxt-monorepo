@@ -28,7 +28,7 @@ export class CorePlugin extends BaseFabricPlugin {
   readonly pluginName = 'core';
   readonly hooks = [""]; // Keep existing hooks property if it's intended
 
-  static apis = [
+  override readonly exposedMethods = [
     'big',
     'small',
     'auto',
@@ -73,6 +73,7 @@ export class CorePlugin extends BaseFabricPlugin {
     this._bindWheel();
 
   }
+
 
   override onCanvasInit(canvas: Canvas) {
   }

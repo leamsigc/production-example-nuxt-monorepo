@@ -15,6 +15,7 @@ export interface FabricPlugin {
   readonly pluginName: string;
   readonly events?: string[];
   readonly hooks?: EditorHookType[];
+  readonly exposedMethods?: string[];
 
   onRegister?(editor: FabricEditor): void;
   onDestroy?(): void;
@@ -35,6 +36,8 @@ export abstract class BaseFabricPlugin implements FabricPlugin {
   abstract readonly pluginName: string;
   public canvas: Canvas;
   public editor: FabricEditor;
+  public exposedMethods?: string[] | undefined;
+  [key: string]: any; // Add index signature
 
   // Explicitly declare optional methods from FabricPlugin
   onRegister?(editor: FabricEditor): void;
@@ -67,6 +70,7 @@ export class FabricEditor extends EventEmitter {
   private canvas: Canvas | null = null;
   private plugins: Map<string, FabricPlugin> = new Map();
   public state: Ref<EditorState> = ref('Init');
+  [key: string]: any;
 
   public activeLayer: Ref<FabricObjectWithName | null> = ref(null);
   public mainFrameSize: Ref<{ width: number; height: number }> = ref({ width: 1242, height: 1660 });
@@ -149,14 +153,6 @@ export class FabricEditor extends EventEmitter {
     }
   }
 
-  newEditor() {
-    if (this.canvas) {
-      this.canvas.clear();
-      this.state.value = 'New';
-      this.canvas.requestRenderAll();
-    }
-  }
-
   use(pluginClass: FabricPluginConstructor, options?: any): this {
     const pluginName = pluginClass.pluginName;
     if (this.plugins.has(pluginName)) {
@@ -166,6 +162,11 @@ export class FabricEditor extends EventEmitter {
     const plugin = new pluginClass(this.canvas!, this, options);
     this.plugins.set(pluginName, plugin);
     plugin.onRegister?.(this);
+
+    const exposedMethods = plugin.exposedMethods || [];
+    exposedMethods.forEach(method => {
+      this[method] = plugin[method].bind(plugin, [...arguments]);
+    });
 
     return this;
   }
