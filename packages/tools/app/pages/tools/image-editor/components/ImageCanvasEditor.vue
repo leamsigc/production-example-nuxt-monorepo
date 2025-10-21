@@ -24,8 +24,8 @@ const canvas = useTemplateRef('canvas');
 const files = ref<File>();
 
 const route = useRoute();
-run(canvas);
 
+run(canvas);
 
 
 onMounted(async () => {

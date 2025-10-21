@@ -42,14 +42,12 @@ export class CorePlugin extends BaseFabricPlugin {
   workspaceEl!: HTMLElement;
   workspace: null | Rect;
   resizeObserver!: ResizeObserver;
-  option: { width: number; height: number } = { width: 1200, height: 675 };
   zoomRatio: number;
 
   constructor(canvas: Canvas, editor: FabricEditor) {
     super(canvas, editor);
 
     this.workspace = null;
-    this.option = { width: 1200, height: 675 };
     this.zoomRatio = 0.85;
 
   }
@@ -57,7 +55,6 @@ export class CorePlugin extends BaseFabricPlugin {
   protected init() {
 
     this.workspace = null;
-    this.option = { width: 1200, height: 675 };
     this.zoomRatio = 0.85;
     // This method is now empty as canvas-dependent initialization moved to onCanvasInit
     const workspaceEl = document.querySelector('#workspace') as HTMLElement;
@@ -79,16 +76,17 @@ export class CorePlugin extends BaseFabricPlugin {
   }
 
   _initBackground() {
+    const { width, height } = this.editor.globalSettings.value;
     this.canvas.setDimensions({
-      width: this.option.width || 1200,
-      height: this.option.height || 675,
+      width,
+      height,
     });
   }
 
   _initWorkspace() {
-    const { width, height } = this.option;
+    const { width, height, fill } = this.editor.globalSettings.value;
     const workspace = new Rect({
-      fill: 'rgba(255,255,255,1)',
+      fill: fill,
       width,
       height,
       id: 'workspace',
@@ -105,6 +103,7 @@ export class CorePlugin extends BaseFabricPlugin {
     // if (this.canvas.clearHistory) {
     //   this.canvas.clearHistory();
     // }
+
     this.auto();
   }
 
@@ -151,8 +150,8 @@ export class CorePlugin extends BaseFabricPlugin {
 
   setSize(width: number, height: number) {
     this._initBackground();
-    this.option.width = width;
-    this.option.height = height;
+    this.editor.globalSettings.value.width = width;
+    this.editor.globalSettings.value.height = height;
     this.workspace = this.canvas
       .getObjects()
       .find((item: FabricObjectWithName) => item.id === 'workspace') as Rect;
@@ -218,9 +217,13 @@ export class CorePlugin extends BaseFabricPlugin {
     const workspace = this.getWorkspace();
     workspace?.set('fill', color);
   }
+  getWorkspaceBg() {
+    const workspace = this.getWorkspace();
+    return workspace?.get('fill');
+  }
 
   override onDestroy() {
-    this.resizeObserver.disconnect();
+    // this.resizeObserver.disconnect();
     this.canvas.off(); // Disconnect all canvas events
     console.log('CorePlugin destroyed');
   }

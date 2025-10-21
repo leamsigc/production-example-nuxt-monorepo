@@ -147,6 +147,10 @@ export class ToolsPlugin extends BaseFabricPlugin {
     stroke?: string;
     strokeWidth?: number;
   }) {
+    this.editor.setSize(
+      this.editor.globalSettings.value.width,
+      this.editor.globalSettings.value.height,
+    );
     this.editor.globalSettings.value = {
       width: settings.width || this.editor.globalSettings.value.width,
       height: settings.height || this.editor.globalSettings.value.height,
@@ -154,25 +158,6 @@ export class ToolsPlugin extends BaseFabricPlugin {
       stroke: settings.stroke || this.editor.globalSettings.value.stroke,
       strokeWidth: settings.strokeWidth || this.editor.globalSettings.value.strokeWidth,
     };
-    this.editor.mainFrameSize.value = {
-      width: this.editor.globalSettings.value.width || this.editor.mainFrameSize.value.width,
-      height: this.editor.globalSettings.value.height || this.editor.mainFrameSize.value.height,
-    };
-    if (this.canvas) {
-      const frame = this.canvas
-        .getObjects()
-        .find((obj: FabricObjectWithName) => obj.id === 'workspace');
-      if (frame) {
-        frame.set('width', this.editor.globalSettings.value.width);
-        frame.set('height', this.editor.globalSettings.value.height);
-        if (settings.fill !== undefined) frame.set('fill', this.editor.globalSettings.value.fill);
-        if (settings.stroke !== undefined) frame.set('stroke', this.editor.globalSettings.value.stroke);
-        if (settings.strokeWidth !== undefined)
-          frame.set('strokeWidth', this.editor.globalSettings.value.strokeWidth);
-        this.canvas.centerObject(frame);
-        this.canvas.requestRenderAll();
-      }
-    }
   }
 
   flipHorizontal(): void {

@@ -16,7 +16,8 @@
 type Props = {
   filterType: 'all' | 'image' | 'video' | 'document'
   searchQuery: string
-  viewMode: 'grid' | 'list'
+  viewMode: 'grid' | 'list',
+  hideViewMode?: boolean
 }
 
 type Emits = {
@@ -25,7 +26,12 @@ type Emits = {
   'update:viewMode': [value: 'grid' | 'list']
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  filterType: 'all',
+  searchQuery: '',
+  viewMode: 'grid',
+  hideViewMode: false
+})
 const emit = defineEmits<Emits>()
 const { t } = useI18n()
 
@@ -68,7 +74,7 @@ const filterOptions = [
       </div>
 
       <!-- View Mode Toggle -->
-      <div class="flex items-center gap-2 ml-auto">
+      <div class="flex items-center gap-2 ml-auto" v-if="!hideViewMode">
         <label class="text-sm font-medium">{{ t('sections.filters.view') }}</label>
         <div class="flex border rounded-lg">
           <UButton variant="ghost" size="sm" :class="{ 'bg-muted': viewMode === 'grid' }" @click="viewMode = 'grid'">

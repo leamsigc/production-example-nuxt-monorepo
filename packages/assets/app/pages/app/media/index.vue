@@ -187,7 +187,7 @@ const handleDeleteAsset = (asset: Asset[]) => {
       @upload-assets="showUploader = true" />
 
     <!-- Business Selection Warning -->
-    <UAlert v-if="!hasSelectedBusiness" color="info" variant="soft" icon="lucide:info" class="mb-4">
+    <UAlert v-if="!hasSelectedBusiness" color="neutral" variant="soft" icon="lucide:info" class="mb-4">
       <template #title>
         {{ t('alerts.select_business.title') }}
       </template>
@@ -218,7 +218,8 @@ const handleDeleteAsset = (asset: Asset[]) => {
       <MediaStats :asset-stats="assetStats" :storage-usage="storageUsage" />
 
       <!-- Filters and Search -->
-      <MediaFilters v-model:filter-type="filterType" v-model:search-query="searchQuery" v-model:view-mode="viewMode" />
+      <MediaFilters v-model:filter-type="filterType" v-model:search-query="searchQuery" v-model:view-mode="viewMode"
+        hide-view-mode />
 
       <!-- Asset Gallery -->
       <UCard class="p-6">

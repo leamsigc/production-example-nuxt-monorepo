@@ -1,5 +1,5 @@
 import { ref, onMounted, onUnmounted, type Ref } from 'vue';
-import { Canvas, FabricObject, InteractiveFabricObject, type FabricObjectProps, type CanvasEvents } from 'fabric';
+import { Canvas, FabricObject, InteractiveFabricObject, type FabricObjectProps, type CanvasEvents, type TClassProperties } from 'fabric';
 import EventEmitter from 'events';
 
 // Define a type that extends FabricObject to include a 'name' property
@@ -73,14 +73,26 @@ export class FabricEditor extends EventEmitter {
   [key: string]: any;
 
   public activeLayer: Ref<FabricObjectWithName | null> = ref(null);
-  public mainFrameSize: Ref<{ width: number; height: number }> = ref({ width: 1242, height: 1660 });
   public globalSettings: Ref<{ width: number; height: number, fill: string, stroke: string, strokeWidth: number }> = ref({
-    width: 1200,
-    height: 675,
+    width: 1242,
+    height: 1660,
     fill: '#1DA1F2',
     stroke: '#ccc',
     strokeWidth: 1,
   });
+  public interactiveDefaults: Partial<
+    TClassProperties<InteractiveFabricObject>
+  > = {
+      cornerStyle: 'circle',
+      cornerStrokeColor: 'blue',
+      cornerColor: 'lightblue',
+      padding: 10,
+      transparentCorners: false,
+      cornerDashArray: [2, 2],
+      borderColor: 'orange',
+      borderDashArray: [3, 1, 3],
+      borderScaleFactor: 2,
+    };
 
   constructor(elementRef: Ref<HTMLCanvasElement | null>) {
     super();
@@ -107,15 +119,7 @@ export class FabricEditor extends EventEmitter {
 
     InteractiveFabricObject.ownDefaults = {
       ...InteractiveFabricObject.ownDefaults,
-      cornerStyle: 'circle',
-      cornerStrokeColor: 'blue',
-      cornerColor: 'lightblue',
-      padding: 10,
-      transparentCorners: false,
-      cornerDashArray: [2, 2],
-      borderColor: 'orange',
-      borderDashArray: [3, 1, 3],
-      borderScaleFactor: 2,
+      ...this.interactiveDefaults
     };
 
     this.state.value = 'New';
@@ -165,6 +169,10 @@ export class FabricEditor extends EventEmitter {
 
     const exposedMethods = plugin.exposedMethods || [];
     exposedMethods.forEach(method => {
+      // Check if the method exists on the plugin
+      if (!plugin[method]) {
+        throw new Error(`Method ${method} not found on plugin ${pluginName}`);
+      }
       this[method] = plugin[method].bind(plugin, [...arguments]);
     });
 
