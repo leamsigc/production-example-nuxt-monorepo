@@ -40,7 +40,8 @@ export default defineNuxtConfig({
     Nuxt UI RELATED CONFIGS
    */
   css: [
-    join(currentDir, './app/assets/css/main.css')
+    join(currentDir, './app/assets/css/main.css'),
+    join(currentDir, './app/assets/css/full-calendar.css'),
   ],
   ui: {
     fonts: true,

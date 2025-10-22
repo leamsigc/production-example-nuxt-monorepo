@@ -241,13 +241,13 @@ Example :
     - [ ] Create the components that will be used in the Contact page
     - [ ] Create the components that will be used in the Privacy policy page
     - [ ] Create the components that will be used in the Terms of service page
-    - [ ] Create the components that will be used in the Blog page
-    - [ ] Create the components that will be used in the Blog post page
+    - [x] Create the components that will be used in the Blog page
+    - [x] Create the components that will be used in the Blog post page
 
 
-- [] Create the static content layer
+- [x] Create the static content layer
     - [ ] Create Home, About, Contact, Privacy policy, Terms of service
-    - [ ] Create Blog posts for each task that is done.
+    - [x] Create Blog posts for each task that is done.
 
 
 - [ ] Create the tools layer
@@ -260,14 +260,14 @@ Example :
     - [ ] Create the tools for Text over image
 
 
-- [ ] Set up the Database Layer
-  - [ ] Create User model
-  - [ ] Create Post model
-  - [ ] Create Schedule model
-  - [ ] Create Task model
-  - [ ] Create Group model
-  - [ ] Create Message model
-  - [ ] Create Platform model
+- [x] Set up the Database Layer
+  - [x] Create User model
+  - [x] Create Post model
+  - [x] Create Schedule model
+  - [x] Create Task model
+  - [x] Create Group model
+  - [x] Create Message model
+  - [x] Create Platform model
 
 
 
@@ -283,8 +283,8 @@ Example :
     - [ ] Create template email for Post Schedule reminder
 
 - [ ] Set up the Auth Layer
-    - [ ] Create login page
-    - [ ] Create signup page
+    - [x] Create login page
+    - [x] Create signup page
     - [ ] Create forgot password page
     - [ ] Create reset password page
     - [ ] Create confirm email page
@@ -292,7 +292,7 @@ Example :
     - [ ] Create unsubscribe page
     - [ ] Create profile page
     - [ ] Create settings page
-    - [ ] Set up the middleware for the auth
+    - [x] Set up the middleware for the auth
     - [ ] Set up the middleware for the admin
     - [ ] Set up the middleware for the guest
     - [ ] Set up the middleware for the user
@@ -342,7 +342,7 @@ Example :
     - [ ] Create the api for analytics
     - [ ] Create the UI for the analytics
 
-- [ ] Set up the assets Layer
-    - [ ] Create the api for CRUD operations for assets
-    - [ ] Create the UI for the CRUD operations for the assets
-    - [ ] Create UI & API to create template assets
+- [x] Set up the assets Layer
+    - [x] Create the api for CRUD operations for assets
+    - [x] Create the UI for the CRUD operations for the assets
+    - [] Create UI & API to create template assets

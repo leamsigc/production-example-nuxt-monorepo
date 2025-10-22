@@ -12,11 +12,19 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@local-monorepo/db": "workspace:*",
+    "@fullcalendar/daygrid": "^6.1.19",
+    "@fullcalendar/interaction": "^6.1.19",
+    "@fullcalendar/list": "^6.1.19",
+    "@fullcalendar/multimonth": "^6.1.19",
+    "@fullcalendar/scrollgrid": "^6.1.19",
+    "@fullcalendar/timegrid": "^6.1.19",
     "@local-monorepo/auth": "workspace:*",
+    "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*"
   },
   "devDependencies": {
+    "@fullcalendar/core": "^6.1.19",
+    "@fullcalendar/vue3": "^6.1.19",
     "@nuxt/eslint": "latest",
     "eslint": "^9.35.0",
     "nuxt": "^4.1.1",
