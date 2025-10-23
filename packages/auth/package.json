@@ -15,7 +15,7 @@
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
     "@local-monorepo/email": "workspace:*",
-    "better-auth": "^1.3.27",
+    "better-auth": "^1.3.28",
     "better-sqlite3": "^12.4.1",
     "@nuxtjs/i18n": "^10.1.1"
   },
@@ -24,6 +24,7 @@
     "eslint": "^9.37.0",
     "nuxt": "^4.1.3",
     "typescript": "^5.9.3",
-    "vue": "latest"
+    "vue": "latest",
+    "nuxt-auth-utils": "^0.5.25"
   }
 }

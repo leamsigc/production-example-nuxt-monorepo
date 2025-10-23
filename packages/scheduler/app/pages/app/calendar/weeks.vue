@@ -3,7 +3,6 @@
 <script lang="ts" setup>
 import type { DateClickArg } from '@fullcalendar/interaction/index.js';
 import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
-
 /**
  *
  * Component Description:Individual preview page for BaseBannerPromo component
@@ -17,9 +16,9 @@ import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
  */
 const { t } = useI18n()
 useHead({
-  title: t('seo_title_all'),
+  title: t('seo_title_week'),
   meta: [
-    { name: 'description', content: t('seo_description_all') }
+    { name: 'description', content: t('seo_description_week') }
   ]
 })
 const toast = useToast()
@@ -42,7 +41,6 @@ const events = [
     end: `${useDateFormat("2025-11-31", "YYYY-MM-DD").value}`,
   },
 ]
-
 const HandleDateClicked = (event: DateClickArg) => {
   toast.add({
     title: 'Date Clicked',
@@ -50,11 +48,12 @@ const HandleDateClicked = (event: DateClickArg) => {
     color: 'success'
   })
 }
+
 </script>
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <SchedulerPageHeader />
-    <ScheduleCalendar :events="events" @dateClick="HandleDateClicked" />
+    <ScheduleCalendar active-view="timeGridWeek" :events="events" @dateClick="HandleDateClicked" />
   </div>
 </template>
 

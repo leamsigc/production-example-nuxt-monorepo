@@ -61,6 +61,11 @@ html {
   --radius: 0.5rem;
 
   --reka-navigation-menu-viewport-width:900px;
+
+  --color-border: var(--color-gray-300);
+  --color-input: var(--color-gray-300);
+
+  --color-muted: hsla(0, 0%, 72%, 0.2);
 }
 
 .dark {
@@ -92,6 +97,8 @@ html {
   --input: 12 6.5% 15.1%;
   --ring: 20.5 90.2% 48.2%;
   --color-border: var(--color-gray-800);
+  --color-input: var(--color-gray-800);
+  --color-muted: hsla(12, 6%, 15%, 0.7);
 }
 
 /* Base styles */
@@ -277,4 +284,10 @@ body {
 
 .asset-overlay-button:nth-child(3) {
   transition-delay: 0.3s;
+}
+
+.fc-daygrid-day-bg{
+  position: absolute;
+  inset: 0;
+  /* background: rgba(0, 0, 0, .6); */
 }

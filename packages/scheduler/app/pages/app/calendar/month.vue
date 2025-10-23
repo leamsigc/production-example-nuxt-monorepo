@@ -17,9 +17,9 @@ import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
  */
 const { t } = useI18n()
 useHead({
-  title: t('seo_title_all'),
+  title: t('seo_title_month'),
   meta: [
-    { name: 'description', content: t('seo_description_all') }
+    { name: 'description', content: t('seo_description_month') }
   ]
 })
 const toast = useToast()

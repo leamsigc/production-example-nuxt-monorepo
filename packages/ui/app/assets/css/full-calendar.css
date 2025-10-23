@@ -23,7 +23,7 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
   --fc-button-hover-bg-color: var(--color-accent);
   --fc-button-hover-border-color: var(--color-input);
   --fc-button-active-bg-color: var(--color-accent);
-  --fc-button-active-border-color: var(--color-input);
+  --fc-button-active-border-color: var(--color-slate-400);
 
   --fc-event-bg-color: var(--color-primary);
   --fc-event-border-color: var(--color-input);
@@ -56,9 +56,9 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
     }
   }
   .fc-button-primary {
-    @apply z-10 focus:shadow-none focus:ring-[3px] focus:ring-[var(--ring)/50%];
+    @apply z-10 focus:shadow-none focus:ring-[3px] focus:ring-[var(--ring)/50%] border-slate-300 dark:border-slate-700 ;
     &.fc-button-active {
-      @apply z-10 focus:shadow-none focus:ring-[3px] focus:ring-[var(--ring)/50%];
+      @apply z-10 focus:shadow-none focus:ring-[3px] focus:ring-[var(--ring)/50%] border-slate-400 dark:border-slate-600;
     }
   }
 }

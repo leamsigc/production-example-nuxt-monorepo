@@ -15,13 +15,15 @@ import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+
 const { t } = useI18n()
 useHead({
-  title: t('seo_title_all'),
+  title: t('seo_title_day'),
   meta: [
-    { name: 'description', content: t('seo_description_all') }
+    { name: 'description', content: t('seo_description_day') }
   ]
 })
+
 const toast = useToast()
 const date = useDateFormat(useNow(), "YYYY-MM-DD");
 const events = [
@@ -42,7 +44,6 @@ const events = [
     end: `${useDateFormat("2025-11-31", "YYYY-MM-DD").value}`,
   },
 ]
-
 const HandleDateClicked = (event: DateClickArg) => {
   toast.add({
     title: 'Date Clicked',
@@ -54,7 +55,7 @@ const HandleDateClicked = (event: DateClickArg) => {
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <SchedulerPageHeader />
-    <ScheduleCalendar :events="events" @dateClick="HandleDateClicked" />
+    <ScheduleCalendar active-view="timeGridDay" :events="events" @dateClick="HandleDateClicked" />
   </div>
 </template>
 

@@ -23,7 +23,8 @@ export default defineNuxtConfig({
     '@local-monorepo/email',
     '@local-monorepo/assets',
     '@local-monorepo/content',
-    '@local-monorepo/tools'
+    '@local-monorepo/tools',
+    '@local-monorepo/scheduler'
   ],
 
   modules: ['@nuxtjs/seo', '@nuxtjs/i18n'],

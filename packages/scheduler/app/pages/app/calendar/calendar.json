@@ -1,0 +1,257 @@
+{
+  "en": {
+    "title": "Content Calendar",
+    "description": "Schedule and manage your social media posts",
+    "seo_title_day": "Day Calendar",
+    "seo_description_day": "View and manage your scheduled posts by day",
+    "seo_title_week": "Week Calendar",
+    "seo_description_week": "View and manage your scheduled posts by week",
+    "seo_title_month": "Month Calendar",
+    "seo_description_month": "View and manage your scheduled posts by month",
+    "seo_title_all": "All Posts Calendar",
+    "seo_description_all": "View and manage all your scheduled posts",
+    "buttons": {
+      "dashboard": "Dashboard",
+      "schedule_post": "Schedule Post",
+      "month": "Month",
+      "week": "Week"
+    },
+    "filters": {
+      "title": "Filters",
+      "business": "Business",
+      "platforms": "Platforms",
+      "status": "Status",
+      "all_businesses": "All Businesses",
+      "all_platforms": "All Platforms",
+      "all_statuses": "All Statuses"
+    },
+    "post_status": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "published": "Published",
+      "failed": "Failed"
+    },
+    "actions": {
+      "move_post": "Move Post",
+      "edit_post": "Edit Post",
+      "delete_post": "Delete Post",
+      "view_post": "View Post"
+    },
+    "messages": {
+      "post_moved": "Post Moved",
+      "post_rescheduled": "Post rescheduled to {date}",
+      "move_failed": "Move Failed",
+      "move_failed_description": "Failed to reschedule post. Please try again.",
+      "post_deleted": "Post Deleted",
+      "post_deleted_description": "The post has been successfully deleted.",
+      "delete_failed": "Delete Failed",
+      "delete_failed_description": "Failed to delete the post. Please try again.",
+      "no_posts": "No posts scheduled for this period",
+      "loading": "Loading calendar data..."
+    },
+    "modal": {
+      "schedule_post": {
+        "title": "Schedule New Post",
+        "description": "Create and schedule a new social media post"
+      }
+    }
+  },
+  "es": {
+    "title": "Calendario de Contenido",
+    "description": "Programa y gestiona tus publicaciones en redes sociales",
+    "seo_title_day": "Calendario Diario",
+    "seo_description_day": "Ver y gestionar tus publicaciones programadas por día",
+    "seo_title_week": "Calendario Semanal",
+    "seo_description_week": "Ver y gestionar tus publicaciones programadas por semana",
+    "seo_title_month": "Calendario Mensual",
+    "seo_description_month": "Ver y gestionar tus publicaciones programadas por mes",
+    "seo_title_all": "Calendario de Todas las Publicaciones",
+    "seo_description_all": "Ver y gestionar todas tus publicaciones programadas",
+    "buttons": {
+      "dashboard": "Panel de Control",
+      "schedule_post": "Programar Publicación",
+      "month": "Mes",
+      "week": "Semana"
+    },
+    "navigation": {
+      "previous_month": "Mes Anterior",
+      "next_month": "Mes Siguiente"
+    },
+    "view_modes": {
+      "month": "Mes",
+      "week": "Semana",
+      "day": "Día"
+    },
+    "filters": {
+      "title": "Filtros",
+      "business": "Negocio",
+      "platforms": "Plataformas",
+      "status": "Estado",
+      "all_businesses": "Todos los Negocios",
+      "all_platforms": "Todas las Plataformas",
+      "all_statuses": "Todos los Estados"
+    },
+    "post_status": {
+      "draft": "Borrador",
+      "scheduled": "Programado",
+      "published": "Publicado",
+      "failed": "Fallido"
+    },
+    "actions": {
+      "move_post": "Mover Publicación",
+      "edit_post": "Editar Publicación",
+      "delete_post": "Eliminar Publicación",
+      "view_post": "Ver Publicación"
+    },
+    "messages": {
+      "post_moved": "Publicación Movida",
+      "post_rescheduled": "Publicación reprogramada para {date}",
+      "move_failed": "Movimiento Fallido",
+      "move_failed_description": "Error al reprogramar la publicación. Inténtalo de nuevo.",
+      "post_deleted": "Publicación Eliminada",
+      "post_deleted_description": "La publicación ha sido eliminada exitosamente.",
+      "delete_failed": "Error al Eliminar",
+      "delete_failed_description": "Error al eliminar la publicación. Inténtalo de nuevo.",
+      "no_posts": "No hay publicaciones programadas para este período",
+      "loading": "Cargando datos del calendario..."
+    },
+    "modal": {
+      "schedule_post": {
+        "title": "Programar Nueva Publicación",
+        "description": "Crear y programar una nueva publicación en redes sociales"
+      }
+    }
+  },
+  "de": {
+    "title": "Inhaltskalender",
+    "description": "Planen und verwalten Sie Ihre Social-Media-Beiträge",
+    "seo_title_day": "Tageskalender",
+    "seo_description_day": "Geplante Beiträge nach Tag anzeigen und verwalten",
+    "seo_title_week": "Wochenkalender",
+    "seo_description_week": "Geplante Beiträge nach Woche anzeigen und verwalten",
+    "seo_title_month": "Monatskalender",
+    "seo_description_month": "Geplante Beiträge nach Monat anzeigen und verwalten",
+    "seo_title_all": "Alle Beiträge Kalender",
+    "seo_description_all": "Alle geplanten Beiträge anzeigen und verwalten",
+    "buttons": {
+      "dashboard": "Dashboard",
+      "schedule_post": "Beitrag Planen",
+      "month": "Monat",
+      "week": "Woche"
+    },
+    "navigation": {
+      "previous_month": "Vorheriger Monat",
+      "next_month": "Nächster Monat"
+    },
+    "view_modes": {
+      "month": "Monat",
+      "week": "Woche",
+      "day": "Tag"
+    },
+    "filters": {
+      "title": "Filter",
+      "business": "Unternehmen",
+      "platforms": "Plattformen",
+      "status": "Status",
+      "all_businesses": "Alle Unternehmen",
+      "all_platforms": "Alle Plattformen",
+      "all_statuses": "Alle Status"
+    },
+    "post_status": {
+      "draft": "Entwurf",
+      "scheduled": "Geplant",
+      "published": "Veröffentlicht",
+      "failed": "Fehlgeschlagen"
+    },
+    "actions": {
+      "move_post": "Beitrag Verschieben",
+      "edit_post": "Beitrag Bearbeiten",
+      "delete_post": "Beitrag Löschen",
+      "view_post": "Beitrag Anzeigen"
+    },
+    "messages": {
+      "post_moved": "Beitrag Verschoben",
+      "post_rescheduled": "Beitrag neu geplant für {date}",
+      "move_failed": "Verschieben Fehlgeschlagen",
+      "move_failed_description": "Fehler beim Neuterminieren des Beitrags. Bitte versuchen Sie es erneut.",
+      "post_deleted": "Beitrag Gelöscht",
+      "post_deleted_description": "Der Beitrag wurde erfolgreich gelöscht.",
+      "delete_failed": "Löschen Fehlgeschlagen",
+      "delete_failed_description": "Fehler beim Löschen des Beitrags. Bitte versuchen Sie es erneut.",
+      "no_posts": "Keine Beiträge für diesen Zeitraum geplant",
+      "loading": "Kalenderdaten werden geladen..."
+    },
+    "modal": {
+      "schedule_post": {
+        "title": "Neuen Beitrag Planen",
+        "description": "Erstellen und planen Sie einen neuen Social-Media-Beitrag"
+      }
+    }
+  },
+  "fr": {
+    "title": "Calendrier de Contenu",
+    "description": "Planifiez et gérez vos publications sur les réseaux sociaux",
+    "seo_title_day": "Calendrier Journalier",
+    "seo_description_day": "Afficher et gérer vos publications programmées par jour",
+    "seo_title_week": "Calendrier Hebdomadaire",
+    "seo_description_week": "Afficher et gérer vos publications programmées par semaine",
+    "seo_title_month": "Calendrier Mensuel",
+    "seo_description_month": "Afficher et gérer vos publications programmées par mois",
+    "seo_title_all": "Calendrier de Toutes les Publications",
+    "seo_description_all": "Afficher et gérer toutes vos publications programmées",
+    "buttons": {
+      "dashboard": "Tableau de Bord",
+      "schedule_post": "Programmer Publication",
+      "month": "Mois",
+      "week": "Semaine"
+    },
+    "navigation": {
+      "previous_month": "Mois Précédent",
+      "next_month": "Mois Suivant"
+    },
+    "view_modes": {
+      "month": "Mois",
+      "week": "Semaine",
+      "day": "Jour"
+    },
+    "filters": {
+      "title": "Filtres",
+      "business": "Entreprise",
+      "platforms": "Plateformes",
+      "status": "Statut",
+      "all_businesses": "Toutes les Entreprises",
+      "all_platforms": "Toutes les Plateformes",
+      "all_statuses": "Tous les Statuts"
+    },
+    "post_status": {
+      "draft": "Brouillon",
+      "scheduled": "Programmé",
+      "published": "Publié",
+      "failed": "Échoué"
+    },
+    "actions": {
+      "move_post": "Déplacer Publication",
+      "edit_post": "Modifier Publication",
+      "delete_post": "Supprimer Publication",
+      "view_post": "Voir Publication"
+    },
+    "messages": {
+      "post_moved": "Publication Déplacée",
+      "post_rescheduled": "Publication reprogrammée pour {date}",
+      "move_failed": "Déplacement Échoué",
+      "move_failed_description": "Échec de la reprogrammation de la publication. Veuillez réessayer.",
+      "post_deleted": "Publication Supprimée",
+      "post_deleted_description": "La publication a été supprimée avec succès.",
+      "delete_failed": "Suppression Échouée",
+      "delete_failed_description": "Échec de la suppression de la publication. Veuillez réessayer.",
+      "no_posts": "Aucune publication programmée pour cette période",
+      "loading": "Chargement des données du calendrier..."
+    },
+    "modal": {
+      "schedule_post": {
+        "title": "Programmer Nouvelle Publication",
+        "description": "Créer et programmer une nouvelle publication sur les réseaux sociaux"
+      }
+    }
+  }
+}
