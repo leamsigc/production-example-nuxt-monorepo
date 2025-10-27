@@ -26,13 +26,13 @@ export const useConnectionManager = () => {
       { name: 'Google Business', icon: 'logos:google', url: '#' },
     ]
   }
-  const getAllConnections = async () => {
-    // Fetch connection from the api for the current user
-    return connectionList.value;
+  const getAllConnections = async (connections: SocialMediaAccount[]) => {
+    allConnections.value = connections
   }
 
   return {
     connectionList,
+    allConnections,
     setConnectionList,
     getAllConnections
   }

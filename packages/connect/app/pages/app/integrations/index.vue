@@ -15,8 +15,14 @@
 import ConnectIntegrationCard from './components/ConnectIntegrationCard.vue';
 import ConnectAddAccount from './components/ConnectAddAccount.vue';
 import { useConnectionManager } from './composables/useConnectionManager';
+import type { SocialMediaAccount } from '#layers/BaseDB/db/schema';
 
-const { getAllConnections } = useConnectionManager();
+const { getAllConnections, allConnections } = useConnectionManager();
+const { data } = await useFetch<SocialMediaAccount[]>('/api/v1/social-accounts');
+
+if (data.value) {
+  getAllConnections(data.value);
+}
 
 const { t } = useI18n();
 
@@ -33,8 +39,8 @@ useHead({
     <BasePageHeader :title="t('title')" :description="t('description')" />
     <div class="grid grid-cols-4 gap-5">
       <ConnectAddAccount />
-      <ConnectIntegrationCard name="Twitter" image="https://avatars.githubusercontent.com/u/739984?v=4"
-        icon="logos:twitter" time="2 days ago" connected />
+      <ConnectIntegrationCard v-for="connection in allConnections" :name="connection.accountName" :key="connection.id"
+        image="https://avatars.githubusercontent.com/u/739984?v=4" icon="logos:twitter" time="2 days ago" connected />
     </div>
   </div>
 </template>

@@ -21,6 +21,7 @@ export * from './reviews/reviews'
 export * from './socialMedia/socialMedia'
 export * from './subscriptions/subscriptions'
 export * from './templates/templates'
+export * from './logs/audit'
 
 /***
 * Custom table here

@@ -7,6 +7,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // debug: true,
   devtools: { enabled: true },
   experimental: {
     viteEnvironmentApi: true,

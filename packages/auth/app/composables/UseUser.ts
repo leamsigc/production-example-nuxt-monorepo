@@ -2,11 +2,11 @@ import type { RouteLocationRaw } from 'vue-router'
 import { authClient } from '#layers/BaseAuth/lib/auth-client'
 import type { User } from '#layers/BaseDB/db/schema'
 
+const user = useState<User | null>('auth:user', () => null)
 export function UseUser() {
   const client = authClient
 
   const session = useState('auth:session', () => null as any)
-  const user = useState<User | null>('auth:user', () => null)
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)
 
   const fetchSession = async () => {
