@@ -1,0 +1,109 @@
+{
+  "en": {
+    "title": "Business Management",
+    "description": "Manage your businesses here",
+    "seo_title_all": "Business Management",
+    "seo_description_all": "Manage your businesses here",
+    "states": {
+      "add_business": "Add Business",
+      "no_businesses": "No businesses found",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "form": {
+      "name": "Business Name",
+      "description": "Description",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "website": "Website",
+      "save": "Save Business",
+      "cancel": "Cancel",
+      "name_required": "Business name is required",
+      "email_invalid": "Invalid email address",
+      "website_invalid": "Invalid website URL"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "fr": {
+    "title": "Gestion des entreprises",
+    "description": "Gérez vos entreprises ici",
+    "seo_title_all": "Gestion des entreprises",
+    "seo_description_all": "Gérez vos entreprises ici",
+    "states": {
+      "add_business": "Ajouter une entreprise",
+      "no_businesses": "Aucune entreprise trouvée",
+      "active": "Actif",
+      "inactive": "Inactif"
+    },
+    "form": {
+      "name": "Nom de l'entreprise",
+      "description": "Description",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "website": "Site web",
+      "save": "Enregistrer l'entreprise",
+      "cancel": "Annuler"
+    },
+    "actions": {
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    }
+  },
+  "es": {
+    "title": "Gestión de negocios",
+    "description": "Administra tus negocios aquí",
+    "seo_title_all": "Gestión de negocios",
+    "seo_description_all": "Administra tus negocios aquí",
+    "states": {
+      "add_business": "Agregar negocio",
+      "no_businesses": "No se encontraron negocios",
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "form": {
+      "name": "Nombre del negocio",
+      "description": "Descripción",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "email": "Correo electrónico",
+      "website": "Sitio web",
+      "save": "Guardar negocio",
+      "cancel": "Cancelar"
+    },
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  },
+  "de": {
+    "title": "Unternehmensverwaltung",
+    "description": "Verwalten Sie hier Ihre Unternehmen",
+    "seo_title_all": "Unternehmensverwaltung",
+    "seo_description_all": "Verwalten Sie hier Ihre Unternehmen",
+    "states": {
+      "add_business": "Unternehmen hinzufügen",
+      "no_businesses": "Keine Unternehmen gefunden",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "form": {
+      "name": "Firmenname",
+      "description": "Beschreibung",
+      "address": "Adresse",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "website": "Webseite",
+      "save": "Unternehmen speichern",
+      "cancel": "Abbrechen"
+    },
+    "actions": {
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
+  }
+}

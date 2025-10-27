@@ -1,6 +1,6 @@
 import { businessProfileService } from '#layers/BaseDB/server/services/business-profile.service';
 import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
-import { createBusinessProfileSchema } from '#layers/BaseDB/server/schemas/business-profile.schema';
+import { CreateBusinessProfileSchema } from '#layers/BaseDB/db/schema';
 
 export default defineEventHandler(async (event) => {
   const user = await checkUserIsLogin(event)
@@ -12,11 +12,10 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const body = await readValidatedBody(event, createBusinessProfileSchema.parse);
+  const body = await readValidatedBody(event, CreateBusinessProfileSchema.parse);
 
-  const newBusiness = await businessProfileService.create({
+  const newBusiness = await businessProfileService.create(user.id, {
     ...body,
-    userId: user.id,
   });
 
   return newBusiness;

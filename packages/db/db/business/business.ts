@@ -32,3 +32,14 @@ export const UpdateBusinessProfileSchema = z.object({
   category: z.string(),
   isActive: z.boolean()
 })
+
+export const CreateBusinessProfileSchema = z.object({
+  userId: z.string(),
+  googleBusinessId: z.string(),
+  name: z.string(),
+  description: z.string(),
+  address: z.string(),
+  phone: z.string(),
+  website: z.string(),
+  category: z.string()
+})
