@@ -44,7 +44,7 @@
     "clean": "pnpm -r run clean"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.3.0"
+    "dotenv-cli": "^7.4.4"
   },
   "workspaces": [
     "packages/*"
@@ -52,5 +52,8 @@
   "keywords": [],
   "author": "Ismael Garcia <leamsigc@leamsigc.com>",
   "license": "MIT",
-  "packageManager": "pnpm@10.12.1"
+  "packageManager": "pnpm@10.19.0",
+  "dependencies": {
+    "dayjs": "^1.11.18"
+  }
 }

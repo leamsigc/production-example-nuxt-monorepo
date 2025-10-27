@@ -1,23 +1,18 @@
 /**
  * POST /api/v1/posts/[id]/publish - Publish a post immediately
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { postService } from '~~/server/services/post.service'
-import { QueueUtils } from '~~/server/utils/queueManager'
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { postService } from "#layers/BaseDB/server/services/post.service"
+
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get post ID from route params
     const postId = getRouterParam(event, 'id')
@@ -29,7 +24,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Verify post exists and belongs to user
-    const postResult = await postService.findById(postId, session.user.id)
+    const postResult = await postService.findById(postId, user.id)
     if (!postResult.success) {
       throw createError({
         statusCode: postResult.code === 'NOT_FOUND' ? 404 : 500,
@@ -48,7 +43,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Update post status to scheduled for immediate publishing
-    const updateResult = await postService.updateStatus(postId, session.user.id, 'scheduled')
+    const updateResult = await postService.updateStatus(postId, user.id, 'scheduled')
     if (!updateResult.success) {
       throw createError({
         statusCode: 500,
@@ -71,7 +66,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

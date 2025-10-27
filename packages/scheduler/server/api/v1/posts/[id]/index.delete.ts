@@ -1,17 +1,11 @@
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { postService } from "#layers/BaseDB/server/services/post.service"
 
-import { postService } from '~~/server/services/post.service'
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
-
+    const user = await checkUserIsLogin(event)
     // Get post ID from route params
     const postId = getRouterParam(event, 'id')
     if (!postId) {
@@ -22,7 +16,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Delete post
-    const result = await postService.delete(postId, session.user.id)
+    const result = await postService.delete(postId, user.id)
 
     if (!result.success) {
       if (result.code === 'NOT_FOUND') {

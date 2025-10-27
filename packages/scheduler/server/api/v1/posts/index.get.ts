@@ -5,18 +5,14 @@
  * @version 0.0.1
  */
 
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import type { User } from "#layers/BaseDB/db/schema"
 import { postService } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSessionFromEvent(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get query parameters
     const query = getQuery(event)
@@ -46,7 +42,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Get posts
-    const result = await postService.findByBusinessId(businessId, session.user.id, {
+    const result = await postService.findByBusinessId(businessId, user.id, {
       pagination: { page, limit },
       filters
     })

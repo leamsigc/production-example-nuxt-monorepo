@@ -1,15 +1,10 @@
-import { postService } from "#layers/BaseDB/server/services/post.service"
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { postService, type CreatePostData } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSessionFromEvent(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get request body
     const body = await readBody(event)
@@ -57,7 +52,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Create post
-    const result = await postService.create(session.user.id, postData)
+    const result = await postService.create(user.id, postData)
 
     if (!result.success) {
       throw createError({

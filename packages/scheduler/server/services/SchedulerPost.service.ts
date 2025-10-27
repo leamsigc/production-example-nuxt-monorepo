@@ -1,6 +1,5 @@
 import { type Post, type SocialMediaAccount as Integration } from '#layers/BaseDB/db/schema';
 import { EventEmitter } from 'events';
-import type { SocialMediaAccount as Integration } from '@local-monorepo/db/db/socialMedia/socialMedia';
 
 // Simplified types based on the core requirements for SchedulerPost
 export type { Integration };
@@ -42,27 +41,27 @@ export interface SchedulerPlugin {
   onRegister?(scheduler: SchedulerPost): void;
   onDestroy?(): void;
 
-  validate(postDetails: PostDetails[]): Promise<string[]>;
+  validate(postDetail: PostDetails): Promise<string>;
   post(
     id: string,
     accessToken: string,
-    postDetails: PostDetails[],
+    postDetail: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
   update(
     id: string,
     accessToken: string,
     postId: string,
     updateDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
   addComment(
     id: string,
     accessToken: string,
     postId: string,
     commentDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
 }
 
 export interface SchedulerPluginConstructor {
@@ -91,27 +90,27 @@ export abstract class BaseSchedulerPlugin implements SchedulerPlugin {
     this.scheduler.emit(event, ...args);
   }
 
-  abstract validate(postDetails: PostDetails[]): Promise<string[]>;
+  abstract validate(postDetail: PostDetails): Promise<string>;
   abstract post(
     id: string,
     accessToken: string,
-    postDetails: PostDetails[],
+    postDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
   abstract update(
     id: string,
     accessToken: string,
     postId: string,
-    updateDetails: PostDetails,
+    updateDetail: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
   abstract addComment(
     id: string,
     accessToken: string,
     postId: string,
     commentDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse[]>;
+  ): Promise<PostResponse>;
   abstract addComment(
     id: string,
     accessToken: string,

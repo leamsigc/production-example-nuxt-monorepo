@@ -1,22 +1,18 @@
 /**
  * GET /api/v1/posts/[id] - Get a specific post by ID
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { postService } from '~~/server/services/post.service'
+import { postService } from "#layers/BaseDB/server/services/post.service"
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get post ID from route params
     const postId = getRouterParam(event, 'id')
@@ -32,7 +28,7 @@ export default defineEventHandler(async (event) => {
     const includePlatforms = query.includePlatforms === 'true'
 
     // Get post
-    const result = await postService.findById(postId, session.user.id, includePlatforms)
+    const result = await postService.findById(postId, user.id, includePlatforms)
 
     if (!result.success) {
       if (result.code === 'NOT_FOUND') {
@@ -41,7 +37,7 @@ export default defineEventHandler(async (event) => {
           statusMessage: 'Post not found'
         })
       }
-      
+
       throw createError({
         statusCode: 500,
         statusMessage: result.error || 'Failed to fetch post'
@@ -56,7 +52,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

@@ -1,27 +1,22 @@
 /**
  * POST /api/v1/posts/format - Format post content for specific platforms
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { socialMediaAccountService } from '~~/server/services/social-media-account.service'
-import type { PostContent } from '~~/server/utils/publishing'
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { socialMediaAccountService } from "#layers/BaseDB/server/services/social-media-account.service"
+import type { PostContent } from "#layers/BaseDB/server/services/types"
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get request body
     const body = await readBody(event)
-    
+
     if (!body.content) {
       throw createError({
         statusCode: 400,
@@ -56,7 +51,7 @@ export default defineEventHandler(async (event) => {
     if (body.platforms) {
       // Format for specific platforms
       const variations = suggestPlatformVariations(content, body.platforms)
-      
+
       for (const platform of body.platforms) {
         const formatted = formatContentForPlatform(platform, content, options)
         formattedResults[platform] = {
@@ -71,7 +66,7 @@ export default defineEventHandler(async (event) => {
     if (body.socialAccountIds) {
       // Get social accounts and format for their platforms
       const accounts = await Promise.all(
-        body.socialAccountIds.map((id: string) => 
+        body.socialAccountIds.map((id: string) =>
           socialMediaAccountService.getAccountById(id)
         )
       )
@@ -109,7 +104,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

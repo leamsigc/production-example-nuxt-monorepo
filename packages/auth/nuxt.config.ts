@@ -9,6 +9,13 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  experimental: {
+    viteEnvironmentApi: true,
+    typescriptPlugin: true
+  },
+  future: {
+    compatibilityVersion: 5
+  },
   nitro: {
     experimental: {
       openAPI: true,

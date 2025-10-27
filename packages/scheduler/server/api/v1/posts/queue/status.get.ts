@@ -1,22 +1,17 @@
 /**
  * GET /api/v1/posts/queue/status - Get queue status and statistics
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { QueueUtils } from '~~/server/utils/queueManager'
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get queue statistics
     const stats = QueueUtils.getQueueStats()

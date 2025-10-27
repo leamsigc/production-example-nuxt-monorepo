@@ -41,7 +41,7 @@ onMounted(async () => {
 
   if (imageId) {
     try {
-      const url = `http://localhost:3000/api/v1/assets/serve/${imageId}.png`;
+      const url = `/api/v1/assets/serve/${imageId}.png`;
       const response = await fetch(url);
       if (response.ok) {
         const blob = await response.blob();

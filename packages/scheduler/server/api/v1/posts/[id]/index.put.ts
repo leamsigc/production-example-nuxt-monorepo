@@ -1,22 +1,18 @@
 /**
  * PUT /api/v1/posts/[id] - Update a specific post
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { postService, type UpdatePostData } from '~~/server/services/post.service'
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { postService, type UpdatePostData } from "#layers/BaseDB/server/services/post.service"
+
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get post ID from route params
     const postId = getRouterParam(event, 'id')
@@ -29,18 +25,18 @@ export default defineEventHandler(async (event) => {
 
     // Get request body
     const body = await readBody(event)
-    
+
     // Prepare update data
     const updateData: UpdatePostData = {}
-    
+
     if (body.content !== undefined) {
       updateData.content = body.content
     }
-    
+
     if (body.mediaAssets !== undefined) {
       updateData.mediaAssets = body.mediaAssets
     }
-    
+
     if (body.targetPlatforms !== undefined) {
       if (!Array.isArray(body.targetPlatforms)) {
         throw createError({
@@ -50,7 +46,7 @@ export default defineEventHandler(async (event) => {
       }
       updateData.targetPlatforms = body.targetPlatforms
     }
-    
+
     if (body.status !== undefined) {
       const validStatuses = ['draft', 'scheduled', 'published', 'failed']
       if (!validStatuses.includes(body.status)) {
@@ -79,7 +75,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Update post
-    const result = await postService.update(postId, session.user.id, updateData)
+    const result = await postService.update(postId, user.id, updateData)
 
     if (!result.success) {
       if (result.code === 'NOT_FOUND') {
@@ -88,7 +84,7 @@ export default defineEventHandler(async (event) => {
           statusMessage: 'Post not found'
         })
       }
-      
+
       throw createError({
         statusCode: 400,
         statusMessage: result.error || 'Failed to update post'
@@ -103,7 +99,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

@@ -1,23 +1,17 @@
 /**
  * POST /api/v1/posts/[id]/retry - Retry a failed post
- * 
+ *
  * @author Ismael Garcia <leamsigc@leamsigc.com>
  * @version 0.0.1
  */
 
-import { postService } from '~~/server/services/post.service'
-import { QueueUtils } from '~~/server/utils/queueManager'
+import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
+import { postService } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
-    const session = await getUserSession(event)
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    const user = await checkUserIsLogin(event)
 
     // Get post ID from route params
     const postId = getRouterParam(event, 'id')
@@ -33,7 +27,7 @@ export default defineEventHandler(async (event) => {
     const platformPostId = body.platformPostId
 
     // Verify post exists and belongs to user
-    const postResult = await postService.findById(postId, session.user.id, true)
+    const postResult = await postService.findById(postId, user.id, true)
     if (!postResult.success) {
       throw createError({
         statusCode: postResult.code === 'NOT_FOUND' ? 404 : 500,
@@ -44,7 +38,7 @@ export default defineEventHandler(async (event) => {
     const post = postResult.data!
 
     // Check if post has failed attempts to retry
-    const hasFailedAttempts = post.status === 'failed' || 
+    const hasFailedAttempts = post.status === 'failed' ||
       post.platformPosts?.some(p => p.status === 'failed')
 
     if (!hasFailedAttempts) {
@@ -74,13 +68,13 @@ export default defineEventHandler(async (event) => {
       }
 
       jobId = await QueueUtils.retryFailedPost(
-        postId, 
-        platformPostId, 
+        postId,
+        platformPostId,
         platformPost.errorMessage || 'Unknown error'
       )
     } else {
       // Retry entire post using the service method
-      const retryResult = await postService.retryFailedPost(postId, session.user.id)
+      const retryResult = await postService.retryFailedPost(postId, user.id)
       if (!retryResult.success) {
         throw createError({
           statusCode: 400,
@@ -98,8 +92,8 @@ export default defineEventHandler(async (event) => {
         postId,
         platformPostId,
         jobId,
-        message: platformPostId 
-          ? 'Platform post scheduled for retry' 
+        message: platformPostId
+          ? 'Platform post scheduled for retry'
           : 'Post scheduled for retry'
       }
     }
@@ -107,7 +101,7 @@ export default defineEventHandler(async (event) => {
     if (error.statusCode) {
       throw error
     }
-    
+
     throw createError({
       statusCode: 500,
       statusMessage: 'Internal server error'

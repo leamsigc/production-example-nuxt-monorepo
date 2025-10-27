@@ -12,15 +12,15 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@nuxt/eslint": "latest",
-    "@nuxtjs/i18n": "^10.1.1",
-    "eslint": "^9.35.0",
-    "nuxt": "^4.1.1",
-    "typescript": "^5.9.2",
-    "vue": "latest",
-    "@local-monorepo/ui": "workspace:*",
+    "@huggingface/transformers": "3.7.3",
     "@local-monorepo/assets": "workspace:*",
+    "@local-monorepo/ui": "workspace:*",
+    "@nuxt/eslint": "latest",
+    "@nuxtjs/i18n": "^10.1.2",
+    "eslint": "^9.38.0",
     "fabric": "^6.7.1",
-    "@huggingface/transformers": "3.7.3"
+    "nuxt": "^4.2.0",
+    "typescript": "^5.9.3",
+    "vue": "latest"
   }
 }
