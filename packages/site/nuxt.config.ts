@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     '@local-monorepo/assets',
     '@local-monorepo/content',
     '@local-monorepo/tools',
-    '@local-monorepo/scheduler'
+    '@local-monorepo/scheduler',
+    '@local-monorepo/connect'
   ],
 
   modules: ['@nuxtjs/seo', '@nuxtjs/i18n'],

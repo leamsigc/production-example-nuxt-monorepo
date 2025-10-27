@@ -12,6 +12,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@atproto/api": "^0.12.29",
     "@fullcalendar/daygrid": "^6.1.19",
     "@fullcalendar/interaction": "^6.1.19",
     "@fullcalendar/list": "^6.1.19",
@@ -20,16 +21,19 @@
     "@fullcalendar/timegrid": "^6.1.19",
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/db": "workspace:*",
-    "@local-monorepo/ui": "workspace:*"
+    "@local-monorepo/ui": "workspace:*",
+    "axios": "^1.7.2",
+    "dayjs": "^1.11.11",
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@fullcalendar/core": "^6.1.19",
     "@fullcalendar/vue3": "^6.1.19",
     "@nuxt/eslint": "latest",
+    "@nuxtjs/i18n": "^10.1.2",
     "eslint": "^9.38.0",
     "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
-    "vue": "latest",
-    "@nuxtjs/i18n": "^10.1.2"
+    "vue": "latest"
   }
 }

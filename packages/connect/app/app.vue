@@ -1,3 +1,0 @@
-<template>
-  <BaseRootPage></BaseRootPage>
-</template>

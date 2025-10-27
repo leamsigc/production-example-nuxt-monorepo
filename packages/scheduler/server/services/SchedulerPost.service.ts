@@ -30,6 +30,7 @@ export type PostDetails<T = Record<string, unknown>> = {
   settings: T;
   media?: MediaContent[];
   poll?: PollDetails;
+  comments?: PostDetails[];
 };
 
 
@@ -41,27 +42,28 @@ export interface SchedulerPlugin {
   onRegister?(scheduler: SchedulerPost): void;
   onDestroy?(): void;
 
-  validate(postDetail: PostDetails): Promise<string>;
+  validate(postDetail: PostDetails): Promise<string[]>;
   post(
     id: string,
     accessToken: string,
     postDetail: PostDetails,
+    comments: PostDetails[],
     integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
   update(
     id: string,
     accessToken: string,
     postId: string,
     updateDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
   addComment(
     id: string,
     accessToken: string,
     postId: string,
     commentDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
 }
 
 export interface SchedulerPluginConstructor {
@@ -90,34 +92,28 @@ export abstract class BaseSchedulerPlugin implements SchedulerPlugin {
     this.scheduler.emit(event, ...args);
   }
 
-  abstract validate(postDetail: PostDetails): Promise<string>;
+  abstract validate(postDetail: PostDetails): Promise<string[]>;
   abstract post(
     id: string,
     accessToken: string,
     postDetails: PostDetails,
+    comments: PostDetails[],
     integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
   abstract update(
     id: string,
     accessToken: string,
     postId: string,
     updateDetail: PostDetails,
     integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
   abstract addComment(
     id: string,
     accessToken: string,
     postId: string,
     commentDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse>;
-  abstract addComment(
-    id: string,
-    accessToken: string,
-    postId: string,
-    commentDetails: Post,
-    integration: Integration
-  ): Promise<PostResponse>;
+  ): Promise<PostResponse[]>;
 }
 
 class SchedulerPost extends EventEmitter {
@@ -214,25 +210,26 @@ class SchedulerPost extends EventEmitter {
   async publish(
     id: string,
     accessToken: string,
-    postDetails: Post,
+    postDetails: PostDetails,
+    comments: PostDetails[],
     integrations: Integration[]
-  ): Promise<{ [integrationId: string]: PostResponse }> {
+  ): Promise<{ [integrationId: string]: PostResponse[] }> {
     const validationErrors = await this.validate(postDetails);
     if (Object.keys(validationErrors).length > 0) {
       this.emit('post:validation-failed', validationErrors);
       return {};
     }
 
-    return this.executeOnPlugins('post', [id, accessToken, postDetails], integrations, 'post', { postDetails });
+    return this.executeOnPlugins('post', [id, accessToken, postDetails, comments], integrations, 'post', { postDetails, comments });
   }
 
   async update(
     id: string,
     accessToken: string,
     postId: string,
-    updateDetails: Post,
+    updateDetails: PostDetails,
     integrations: Integration[]
-  ): Promise<{ [integrationId: string]: PostResponse }> {
+  ): Promise<{ [integrationId: string]: PostResponse[] }> {
     return this.executeOnPlugins('update', [id, accessToken, postId, updateDetails], integrations, 'post:update', { postId, updateDetails });
   }
 
@@ -240,9 +237,9 @@ class SchedulerPost extends EventEmitter {
     id: string,
     accessToken: string,
     postId: string,
-    commentDetails: Post,
+    commentDetails: PostDetails,
     integrations: Integration[]
-  ): Promise<{ [integrationId: string]: PostResponse }> {
+  ): Promise<{ [integrationId: string]: PostResponse[] }> {
     return this.executeOnPlugins('addComment', [id, accessToken, postId, commentDetails], integrations, 'comment:add', { postId, commentDetails });
   }
 }

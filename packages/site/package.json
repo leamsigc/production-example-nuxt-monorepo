@@ -18,6 +18,7 @@
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/bulk-scheduler": "workspace:*",
     "@local-monorepo/content": "workspace:*",
+    "@local-monorepo/connect": "workspace:*",
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/email": "workspace:*",
     "@local-monorepo/scheduler": "workspace:*",
