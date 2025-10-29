@@ -34,8 +34,8 @@ export const UpdateBusinessProfileSchema = z.object({
 })
 
 export const CreateBusinessProfileSchema = z.object({
-  userId: z.string(),
-  googleBusinessId: z.string(),
+  userId: z.string().optional(),
+  googleBusinessId: z.string().optional(),
   name: z.string(),
   description: z.string(),
   address: z.string(),
@@ -43,3 +43,5 @@ export const CreateBusinessProfileSchema = z.object({
   website: z.string(),
   category: z.string()
 })
+export type CreateBusinessProfileData = z.infer<typeof CreateBusinessProfileSchema>
+export type UpdateBusinessProfileData = z.infer<typeof UpdateBusinessProfileSchema>

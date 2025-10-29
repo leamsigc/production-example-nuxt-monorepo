@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type { Business } from '../composables/useBusinessManager';
+import type { BusinessProfile } from '#layers/BaseDB/db/schema';
+
 
 const props = defineProps<{
-  business: Business;
+  business: BusinessProfile;
 }>();
 
 const emit = defineEmits(['edit', 'delete']);
@@ -13,7 +14,7 @@ const emit = defineEmits(['edit', 'delete']);
     <div>
       <h3 class="text-lg font-semibold">{{ business.name }}</h3>
       <p class="text-gray-600 text-sm">{{ business.description }}</p>
-      <p class="text-gray-500 text-xs">Status: {{ business.status }}</p>
+      <p class="text-gray-500 text-xs">Status: {{ business.isActive }}</p>
     </div>
     <div class="mt-4 flex justify-end space-x-2">
       <BaseButton :button="{ size: 'sm', variant: 'outline' }" @click="emit('edit', business.id)">Edit</BaseButton>

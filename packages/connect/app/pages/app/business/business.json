@@ -8,7 +8,11 @@
       "add_business": "Add Business",
       "no_businesses": "No businesses found",
       "active": "Active",
-      "inactive": "Inactive"
+      "inactive": "Inactive",
+      "business_added": "Business Added",
+      "business_added_successfully": "Business has been added successfully.",
+      "error": "Error",
+      "something_went_wrong": "Something went wrong. Please try again."
     },
     "form": {
       "name": "Business Name",
@@ -22,6 +26,14 @@
       "name_required": "Business name is required",
       "email_invalid": "Invalid email address",
       "website_invalid": "Invalid website URL"
+    },
+    "placeholders": {
+      "name": "Enter business name",
+      "description": "Enter business description",
+      "address": "Enter business address",
+      "phone": "Enter business phone number",
+      "email": "Enter business email",
+      "website": "Enter business website URL"
     },
     "actions": {
       "edit": "Edit",
@@ -37,7 +49,11 @@
       "add_business": "Ajouter une entreprise",
       "no_businesses": "Aucune entreprise trouvée",
       "active": "Actif",
-      "inactive": "Inactif"
+      "inactive": "Inactif",
+      "business_added": "Entreprise ajoutée",
+      "business_added_successfully": "L'entreprise a été ajoutée avec succès.",
+      "error": "Erreur",
+      "something_went_wrong": "Quelque chose s'est mal passé. Veuillez réessayer."
     },
     "form": {
       "name": "Nom de l'entreprise",
@@ -48,6 +64,14 @@
       "website": "Site web",
       "save": "Enregistrer l'entreprise",
       "cancel": "Annuler"
+    },
+    "placeholders": {
+      "name": "Entrez le nom de l'entreprise",
+      "description": "Entrez la description de l'entreprise",
+      "address": "Entrez l'adresse de l'entreprise",
+      "phone": "Entrez le numéro de téléphone de l'entreprise",
+      "email": "Entrez l'e-mail de l'entreprise",
+      "website": "Entrez l'URL du site web de l'entreprise"
     },
     "actions": {
       "edit": "Modifier",
@@ -63,7 +87,11 @@
       "add_business": "Agregar negocio",
       "no_businesses": "No se encontraron negocios",
       "active": "Activo",
-      "inactive": "Inactivo"
+      "inactive": "Inactivo",
+      "business_added": "Negocio agregado",
+      "business_added_successfully": "El negocio ha sido agregado exitosamente.",
+      "error": "Error",
+      "something_went_wrong": "Algo salió mal. Por favor, inténtalo de nuevo."
     },
     "form": {
       "name": "Nombre del negocio",
@@ -74,6 +102,14 @@
       "website": "Sitio web",
       "save": "Guardar negocio",
       "cancel": "Cancelar"
+    },
+    "placeholders": {
+      "name": "Ingrese el nombre del negocio",
+      "description": "Ingrese la descripción del negocio",
+      "address": "Ingrese la dirección del negocio",
+      "phone": "Ingrese el número de teléfono del negocio",
+      "email": "Ingrese el correo electrónico del negocio",
+      "website": "Ingrese la URL del sitio web del negocio"
     },
     "actions": {
       "edit": "Editar",
@@ -89,7 +125,11 @@
       "add_business": "Unternehmen hinzufügen",
       "no_businesses": "Keine Unternehmen gefunden",
       "active": "Aktiv",
-      "inactive": "Inaktiv"
+      "inactive": "Inaktiv",
+      "business_added": "Unternehmen hinzugefügt",
+      "business_added_successfully": "Das Unternehmen wurde erfolgreich hinzugefügt.",
+      "error": "Fehler",
+      "something_went_wrong": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut."
     },
     "form": {
       "name": "Firmenname",
@@ -100,6 +140,14 @@
       "website": "Webseite",
       "save": "Unternehmen speichern",
       "cancel": "Abbrechen"
+    },
+    "placeholders": {
+      "name": "Geben Sie den Firmennamen ein",
+      "description": "Geben Sie die Unternehmensbeschreibung ein",
+      "address": "Geben Sie die Geschäftsadresse ein",
+      "phone": "Geben Sie die Geschäftsnummer ein",
+      "email": "Geben Sie die Geschäfts-E-Mail ein",
+      "website": "Geben Sie die Geschäftswebsite-URL ein"
     },
     "actions": {
       "edit": "Bearbeiten",

@@ -1,53 +1,49 @@
+import type { BusinessProfile, CreateBusinessProfileData } from '#layers/BaseDB/db/schema';
 import { ref } from 'vue';
 
-export interface Business {
-  id: string;
-  name: string;
-  description?: string;
-  address?: string;
-  phone?: string;
-  email?: string;
-  website?: string;
-  status: 'active' | 'inactive';
-}
 
-const businesses = ref<Business[]>([]);
+
+const businesses = ref<PaginatedResponse<BusinessProfile>>({
+  data: [] as BusinessProfile[],
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 1,
+    totalPages: 1
+  },
+  success: false
+});
 
 export const useBusinessManager = () => {
   const getAllBusinesses = async () => {
     try {
-      const data = await $fetch<Business[]>('/api/v1/businesses');
+      const data = await $fetch<Promise<PaginatedResponse<BusinessProfile>>>('/api/v1/business');
       businesses.value = data;
     } catch (error) {
       console.error('Error fetching businesses:', error);
     }
   };
 
-  const addBusiness = async (business: Omit<Business, 'id' | 'status'>) => {
+  const addBusiness = async (business: Omit<CreateBusinessProfileData, 'userId'>) => {
     try {
-      const newBusiness = await $fetch<Business>('/api/v1/businesses', {
+      await $fetch<BusinessProfile>('/api/v1/business', {
         method: 'POST',
-        body: { ...business, status: 'active' }, // Default status to active
+        body: { ...business },
       });
-      businesses.value.push(newBusiness);
-      return newBusiness;
+      await getAllBusinesses();
     } catch (error) {
       console.error('Error adding business:', error);
       throw error;
     }
   };
 
-  const updateBusiness = async (id: string, updatedFields: Partial<Business>) => {
+  const updateBusiness = async (id: string, updatedFields: Partial<BusinessProfile>) => {
     try {
-      const updatedBusiness = await $fetch<Business>(`/api/v1/businesses/${id}`, {
+      const updatedBusiness = await $fetch<BusinessProfile>(`/api/v1/business/${id}`, {
         method: 'PUT',
         body: updatedFields,
       });
-      const index = businesses.value.findIndex((b) => b.id === id);
-      if (index !== -1) {
-        businesses.value[index] = { ...businesses.value[index], ...updatedBusiness };
-      }
-      return updatedBusiness;
+      await getAllBusinesses();
     } catch (error) {
       console.error(`Error updating business with ID ${id}:`, error);
       throw error;
@@ -56,10 +52,10 @@ export const useBusinessManager = () => {
 
   const deleteBusiness = async (id: string) => {
     try {
-      await $fetch(`/api/v1/businesses/${id}`, {
+      await $fetch(`/api/v1/business/${id}`, {
         method: 'DELETE',
       });
-      businesses.value = businesses.value.filter((b) => b.id !== id);
+      await getAllBusinesses();
     } catch (error) {
       console.error(`Error deleting business with ID ${id}:`, error);
       throw error;

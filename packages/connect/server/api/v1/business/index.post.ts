@@ -13,6 +13,8 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readValidatedBody(event, CreateBusinessProfileSchema.parse);
+  console.log(body);
+
 
   const newBusiness = await businessProfileService.create(user.id, {
     ...body,
