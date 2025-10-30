@@ -18,10 +18,11 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "latest",
-    "eslint": "^9.37.0",
-    "nuxt": "^4.1.3",
+    "@types/mjml": "^4.7.4",
+    "eslint": "^9.38.0",
+    "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
     "vue": "latest",
-    "@types/mjml": "^4.7.4"
+    "@nuxtjs/i18n": "^10.1.2"
   }
 }

@@ -9,6 +9,13 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  experimental: {
+    viteEnvironmentApi: true,
+    typescriptPlugin: true
+  },
+  future: {
+    compatibilityVersion: 5
+  },
   nitro: {
     experimental: {
       openAPI: true,
@@ -18,7 +25,7 @@ export default defineNuxtConfig({
     name: 'BaseAuth',
   },
   extends: ['@local-monorepo/db', '@local-monorepo/ui', '@local-monorepo/email'],
-  modules: ['@nuxtjs/i18n',],
+  modules: ['@nuxtjs/i18n', 'nuxt-auth-utils',],
   i18n: {
     vueI18n: join(currentDir, './translations/i18n.config.ts'),
     baseUrl: process.env.NUXT_APP_URL,

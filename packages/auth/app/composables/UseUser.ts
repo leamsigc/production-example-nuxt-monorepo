@@ -5,8 +5,8 @@ import type { User } from '#layers/BaseDB/db/schema'
 export function UseUser() {
   const client = authClient
 
-  const session = useState('auth:session', () => null as any)
   const user = useState<User | null>('auth:user', () => null)
+  const session = useState('auth:session', () => null as any)
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)
 
   const fetchSession = async () => {

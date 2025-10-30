@@ -14,12 +14,12 @@
   "dependencies": {
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
-    "@nuxtjs/i18n": "^10.1.1"
+    "@nuxtjs/i18n": "^10.1.2"
   },
   "devDependencies": {
     "@nuxt/eslint": "latest",
-    "eslint": "^9.37.0",
-    "nuxt": "^4.1.3",
+    "eslint": "^9.38.0",
+    "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
     "vue": "latest"
   }

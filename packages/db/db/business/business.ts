@@ -1,7 +1,7 @@
 import type { InferSelectModel } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { user } from '../auth/auth'
-
+import z from 'zod'
 // Business profiles
 export const businessProfiles = sqliteTable('business_profiles', {
   id: text('id').primaryKey(),
@@ -19,3 +19,29 @@ export const businessProfiles = sqliteTable('business_profiles', {
 })
 
 export type BusinessProfile = InferSelectModel<typeof businessProfiles>
+
+export const UpdateBusinessProfileSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  googleBusinessId: z.string(),
+  name: z.string(),
+  description: z.string(),
+  address: z.string(),
+  phone: z.string(),
+  website: z.string(),
+  category: z.string(),
+  isActive: z.boolean()
+})
+
+export const CreateBusinessProfileSchema = z.object({
+  userId: z.string().optional(),
+  googleBusinessId: z.string().optional(),
+  name: z.string(),
+  description: z.string(),
+  address: z.string(),
+  phone: z.string(),
+  website: z.string(),
+  category: z.string()
+})
+export type CreateBusinessProfileData = z.infer<typeof CreateBusinessProfileSchema>
+export type UpdateBusinessProfileData = z.infer<typeof UpdateBusinessProfileSchema>

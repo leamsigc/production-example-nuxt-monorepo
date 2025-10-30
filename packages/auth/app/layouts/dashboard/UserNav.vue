@@ -21,12 +21,16 @@
 interface Props {
   collapsed?: boolean
 }
+
 const props = withDefaults(defineProps<Props>(), {
   collapsed: false
 })
 const { t } = useI18n();
 const colorMode = useColorMode();
 
+const { signOut, user, fetchSession } = UseUser();
+
+fetchSession();
 // Reactive state for appearance preference
 const currentAppearance = ref('system');
 
@@ -35,11 +39,11 @@ const items = computed(() => [
   [
     {
       label: 'satnaing',
-      name: 'Ismael Garcia',
-      email: 'satnaingdev@gmail.com',
+      name: user.value?.name || 'User',
+      email: user.value?.email || 'user@email',
       avatar: {
-        src: "https://avatars.githubusercontent.com/u/739984?v=4",
-        alt: "Avatar"
+        src: user.value?.image || "https://avatars.githubusercontent.com/u/739984?v=4",
+        alt: user.value?.name || 'Avatar'
       },
       slot: 'account',
       disabled: true
@@ -167,8 +171,6 @@ const items = computed(() => [
 
 // Appearance management function
 const setAppearance = (mode: string) => {
-  console.log("mode", mode);
-  console.log("currentAppearance", colorMode.value);
 
   currentAppearance.value = mode;
   updateAppearance(mode);
@@ -184,9 +186,9 @@ const updateAppearance = (mode: string) => {
   }
 };
 
-const handleSignOut = () => {
-  // Implement sign out logic
-  console.log('User signed out');
+const handleSignOut = async () => {
+  await signOut()
+  navigateTo('/')
 };
 </script>
 
@@ -194,16 +196,16 @@ const handleSignOut = () => {
   <UDropdownMenu :items="items" placement="bottom-end" :ui="{ content: 'bg-gray-50 dark:bg-gray-950' }">
     <UButton color="neutral" variant="ghost">
       <div v-if="props.collapsed">
-        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" />
+        <UAvatar :src="user?.image || ''" :alt="user?.name" />
       </div>
       <div class="flex items-center gap-3 p-3" v-else>
-        <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="Avatar" size="2xl" />
+        <UAvatar :src="user?.image || ''" :alt="user?.name" size="2xl" />
         <div class="text-left min-w-0 flex-1">
           <p class="truncate font-medium text-sm">
-            Username
+            {{ user?.name || 'User' }}
           </p>
           <p class="truncate text-xs text-gray-500 dark:text-gray-400">
-            user@email.com
+            {{ user?.email || 'email@domain.com' }}
           </p>
         </div>
       </div>

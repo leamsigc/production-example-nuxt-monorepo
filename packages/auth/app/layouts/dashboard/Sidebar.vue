@@ -106,6 +106,16 @@ const navigationItems = computed<NavigationMenuItem[][]>(() => {
         ]
       },
       {
+        label: menuData.menu.business,
+        icon: 'i-lucide-users',
+        children: [
+          {
+            label: menuData.menu.all,
+            to: '/app/business'
+          }
+        ]
+      },
+      {
         label: menuData.menu.tools,
         icon: 'i-lucide-box',
         children: [

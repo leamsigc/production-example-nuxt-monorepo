@@ -8,6 +8,13 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
+  experimental: {
+    viteEnvironmentApi: true,
+    typescriptPlugin: true
+  },
+  future: {
+    compatibilityVersion: 5
+  },
   devtools: { enabled: true },
 
   nitro: {
@@ -23,7 +30,9 @@ export default defineNuxtConfig({
     '@local-monorepo/email',
     '@local-monorepo/assets',
     '@local-monorepo/content',
-    '@local-monorepo/tools'
+    '@local-monorepo/tools',
+    '@local-monorepo/scheduler',
+    '@local-monorepo/connect'
   ],
 
   modules: ['@nuxtjs/seo', '@nuxtjs/i18n'],

@@ -13,7 +13,7 @@
 import { useFabricJs } from '../composables/useFabricJs';
 import { ref } from 'vue';
 
-const { applyImageAdjustment, applyPresetFilter, canvas } = useFabricJs();
+const { applyImageAdjustment, applyPresetFilter, editor } = useFabricJs();
 
 // Reactive values for adjustment filters (arrays for slider compatibility)
 const brightness = ref(0);
@@ -36,8 +36,8 @@ const presetFilters = [
 
 // Check if active object is an image
 const isActiveImage = () => {
-  if (!canvas) return false;
-  const activeObject = canvas.value?.getActiveObject();
+  if (!editor.value) return false;
+  const activeObject = editor.value?.activeLayer.value;
   return activeObject && activeObject.type === 'image';
 };
 

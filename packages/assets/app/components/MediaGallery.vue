@@ -300,13 +300,13 @@ const handleDeleteAsset = (asset: Asset) => {
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-4">
           <div class="relative">
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <h2 class="text-3xl font-bold ">
               {{ t('title') }}
             </h2>
             <div class="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-primary to-transparent rounded-full">
             </div>
           </div>
-          <UBadge variant="outline" class="glass-badge animate-scale-in animate-stagger-1">
+          <UBadge variant="outline" color="neutral" class="glass-badge animate-scale-in animate-stagger-1">
             <Icon name="lucide:image" class="w-3 h-3 mr-1" />
             {{ t('file_count_badge', { count: storageUsage.count, size: storageUsage.formattedSize }) }}
           </UBadge>
@@ -318,14 +318,14 @@ const handleDeleteAsset = (asset: Asset) => {
             class="w-64" />
 
           <!-- Filters Toggle -->
-          <UButton variant="outline" size="sm" class="glass-button"
+          <UButton variant="outline" size="sm" class="glass-button" color="neutral"
             :class="{ 'bg-primary/10 border-primary': showFilters }" @click="showFilters = !showFilters">
             <Icon name="lucide:filter" class="w-4 h-4 mr-2" />
             {{ t('filters') }}
           </UButton>
 
           <!-- Optimize Button -->
-          <UButton variant="outline" size="sm" class="glass-button" @click="handleOptimizeAssets">
+          <UButton variant="outline" size="sm" class="glass-button" color="neutral" @click="handleOptimizeAssets">
             <Icon name="lucide:sparkles" class="w-4 h-4 mr-2" />
             {{ t('optimize') }}
           </UButton>
@@ -333,15 +333,18 @@ const handleDeleteAsset = (asset: Asset) => {
           <!-- View Mode Toggle -->
           <div class="flex border rounded-lg glass-button-group">
             <UButton variant="ghost" size="sm" class="glass-button-item hover-scale-105"
-              :class="{ 'bg-primary text-primary-foreground': viewMode === 'masonry' }" @click="viewMode = 'masonry'">
+              :class="{ 'bg-primary text-white dark:text-primary-foreground': viewMode === 'masonry' }"
+              @click="viewMode = 'masonry'">
               <Icon name="lucide:layout-grid" class="w-4 h-4" />
             </UButton>
             <UButton variant="ghost" size="sm" class="glass-button-item hover-scale-105"
-              :class="{ 'bg-primary text-primary-foreground': viewMode === 'grid' }" @click="viewMode = 'grid'">
+              :class="{ 'bg-primary text-white dark:text-primary-foreground': viewMode === 'grid' }"
+              @click="viewMode = 'grid'">
               <Icon name="lucide:grid-3x3" class="w-4 h-4" />
             </UButton>
             <UButton variant="ghost" size="sm" class="glass-button-item hover-scale-105"
-              :class="{ 'bg-primary text-primary-foreground': viewMode === 'list' }" @click="viewMode = 'list'">
+              :class="{ 'bg-primary text-white dark:text-primary-foreground': viewMode === 'list' }"
+              @click="viewMode = 'list'">
               <Icon name="lucide:list" class="w-4 h-4" />
             </UButton>
           </div>
@@ -365,7 +368,7 @@ const handleDeleteAsset = (asset: Asset) => {
           <div v-if="allTags.length > 0" class="flex items-center gap-2">
             <label class="text-sm font-medium">{{ t('tags') }}</label>
             <div class="flex flex-wrap gap-1">
-              <UBadge v-for="tag in allTags.slice(0, 5)" :key="tag" variant="outline"
+              <UBadge v-for="tag in allTags.slice(0, 5)" :key="tag" variant="outline" color="neutral"
                 class="cursor-pointer glass-badge hover-scale-105 transition-all duration-200"
                 :class="{ 'bg-primary text-primary-foreground': selectedTags.includes(tag) }" @click="toggleTag(tag)">
                 {{ tag }}
@@ -397,7 +400,7 @@ const handleDeleteAsset = (asset: Asset) => {
       </div>
 
       <div class="flex flex-wrap gap-2">
-        <UButton v-for="folder in folders" :key="folder" variant="outline" size="sm"
+        <UButton v-for="folder in folders" :key="folder" variant="outline" size="sm" color="neutral"
           class="glass-button hover-translate-y-1 transition-all duration-300"
           :class="{ 'bg-primary/10 border-primary text-primary': currentFolder === folder }"
           @click="currentFolder = folder">
@@ -423,7 +426,7 @@ const handleDeleteAsset = (asset: Asset) => {
       </div>
 
       <div class="flex items-center gap-2">
-        <UButton variant="outline" size="sm" :disabled="!hasSelectedAssets" @click="handleDeleteSelected">
+        <UButton variant="outline" color="error" size="sm" :disabled="!hasSelectedAssets" @click="handleDeleteSelected">
           <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
           {{ t('toolbar.delete_selected') }}
         </UButton>

@@ -15,6 +15,13 @@
       "when": 1759139248400,
       "tag": "0001_goofy_the_liberteens",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1761581465184,
+      "tag": "0002_daily_purifiers",
+      "breakpoints": true
     }
   ]
 }

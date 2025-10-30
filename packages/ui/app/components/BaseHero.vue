@@ -107,7 +107,7 @@ const mode = useColorMode()
           <div
             class="absolute -top-6 right-12 w-[90%] h-12 lg:h-[80%] bg-neutral-900 dark:bg-neutral-900 blur-3xl rounded-full img-shadow-animation" />
 
-          <NuxtPicture
+          <img
             class="w-full lg:w-[1200px] mx-auto rounded-lg relative leading-none flex items-center border border-t-2 border-t-primary/30 img-border-animation"
             :src="mode.value == 'light' ? heroImage.light : heroImage.dark" :alt="heroImage.alt" width="1300"
             height="900" loading="lazy" />

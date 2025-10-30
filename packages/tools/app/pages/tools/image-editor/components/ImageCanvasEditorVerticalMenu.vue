@@ -28,6 +28,7 @@ const {
   updateFrameSettingsToImageDimension,
   zoomIn,
   zoomOut, // For "New" action
+  editor
 } = useFabricJs();
 
 import type { DropdownMenuItem } from '@nuxt/ui'

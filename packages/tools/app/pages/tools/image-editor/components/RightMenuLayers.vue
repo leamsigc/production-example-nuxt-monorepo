@@ -13,7 +13,7 @@
 
 import { useFabricJs } from '../composables/useFabricJs'
 
-const { getLayers, setActiveLayer, deleteLayer, toggleLayerVisibility, canvas } = useFabricJs()
+const { getLayers, setActiveLayer, deleteLayer, toggleLayerVisibility, editor } = useFabricJs()
 // Reactive layers list
 const layers = ref([...getLayers()])
 
@@ -23,37 +23,11 @@ const updateLayers = () => {
 
 }
 
-// Watch for canvas changes
-onMounted(() => {
-  // Initial load
-  updateLayers()
-
-  // Listen to canvas events to update layers
-  if (canvas.value) {
-    canvas.value.on('object:added', updateLayers)
-    canvas.value.on('object:removed', updateLayers)
-    canvas.value.on('selection:created', updateLayers)
-    canvas.value.on('selection:updated', updateLayers)
-    canvas.value.on('selection:cleared', updateLayers)
-  }
-})
-
-onUnmounted(() => {
-  // Remove event listeners
-  if (canvas.value) {
-    canvas.value.off('object:added', updateLayers)
-    canvas.value.off('object:removed', updateLayers)
-    canvas.value.off('selection:created', updateLayers)
-    canvas.value.off('selection:updated', updateLayers)
-    canvas.value.off('selection:cleared', updateLayers)
-  }
-})
-
 // Computed property for reversed layers (to show top layer first)
 const reversedLayers = computed(() => [...layers.value].reverse())
 
 // Get active layer for highlighting
-const activeLayer = computed(() => canvas.value?.getActiveObject())
+const activeLayer = computed(() => editor.value?.activeLayer.value)
 
 // Handle layer selection
 const handleLayerClick = (layer: any) => {

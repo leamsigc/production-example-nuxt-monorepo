@@ -147,7 +147,6 @@ watchEffect(() => {
       :disabled="disabled || isUploading" variant="area" layout="list" :dropzone="true" :interactive="true" class="grid"
       @update:modelValue="handleFilesUpload">
       <template #default="{ open, removeFile }">
-        <!-- Premium Glass Morphism Background -->
         <div
           class="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80 backdrop-blur-xl">
         </div>
@@ -205,13 +204,13 @@ watchEffect(() => {
           <!-- Elegant Upload Text with Enhanced Typography -->
           <div class="space-y-4 text-center">
             <h3
-              class="text-3xl font-bold bg-gradient-to-r from-foreground via-primary to-foreground/70 bg-clip-text text-transparent leading-tight">
+              class="text-3xl font-bold bg-gradient-to-r from-foreground via-primary to-foreground/10 bg-clip-text text-transparent leading-tight">
               {{ isUploading ? 'Processing Your Assets...' : 'Drop Your Premium Assets Here' }}
             </h3>
             <p class="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
               {{ multiple ? 'Select multiple files' : 'Select a file' }} up to {{ maxSize }}MB each for optimal quality
             </p>
-            <div class="flex items-center justify-center gap-3 text-sm text-muted-foreground">
+            <div class="flex items-center justify-center gap-3 text-sm text-muted-foreground mb-2">
               <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-muted/50 backdrop-blur-sm">
                 <Icon name="lucide:mouse-pointer-click" class="w-4 h-4" />
                 <span>Click to browse</span>
@@ -231,7 +230,7 @@ watchEffect(() => {
               { name: 'Videos', icon: 'lucide:video', formats: 'MP4, MOV, AVI' },
               { name: 'Documents', icon: 'lucide:file-text', formats: 'PDF, DOC, TXT' }
             ]" :key="type.name" variant="outline"
-              class="glass-badge animate-fade-in-up hover-scale-105 transition-all duration-300 px-4 py-2"
+              class="glass-badge animate-fade-in-up hover-scale-105 transition-all duration-300 px-4 py-2 mb-2"
               :class="`animate-stagger-${index + 1}`">
               <Icon :name="type.icon" class="w-4 h-4 mr-2" />
               <div class="text-left">

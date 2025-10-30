@@ -49,7 +49,8 @@
       "inviteUser": "Invite User",
       "blogs": "Blogs",
       "featured": "Featured",
-      "components": "Components"
+      "components": "Components",
+      "business": "Business"
     },
     "userNav": {
       "upgradeToPro": "Upgrade to Pro",
@@ -131,7 +132,8 @@
       "inviteUser": "Invitar Usuario",
       "blogs": "Blogs",
       "featured": "Destacado",
-      "components": "Componentes"
+      "components": "Componentes",
+      "business": "Business"
     },
     "userNav": {
       "upgradeToPro": "Actualizar a Pro",
@@ -213,7 +215,8 @@
       "inviteUser": "Benutzer einladen",
       "blogs": "Blogs",
       "featured": "Vorgestellt",
-      "components": "Komponenten"
+      "components": "Komponenten",
+      "business": "Business"
     },
     "userNav": {
       "upgradeToPro": "Auf Pro upgraden",
@@ -295,7 +298,8 @@
       "inviteUser": "Inviter un utilisateur",
       "blogs": "Blogs",
       "featured": "En vedette",
-      "components": "Composants"
+      "components": "Composants",
+      "business": "Business"
     },
     "userNav": {
       "upgradeToPro": "Mettre à niveau vers Pro",
