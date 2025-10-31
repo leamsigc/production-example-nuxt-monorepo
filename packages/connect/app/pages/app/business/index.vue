@@ -23,7 +23,6 @@ const editingBusiness = ref<BusinessProfile | null>(null);
 const { data } = await useFetch<PaginatedResponse<BusinessProfile>>('/api/v1/business');
 
 if (data.value) {
-  console.log(data.value);
 
   businesses.value = data.value;
 } else {

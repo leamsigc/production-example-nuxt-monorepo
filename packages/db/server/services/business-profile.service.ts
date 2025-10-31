@@ -5,7 +5,7 @@ import type {
   QueryOptions,
   ServiceResponse
 } from './types'
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, not, sql } from 'drizzle-orm'
 import { businessProfiles } from '#layers/BaseDB/db/schema'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import {
@@ -163,6 +163,52 @@ export class BusinessProfileService {
       return { success: true }
     } catch (error) {
       return { success: false, error: 'Failed to delete business profile' }
+    }
+  }
+  async setActive(userId: string, data: { id: string, isActive: boolean }): Promise<ServiceResponse<BusinessProfile>> {
+    try {
+      const existingResult = await this.findById(data.id, userId)
+      if (!existingResult.success) {
+        return { success: false, error: existingResult.error, code: existingResult.code }
+      }
+
+      const [updated] = await this.db
+        .update(businessProfiles)
+        .set({
+          isActive: data.isActive,
+          updatedAt: new Date()
+        })
+        .where(and(eq(businessProfiles.id, data.id), eq(businessProfiles.userId, userId)))
+        .returning()
+      // Update all others to false
+      await this.db
+        .update(businessProfiles)
+        .set({
+          isActive: false,
+          updatedAt: new Date()
+        })
+        .where(and(not(eq(businessProfiles.id, data.id)), eq(businessProfiles.userId, userId)))
+
+      return { success: true, data: updated }
+    } catch (error) {
+      return { success: false, error: 'Failed to update business profile' }
+    }
+  }
+  async getActive(userId: string): Promise<ServiceResponse<BusinessProfile>> {
+    try {
+      const existingResult = await this.findByUserId(userId)
+      if (!existingResult.success) {
+        return { success: false, error: existingResult.error, code: existingResult.code }
+      }
+
+      const activeProfile = existingResult.data?.find(profile => profile.isActive)
+      if (!activeProfile) {
+        return { success: false, error: 'No active business profile found' }
+      }
+
+      return { success: true, data: activeProfile }
+    } catch (error) {
+      return { success: false, error: 'Failed to fetch active business profile' }
     }
   }
 

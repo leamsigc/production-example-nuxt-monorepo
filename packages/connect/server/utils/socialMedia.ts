@@ -15,8 +15,14 @@ export function getAuthUrl(platform: SocialMediaPlatform, callbackUrl?: string) 
  */
 export function linkAccount(platform: SocialMediaPlatform, callbackUrl?: string) {
   return auth.api.linkSocialAccount({
-    body: { provider: platform, callbackURL: callbackUrl },
-    headers: []
+    body: {
+      provider: platform,
+      callbackURL: callbackUrl
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+
   })
 }
 

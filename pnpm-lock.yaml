@@ -160,6 +160,9 @@ importers:
       '@local-monorepo/db':
         specifier: workspace:*
         version: link:../db
+      '@local-monorepo/scheduler':
+        specifier: workspace:*
+        version: link:../scheduler
       '@local-monorepo/ui':
         specifier: workspace:*
         version: link:../ui

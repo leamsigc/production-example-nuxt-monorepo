@@ -71,11 +71,7 @@ export default defineEventHandler(async (event) => {
           accountId: userInfo.id,
           accountName: userInfo.name,
           // Better Auth manages tokens internally, so we don't store them
-          accessToken: '', // Placeholder - Better Auth handles this
-          refreshToken: null,
-          tokenExpiresAt: null,
-          isActive: true,
-          lastSyncAt: new Date()
+          accessToken: '',
         })
       }
 

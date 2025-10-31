@@ -1,3 +1,4 @@
+import type { Post } from '#layers/BaseDB/db/schema';
 import type { PostDetails, PostResponse, Integration, MediaContent } from '../SchedulerPost.service';
 import { BaseSchedulerPlugin } from '../SchedulerPost.service';
 import dayjs from 'dayjs';
@@ -25,8 +26,9 @@ type FacebookDto = {
 };
 
 export class FacebookPlugin extends BaseSchedulerPlugin {
+  static readonly pluginName = 'facebook';
   readonly pluginName = 'facebook';
-  public exposedMethods = [
+  public override exposedMethods = [
     'handleErrors',
     'refreshToken',
     'generateAuthUrl',
@@ -387,12 +389,18 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
     };
   }
 
-  async pages(accessToken: string) {
+  async pages(_: any, accessToken: string) {
+    // console.log("Token", accessToken);
+
     const url = this._getGraphApiUrl(`/me/accounts?fields=id,username,name,picture.type(large)&access_token=${accessToken}`);
     const { data } = await (
       await this.fetch(url, undefined, 'fetch pages')
     ).json();
 
+    console.log({
+      url,
+      data
+    });
     return data;
   }
 
@@ -455,7 +463,16 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
     );
   }
 
-  async validate(postDetails: PostDetails): Promise<string> {
+
+  override async validate(post: Post): Promise<string[]> {
+    const postDetails: PostDetails = {
+      message: post.content,
+      media: [],
+      comments: [],
+      settings: {},
+      id: post.id
+    };
+
     const errors: string[] = [];
     const detail = postDetails;
     if (detail.message && detail.message.length > 63206) {
@@ -466,8 +483,6 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         if (media.type !== 'image' && media.type !== 'video') {
           errors.push(`Unsupported media type: ${media.type}, only image and video allowed`);
         }
-        // Check file size (Facebook limit 4MB for photos)
-        // Assuming path is URL or local, but can't check size here
       }
     }
     if (detail.poll) {
@@ -485,7 +500,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         errors.push('Invalid URL format in post content');
       }
     }
-    return errors.join('; '); // Concatenate errors into a single string
+    return errors;
   }
 
   /**
@@ -590,12 +605,13 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
     return response.json();
   }
 
-  async post(
+  override async post(
     id: string,
     accessToken: string,
     postDetails: PostDetails,
+    comments: PostDetails[] = [], // Added comments parameter with a default empty array
     integration: Integration
-  ): Promise<PostResponse> {
+  ): Promise<PostResponse[]> {
     try {
       let finalId = '';
       let finalUrl = '';
@@ -631,7 +647,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
       };
 
       this.emit('facebook:post:published', { postId: finalId, response });
-      return response;
+      return [response]; // Wrapped in an array
     } catch (error: unknown) {
       const errorResponse: PostResponse = {
         id: postDetails.id,
@@ -641,17 +657,17 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         error: (error as Error).message,
       };
       this.emit('facebook:post:failed', { error: (error as Error).message });
-      return errorResponse;
+      return [errorResponse]; // Wrapped in an array
     }
   }
 
-  async update(
+  override async update(
     id: string,
     accessToken: string,
     postId: string,
     updateDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse> {
+  ): Promise<PostResponse[]> {
     // Facebook API does not directly support updating a post's content or media after publishing.
     // A common approach is to delete the old post and create a new one, or to update only certain fields if supported.
     // For this implementation, we'll simulate an update by returning a new PostResponse with 'updated' status.
@@ -666,16 +682,16 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
       status: 'updated',
     };
     this.emit('facebook:post:updated', { postId: updatedPostId, updateDetails });
-    return response;
+    return [response]; // Wrapped in an array
   }
 
-  async addComment(
+  override async addComment(
     id: string,
     accessToken: string,
     postId: string,
     commentDetails: PostDetails,
     integration: Integration
-  ): Promise<PostResponse> {
+  ): Promise<PostResponse[]> {
     try {
       const url = this._getGraphApiUrl(`/${postId}/comments?access_token=${accessToken}&fields=id,permalink_url`);
       const { id: commentId, permalink_url } = await (
@@ -687,7 +703,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              ...(commentDetails.media?.length
+              ...(commentDetails.media?.length && commentDetails.media[0]?.path
                 ? { attachment_url: commentDetails.media[0].path }
                 : {}),
               message: commentDetails.message,
@@ -704,7 +720,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         status: 'commented',
       };
       this.emit('facebook:comment:added', { commentId, postId, commentDetails });
-      return response;
+      return [response]; // Wrapped in an array
     } catch (error: unknown) {
       const errorResponse: PostResponse = {
         id: commentDetails.id,
@@ -714,7 +730,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         error: (error as Error).message,
       };
       this.emit('facebook:comment:failed', { error: (error as Error).message });
-      return errorResponse;
+      return [errorResponse]; // Wrapped in an array
     }
   }
 }

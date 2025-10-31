@@ -1,39 +1,67 @@
+import { linkSocial } from "#layers/BaseAuth/lib/auth-client";
 import type { SocialMediaAccount } from "#layers/BaseDB/db/schema";
+import { useBusinessManager } from "../../business/composables/useBusinessManager";
 
 interface Connection {
   name: string;
   icon: string;
   url: string;
+  platform: 'facebook' | 'instagram' | 'twitter' | 'tiktok' | 'google' | 'github' | 'discord' | 'apple' | 'microsoft' | 'linkedin' | 'threads' | 'youtube' | 'pinterest' | 'mastodon' | 'bluesky';
 }
 
 const connectionList = ref<Connection[]>([]);
-const allConnections = ref<SocialMediaAccount[]>([]);
 
 export const useConnectionManager = () => {
-
+  const allConnections = ref<SocialMediaAccount[]>([]);
+  const pagesList = ref<SocialMediaAccount[]>([]);
   const setConnectionList = () => {
     connectionList.value = [
-      { name: 'Facebook', icon: 'logos:facebook', url: '#' },
-      { name: 'Instagram', icon: 'logos:instagram', url: '#' },
-      { name: 'Threads', icon: 'fa6-brands:square-threads', url: '#' },
-      { name: 'X (Twitter)', icon: 'logos:twitter', url: '#' },
-      { name: 'LinkedIn', icon: 'logos:linkedin', url: '#' },
-      { name: 'YouTube', icon: 'logos:youtube', url: '#' },
-      { name: 'TikTok', icon: 'logos:tiktok', url: '#' },
-      { name: 'Pinterest', icon: 'logos:pinterest', url: '#' },
-      { name: 'Mastodon', icon: 'logos:mastodon', url: '#' },
-      { name: 'Bluesky', icon: 'fa6-brands:square-bluesky', url: '#' },
-      { name: 'Google Business', icon: 'logos:google', url: '#' },
+      { name: 'Facebook', icon: 'logos:facebook', url: '#', platform: 'facebook' },
+      { name: 'Instagram', icon: 'logos:instagram', url: '#', platform: "instagram" },
+      { name: 'Threads', icon: 'fa6-brands:square-threads', url: '#', platform: "threads" },
+      { name: 'X (Twitter)', icon: 'logos:twitter', url: '#', platform: "twitter" },
+      { name: 'LinkedIn', icon: 'logos:linkedin', url: '#', platform: "linkedin" },
+      { name: 'YouTube', icon: 'logos:youtube', url: '#', platform: "youtube" },
+      { name: 'TikTok', icon: 'logos:tiktok', url: '#', platform: "tiktok" },
+      { name: 'Pinterest', icon: 'logos:pinterest', url: '#', platform: "pinterest" },
+      { name: 'Mastodon', icon: 'logos:mastodon', url: '#', platform: "mastodon" },
+      { name: 'Bluesky', icon: 'fa6-brands:square-bluesky', url: '#', platform: "bluesky" },
+      { name: 'Google Business', icon: 'logos:google', url: '#', platform: "google" },
     ]
   }
   const getAllConnections = async (connections: SocialMediaAccount[]) => {
     allConnections.value = connections
   }
+  const HandleConnectTo = async (connection: Connection) => {
+    try {
+      const { activeBusinessId } = useBusinessManager()
+      linkSocial({
+        provider: connection.platform,
+        callbackURL: `/api/v1/social-accounts/callback/${connection.platform}?businessId=${activeBusinessId.value}`,
+      });
+    } catch (error) {
+      console.error('Error adding business:', error);
+      throw error;
+    }
+  }
+  const getPagesForIntegration = async (connectionId: string) => {
+    try {
+      const response = await $fetch<Promise<SocialMediaAccount[]>>('/api/v1/social-accounts?platformId=' + connectionId);
+      pagesList.value = response;
+
+    } catch (error) {
+      console.error('Error adding business:', error);
+      throw error;
+    }
+  }
 
   return {
     connectionList,
     allConnections,
+    pagesList,
     setConnectionList,
-    getAllConnections
+    getAllConnections,
+    HandleConnectTo,
+    getPagesForIntegration
   }
 };

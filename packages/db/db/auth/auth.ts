@@ -65,3 +65,5 @@ export const verification = sqliteTable('verification', {
 })
 
 export type User = InferSelectModel<typeof user>
+
+export type Account = InferSelectModel<typeof account>

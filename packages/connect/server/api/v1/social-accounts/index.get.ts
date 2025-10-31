@@ -1,5 +1,7 @@
 import { socialMediaAccountService } from '#layers/BaseDB/server/services/social-media-account.service';
-import { type SocialMediaAccount } from '#layers/BaseDB/db/schema';
+import { SchedulerPost, type SchedulerPluginConstructor } from '#layers/BaseScheduler/server/services/SchedulerPost.service';
+import { FacebookPlugin } from '#layers/BaseScheduler/server/services/plugins/facebook.plugin';
+import { checkUserIsLogin } from '#layers/BaseAuth/server/utils/AuthHelpers';
 import { H3Error } from 'h3';
 
 defineRouteMeta({
@@ -24,19 +26,34 @@ export default defineEventHandler(async (event) => {
 
     // Get query parameters for filtering
     const query = getQuery(event)
-    const businessId = query.businessId as string | undefined
-    const platform = query.platform as string | undefined
-    const isActive = query.isActive ? query.isActive === 'true' : undefined
+    const platform = query.platformId as string;
+    console.log(platform);
+
 
     // Get social media accounts with filters
-    const accounts = await socialMediaAccountService.getAccounts({
-      userId: user.id,
-      businessId,
-      platform: platform as any,
-      isActive
-    })
+    const account = await socialMediaAccountService.getAccountsForPlatform(
+      platform,
+      user.id
+    )
+    const matcher: Record<string, SchedulerPluginConstructor> = {
+      facebook: FacebookPlugin,
+    }
+    if (!matcher[platform] || !account) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid platform'
+      })
+    }
 
-    return accounts;
+    const scheduler = new SchedulerPost({
+      accounts: [account]
+    });
+    scheduler.use(matcher[platform]);
+
+
+
+
+    return await scheduler.pages(account.accessToken) as unknown as any;
   } catch (error) {
     console.error('Error fetching social media accounts:', error)
 

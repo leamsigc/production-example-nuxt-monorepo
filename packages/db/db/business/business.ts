@@ -43,5 +43,10 @@ export const CreateBusinessProfileSchema = z.object({
   website: z.string(),
   category: z.string()
 })
+
+export const SetActiveBusinessSchema = z.object({
+  businessId: z.string(),
+  isActive: z.boolean()
+})
 export type CreateBusinessProfileData = z.infer<typeof CreateBusinessProfileSchema>
 export type UpdateBusinessProfileData = z.infer<typeof UpdateBusinessProfileSchema>

@@ -1,4 +1,5 @@
-import { type Post, type SocialMediaAccount as Integration } from '#layers/BaseDB/db/schema';
+import { account } from './../../../db/db/auth/auth';
+import { type Post, type SocialMediaAccount as Integration, type Account } from '#layers/BaseDB/db/schema';
 import { EventEmitter } from 'events';
 
 // Simplified types based on the core requirements for SchedulerPost
@@ -42,7 +43,7 @@ export interface SchedulerPlugin {
   onRegister?(scheduler: SchedulerPost): void;
   onDestroy?(): void;
 
-  validate(postDetail: PostDetails): Promise<string[]>;
+  validate(postDetail: Post): Promise<string[]>;
   post(
     id: string,
     accessToken: string,
@@ -92,7 +93,7 @@ export abstract class BaseSchedulerPlugin implements SchedulerPlugin {
     this.scheduler.emit(event, ...args);
   }
 
-  abstract validate(postDetail: PostDetails): Promise<string[]>;
+  abstract validate(postDetail: Post): Promise<string[]>;
   abstract post(
     id: string,
     accessToken: string,
@@ -116,16 +117,23 @@ export abstract class BaseSchedulerPlugin implements SchedulerPlugin {
   ): Promise<PostResponse[]>;
 }
 
-class SchedulerPost extends EventEmitter {
+export class SchedulerPost extends EventEmitter {
   private post: Post | null = null;
+  private accounts: Account[] | null = null;
 
   private plugins: Map<string, SchedulerPlugin> = new Map();
   [key: string]: unknown;
 
-  constructor(post: Post) {
+  constructor({ post, accounts }: { post?: Post, accounts?: Account[] }) {
     super();
-    this.post = post
+    if (post) {
+      this.post = post;
+    }
+    if (accounts) {
+      this.accounts = accounts;
+    }
   }
+
 
 
 
@@ -144,7 +152,7 @@ class SchedulerPost extends EventEmitter {
       if (!(plugin)[method]) {
         throw new Error(`Method ${method} not found on plugin ${pluginName}`);
       }
-      this[method] = (plugin[method] as Function).bind(plugin);
+      this[method] = (plugin[method] as Function).bind(plugin, [...arguments]);
     });
 
     return this;
@@ -210,7 +218,7 @@ class SchedulerPost extends EventEmitter {
   async publish(
     id: string,
     accessToken: string,
-    postDetails: PostDetails,
+    postDetails: Post,
     comments: PostDetails[],
     integrations: Integration[]
   ): Promise<{ [integrationId: string]: PostResponse[] }> {

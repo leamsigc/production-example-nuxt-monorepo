@@ -1,6 +1,9 @@
 <!--  Translation file -->
 <i18n src="../connect.json"></i18n>
 <script lang="ts" setup>
+import { pageList } from '#build/ui';
+import { useConnectionManager } from '../composables/useConnectionManager';
+
 /**
  *
  * Integration card
@@ -19,44 +22,63 @@ interface Props {
   connected: boolean;
   time: string;
   icon?: string; // Optional icon for the integration, e.g., 'i-simple-icons-linkedin'
+  tags: string[];
 }
+const { getPagesForIntegration, pagesList } = useConnectionManager();
+
+const modalStatus = ref(false);
+const toggleModal = () => {
+  modalStatus.value = !modalStatus.value;
+};
 
 const props = defineProps<Props>();
 
 const items = [
-  [{
-    label: 'Reconnect',
-    icon: 'i-heroicons-arrow-path',
-    click: () => {
-      // Handle reconnect action
-      console.log('Reconnect clicked');
+  [
+    {
+      label: 'Pages',
+      icon: 'i-heroicons-viewfinder-circle',
+      onSelect: async () => {
+        console.log("Get all pages for the current user", props.name);
+
+        //Get all pages for the integration
+        await getPagesForIntegration(props.name);
+        toggleModal();
+      },
     },
-  }, {
-    label: 'Disconnect',
-    icon: 'i-heroicons-link-slash',
-    click: () => {
-      // Handle disconnect action
-      console.log('Disconnect clicked');
-    },
-  }, {
-    label: 'Edit',
-    icon: 'i-heroicons-pencil',
-    click: () => {
-      // Handle edit action
-      console.log('Edit clicked');
-    },
-  }]
+    {
+      label: 'Reconnect',
+      icon: 'i-heroicons-arrow-path',
+      onSelect: () => {
+        // Handle reconnect action
+        console.log('Reconnect onSelected');
+      },
+    }, {
+      label: 'Disconnect',
+      icon: 'i-heroicons-link-slash',
+      onSelect: () => {
+        // Handle disconnect action
+        console.log('Disconnect onSelected');
+      },
+    }, {
+      label: 'Edit',
+      icon: 'i-heroicons-pencil',
+      onSelect: () => {
+        // Handle edit action
+        console.log('Edit clicked');
+      },
+    }]
 ];
 </script>
 
 <template>
-  <UPageCard :ui="{ body: 'flex-col' }">
+  <UPageCard :ui="{ body: 'flex-col', root: 'size-56' }">
     <section class="relative flex flex-col items-center justify-center p-4">
-      <UAvatar :src="props.image" class="w-24 h-24 border-4 border-primary relative" />
-      <div v-if="props.icon" class="absolute bottom-16 right-16">
-        <UAvatar :icon="props.icon" size="md" class="bg-white dark:bg-gray-900" />
+      <UAvatar :src="props.image" class="w-12 h-12 border-4 border-primary relative" />
+      <div v-if="props.icon" class="">
+        <UAvatar :icon="props.icon" size="2xl" class="bg-white dark:bg-gray-900" />
       </div>
-      <section class="text-center mt-4">
+      <section class="text-center">
         <h3 class="text-lg font-semibold">{{ props.name }}</h3>
         <p class="text-sm text-gray-500 dark:text-gray-400">Added: {{ props.time }}</p>
         <UBadge v-if="props.connected" color="success" variant="subtle" class="mt-2">Connected</UBadge>
@@ -69,5 +91,14 @@ const items = [
       </div>
     </section>
   </UPageCard>
+  <UModal v-model:open="modalStatus" title="Select a page"
+    description="Here you can select a specific page to connect to base on the current connection">
+
+    <template #body>
+      <section>
+        {{ pagesList }}
+      </section>
+    </template>
+  </UModal>
 </template>
 <style scoped></style>

@@ -65,6 +65,10 @@ export const useBusinessManager = () => {
   };
   const setActiveBusiness = async (id: string) => {
     activeBusinessId.value = id
+    await $fetch(`/api/v1/business/active`, {
+      method: 'POST',
+      body: { businessId: id, isActive: true },
+    });
   };
 
   return {

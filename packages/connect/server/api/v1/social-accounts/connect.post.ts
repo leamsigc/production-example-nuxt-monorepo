@@ -3,7 +3,7 @@ import { auth } from '#layers/BaseAuth/lib/auth'
 import type { SocialMediaPlatform } from '#layers/BaseDB/server/services/social-media-account.service'
 
 const connectSchema = z.object({
-  platform: z.enum(['facebook', 'instagram', 'twitter', 'tiktok', 'google', 'github', 'discord', 'apple', 'microsoft', 'linkedin']),
+  platform: z.enum(['facebook', 'instagram', 'twitter', 'tiktok', 'google', 'github', 'discord', 'apple', 'microsoft', 'linkedin', 'threads', 'youtube', 'pinterest', 'mastodon', 'bluesky']),
   businessId: z.string().optional(),
   redirectUrl: z.string().url().optional(),
   linkToExisting: z.boolean().optional().default(false)
@@ -43,7 +43,9 @@ export default defineEventHandler(async (event) => {
     }
 
     // Extract authorization URL from Better Auth response
-    const authUrl = authResponse.url
+    const authUrl = authResponse
+    console.log(authUrl);
+
 
     if (!authUrl) {
       throw createError({

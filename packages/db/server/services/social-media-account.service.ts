@@ -1,3 +1,4 @@
+
 /**
  * Social Media Account Service
  *
@@ -11,6 +12,7 @@
 import { eq, and, desc } from 'drizzle-orm'
 import type { SocialMediaAccount } from '#layers/BaseDB/db/socialMedia/socialMedia'
 import { socialMediaAccounts } from '#layers/BaseDB/db/socialMedia/socialMedia'
+import { account } from '#layers/BaseDB/db/auth/auth'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 
 export type SocialMediaPlatform = 'facebook' | 'instagram' | 'twitter' | 'tiktok' | 'google_my_business'
@@ -139,6 +141,20 @@ export class SocialMediaAccountService {
    */
   async getAccountsByBusinessId(businessId: string): Promise<SocialMediaAccount[]> {
     return this.getAccounts({ businessId, isActive: true })
+  }
+
+  /**
+   * Get accounts by platform
+   */
+  async getAccountsForPlatform(platform: string, userId: string) {
+
+    const userAccount = await this.db.select()
+      .from(account)
+      .where(eq(account.userId, userId))
+      .all();
+
+
+    return userAccount.find(account => account.providerId === platform);
   }
 
   /**
