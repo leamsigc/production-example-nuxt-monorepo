@@ -9,6 +9,7 @@
 ![Upload](./images/Screenshot%202025-10-17%20at%2011-21-24%20Upload%20%40local-monorepo_site.png)
 ![Media](./images/Screenshot%202025-10-17%20at%2011-21-37%20Media%20%40local-monorepo_site.png)
 ![Media v2](./images/Screenshot%202025-10-17%20at%2011-22-03%20Media%20%40local-monorepo_site.png)
+![Business initial](./images/Business-initila.png)
 
 ## Project layers Structure using Monorepo
 

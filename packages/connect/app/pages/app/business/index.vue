@@ -53,7 +53,7 @@ useHead({
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <BasePageHeader :title="t('title')" :description="t('description')" />
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid grid-cols-5 gap-2">
       <AddBusiness />
       <BusinessCard v-for="business in businesses.data" :key="business.id" :business="business"
         @edit="handleEditBusiness" @delete="handleDeleteBusiness" />

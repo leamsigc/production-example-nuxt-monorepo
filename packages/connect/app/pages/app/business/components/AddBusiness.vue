@@ -93,7 +93,7 @@ const submitForm = async (payload: FormSubmitEvent<BusinessForm>) => {
 
 <template>
   <UModal v-model:open="modalOpen">
-    <UButton color="primary" variant="outline" class="grid place-content-center py-8 shadow cursor-pointer">
+    <UButton color="primary" variant="outline" class="grid place-content-center py-8 shadow cursor-pointer size-56">
       <section class="flex flex-col items-center gap-2 border-2 border-primary  rounded-full p-4 mb-2 w-24 h-24">
         <Icon name="lucide:plus" size="80" class="" />
       </section>

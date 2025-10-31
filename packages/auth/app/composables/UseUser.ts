@@ -2,9 +2,12 @@ import type { RouteLocationRaw } from 'vue-router'
 import { authClient } from '#layers/BaseAuth/lib/auth-client'
 import type { User } from '#layers/BaseDB/db/schema'
 
+
+
 export function UseUser() {
   const client = authClient
 
+  // Todo: Move to store and pinia
   const user = useState<User | null>('auth:user', () => null)
   const session = useState('auth:session', () => null as any)
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)

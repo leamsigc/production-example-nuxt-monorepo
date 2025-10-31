@@ -4,6 +4,10 @@
     "description": "Manage your businesses here",
     "seo_title_all": "Business Management",
     "seo_description_all": "Manage your businesses here",
+    "title_initial": "Organization Management",
+    "description_initial": "Organization are a way to group your social media accounts, Google My Business, and content creation. You can create multiple organizations and manage them separately.",
+    "seo_title_initial": "Organization Management",
+    "seo_description_initial": "Organization are a way to group your social media accounts, Google My Business, and content creation. You can create multiple organizations and manage them separately.",
     "states": {
       "add_business": "Add Business",
       "no_businesses": "No businesses found",
@@ -45,6 +49,10 @@
     "description": "Gérez vos entreprises ici",
     "seo_title_all": "Gestion des entreprises",
     "seo_description_all": "Gérez vos entreprises ici",
+    "title_initial": "Gestion de l'organisation",
+    "description_initial": "Les organisations sont un moyen de regrouper vos comptes de médias sociaux, Google My Business et la création de contenu. Vous pouvez créer plusieurs organisations et les gérer séparément.",
+    "seo_title_initial": "Gestion de l'organisation",
+    "seo_description_initial": "Les organisations sont un moyen de regrouper vos comptes de médias sociaux, Google My Business et la création de contenu. Vous pouvez créer plusieurs organisations et les gérer séparément.",
     "states": {
       "add_business": "Ajouter une entreprise",
       "no_businesses": "Aucune entreprise trouvée",
@@ -83,6 +91,10 @@
     "description": "Administra tus negocios aquí",
     "seo_title_all": "Gestión de negocios",
     "seo_description_all": "Administra tus negocios aquí",
+    "title_initial": "Gestión de la organización",
+    "description_initial": "Las organizaciones son una forma de agrupar sus cuentas de redes sociales, Google My Business y la creación de contenido. Puede crear múltiples organizaciones y administrarlas por separado.",
+    "seo_title_initial": "Gestión de la organización",
+    "seo_description_initial": "Las organizaciones son una forma de agrupar sus cuentas de redes sociales, Google My Business y la creación de contenido. Puede crear múltiples organizaciones y administrarlas por separado.",
     "states": {
       "add_business": "Agregar negocio",
       "no_businesses": "No se encontraron negocios",
@@ -121,6 +133,10 @@
     "description": "Verwalten Sie hier Ihre Unternehmen",
     "seo_title_all": "Unternehmensverwaltung",
     "seo_description_all": "Verwalten Sie hier Ihre Unternehmen",
+    "title_initial": "Organisationsverwaltung",
+    "description_initial": "Organisationen sind eine Möglichkeit, Ihre Social-Media-Konten, Google My Business und die Inhaltserstellung zu gruppieren. Sie können mehrere Organisationen erstellen und separat verwalten.",
+    "seo_title_initial": "Organisationsverwaltung",
+    "seo_description_initial": "Organisationen sind eine Möglichkeit, Ihre Social-Media-Konten, Google My Business und die Inhaltserstellung zu gruppieren. Sie können mehrere Organisationen erstellen und separat verwalten.",
     "states": {
       "add_business": "Unternehmen hinzufügen",
       "no_businesses": "Keine Unternehmen gefunden",

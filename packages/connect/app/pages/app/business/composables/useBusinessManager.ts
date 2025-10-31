@@ -14,6 +14,8 @@ const businesses = ref<PaginatedResponse<BusinessProfile>>({
   success: false
 });
 
+const activeBusinessId = ref<string>('');
+
 export const useBusinessManager = () => {
   const getAllBusinesses = async () => {
     try {
@@ -61,12 +63,17 @@ export const useBusinessManager = () => {
       throw error;
     }
   };
+  const setActiveBusiness = async (id: string) => {
+    activeBusinessId.value = id
+  };
 
   return {
     businesses,
+    activeBusinessId,
     getAllBusinesses,
     addBusiness,
     updateBusiness,
     deleteBusiness,
+    setActiveBusiness
   };
 };

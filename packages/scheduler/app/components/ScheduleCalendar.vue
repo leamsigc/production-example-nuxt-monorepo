@@ -21,10 +21,11 @@ interface Props {
   events: EventSourceInput
 }
 
-const { activeView, events } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   activeView: "dayGridMonth",
   events: () => []
 });
+const { activeView, events } = toRefs(props)
 
 const $emit = defineEmits({
   'date-clicked': (event: DateClickArg) => true,
@@ -35,7 +36,7 @@ const { locale } = useI18n()
 
 const calendarOptions: CalendarOptions = {
   plugins: [timeGridPlugin, interactionPlugin, dayGridPlugin],
-  initialView: activeView,
+  initialView: activeView.value,
   editable: true,
   nowIndicator: true,
   locale: locale.value,
@@ -55,7 +56,7 @@ const calendarOptions: CalendarOptions = {
     center: "title",
     right: "timeGridDay,timeGridWeek,dayGridMonth",
   },
-  events,
+  events: events.value,
 };
 </script>
 <template>
