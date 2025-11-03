@@ -1,3 +1,5 @@
+import type { FacebookPage } from '#layers/BaseConnect/utils/FacebookPages';
+
 import { linkSocial } from "#layers/BaseAuth/lib/auth-client";
 import type { SocialMediaAccount } from "#layers/BaseDB/db/schema";
 import { useBusinessManager } from "../../business/composables/useBusinessManager";
@@ -9,11 +11,13 @@ interface Connection {
   platform: 'facebook' | 'instagram' | 'twitter' | 'tiktok' | 'google' | 'github' | 'discord' | 'apple' | 'microsoft' | 'linkedin' | 'threads' | 'youtube' | 'pinterest' | 'mastodon' | 'bluesky';
 }
 
+
 const connectionList = ref<Connection[]>([]);
 
 export const useConnectionManager = () => {
   const allConnections = ref<SocialMediaAccount[]>([]);
   const pagesList = ref<SocialMediaAccount[]>([]);
+  const facebookPages = ref<FacebookPage[]>([]);
   const setConnectionList = () => {
     connectionList.value = [
       { name: 'Facebook', icon: 'logos:facebook', url: '#', platform: 'facebook' },
@@ -47,8 +51,24 @@ export const useConnectionManager = () => {
   const getPagesForIntegration = async (connectionId: string) => {
     try {
       const response = await $fetch<Promise<SocialMediaAccount[]>>('/api/v1/social-accounts?platformId=' + connectionId);
-      pagesList.value = response;
 
+      if (connectionId === 'facebook') {
+
+        facebookPages.value = (response as unknown as FacebookPage[])
+      }
+      pagesList.value = response
+    } catch (error) {
+      console.error('Error adding business:', error);
+      throw error;
+    }
+  }
+  const HandleConnectToFacebook = async (page: FacebookPage) => {
+    try {
+      const { activeBusinessId } = useBusinessManager()
+      const res = await $fetch<Promise<SocialMediaAccount>>(`/api/v1/social-accounts/facebook/${page.id}`, {
+        method: 'POST',
+        body: { ...page, platformId: 'facebook', businessId: activeBusinessId.value },
+      });
     } catch (error) {
       console.error('Error adding business:', error);
       throw error;
@@ -59,9 +79,11 @@ export const useConnectionManager = () => {
     connectionList,
     allConnections,
     pagesList,
+    facebookPages,
     setConnectionList,
     getAllConnections,
     HandleConnectTo,
-    getPagesForIntegration
+    getPagesForIntegration,
+    HandleConnectToFacebook
   }
 };

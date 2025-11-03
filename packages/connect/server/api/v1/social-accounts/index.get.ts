@@ -52,8 +52,8 @@ export default defineEventHandler(async (event) => {
 
 
 
-
-    return await scheduler.pages(account.accessToken) as unknown as any;
+    //@ts-ignore
+    return await scheduler.pages(account.accessToken);
   } catch (error) {
     console.error('Error fetching social media accounts:', error)
 

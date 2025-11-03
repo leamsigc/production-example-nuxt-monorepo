@@ -89,6 +89,7 @@ export const auth = betterAuth({
         "email",
         "public_profile",
         'pages_show_list',
+        'business_management',
         'read_insights',
         'pages_manage_posts',
         'pages_read_engagement',

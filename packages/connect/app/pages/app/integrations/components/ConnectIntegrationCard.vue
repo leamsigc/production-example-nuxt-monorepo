@@ -2,6 +2,7 @@
 <i18n src="../connect.json"></i18n>
 <script lang="ts" setup>
 import { pageList } from '#build/ui';
+import type { FacebookPage } from '#layers/BaseConnect/utils/FacebookPages';
 import { useConnectionManager } from '../composables/useConnectionManager';
 
 /**
@@ -24,7 +25,7 @@ interface Props {
   icon?: string; // Optional icon for the integration, e.g., 'i-simple-icons-linkedin'
   tags: string[];
 }
-const { getPagesForIntegration, pagesList } = useConnectionManager();
+const { getPagesForIntegration, HandleConnectToFacebook, facebookPages } = useConnectionManager();
 
 const modalStatus = ref(false);
 const toggleModal = () => {
@@ -69,6 +70,12 @@ const items = [
       },
     }]
 ];
+
+const HandleConnectTo = async (page: unknown) => {
+  if (props.name === 'facebook')
+    await HandleConnectToFacebook(page as FacebookPage);
+
+};
 </script>
 
 <template>
@@ -92,11 +99,21 @@ const items = [
     </section>
   </UPageCard>
   <UModal v-model:open="modalStatus" title="Select a page"
-    description="Here you can select a specific page to connect to base on the current connection">
+    description="Here you can select a specific page to connect to base on the current connection" class="md:min-w-4xl">
 
     <template #body>
-      <section>
-        {{ pagesList }}
+      <section class="grid grid-cols-3 gap-2">
+        <UPageCard
+          :ui="{ body: 'sm:p-0 p-0', root: 'sm:p-0 p-0 cursor-pointer', wrapper: 'p-0', container: 'p-0 sm:p-0' }"
+          v-for="page in facebookPages" :key="page.id" @click="HandleConnectTo(page)">
+          <section class="relative flex flex-col items-center justify-center p-4">
+            <UAvatar :src="page.picture.data.url" class="size-20 border-1 border-primary relative" />
+            <section class="text-center">
+              <h3 class="text-lg font-semibold">{{ page.name }}</h3>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Id: {{ page.id }}</p>
+            </section>
+          </section>
+        </UPageCard>
       </section>
     </template>
   </UModal>
