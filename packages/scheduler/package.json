@@ -12,28 +12,28 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@atproto/api": "^0.12.29",
-    "@fullcalendar/daygrid": "^6.1.19",
-    "@fullcalendar/interaction": "^6.1.19",
-    "@fullcalendar/list": "^6.1.19",
-    "@fullcalendar/multimonth": "^6.1.19",
-    "@fullcalendar/scrollgrid": "^6.1.19",
-    "@fullcalendar/timegrid": "^6.1.19",
+    "@atproto/api": "catalog:",
+    "@fullcalendar/daygrid": "catalog:",
+    "@fullcalendar/interaction": "catalog:",
+    "@fullcalendar/list": "catalog:",
+    "@fullcalendar/multimonth": "catalog:",
+    "@fullcalendar/scrollgrid": "catalog:",
+    "@fullcalendar/timegrid": "catalog:",
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
-    "axios": "^1.7.2",
-    "dayjs": "^1.11.11",
-    "sharp": "^0.33.4"
+    "axios": "catalog:",
+    "dayjs": "catalog:",
+    "sharp": "catalog:"
   },
   "devDependencies": {
-    "@fullcalendar/core": "^6.1.19",
-    "@fullcalendar/vue3": "^6.1.19",
-    "@nuxt/eslint": "latest",
-    "@nuxtjs/i18n": "^10.1.2",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest"
+    "@fullcalendar/core": "catalog:",
+    "@fullcalendar/vue3": "catalog:",
+    "@nuxt/eslint": "catalog:",
+    "@nuxtjs/i18n": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:"
   }
 }

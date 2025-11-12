@@ -12,25 +12,25 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@nuxt/eslint": "latest",
-    "@nuxt/image": "1.11.0",
-    "@nuxt/scripts": "0.12.1",
-    "@nuxt/test-utils": "3.19.2",
-    "@nuxt/ui": "4.0.1",
-    "@nuxtjs/i18n": "^10.1.2",
-    "@unhead/vue": "^2.0.19",
-    "@vueuse/core": "13.9.0",
-    "@vueuse/motion": "3.0.3",
-    "@vueuse/nuxt": "13.9.0",
-    "echarts": "^6.0.0",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest"
+    "@nuxt/eslint": "catalog:",
+    "@nuxt/image": "catalog:",
+    "@nuxt/scripts": "catalog:",
+    "@nuxt/test-utils": "catalog:",
+    "@nuxt/ui": "catalog:",
+    "@nuxtjs/i18n": "catalog:",
+    "@unhead/vue": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@vueuse/motion": "catalog:",
+    "@vueuse/nuxt": "catalog:",
+    "echarts": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:"
   },
   "dependencies": {
-    "@nuxt/fonts": "^0.11.4",
-    "@types/three": "^0.180.0",
-    "three": "^0.180.0"
+    "@nuxt/fonts": "catalog:",
+    "@types/three": "catalog:",
+    "three": "catalog:"
   }
 }

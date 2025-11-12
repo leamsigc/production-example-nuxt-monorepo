@@ -14,15 +14,15 @@
   "dependencies": {
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
-    "mjml": "^4.16.1"
+    "mjml": "catalog:"
   },
   "devDependencies": {
-    "@nuxt/eslint": "latest",
-    "@types/mjml": "^4.7.4",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest",
-    "@nuxtjs/i18n": "^10.1.2"
+    "@nuxt/eslint": "catalog:",
+    "@types/mjml": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:",
+    "@nuxtjs/i18n": "catalog:"
   }
 }

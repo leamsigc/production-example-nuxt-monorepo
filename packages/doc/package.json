@@ -12,11 +12,11 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@nuxt/eslint": "latest",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest",
-    "@nuxtjs/i18n": "^10.1.2"
+    "@nuxt/eslint": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:",
+    "@nuxtjs/i18n": "catalog:"
   }
 }

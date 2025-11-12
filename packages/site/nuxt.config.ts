@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     '@local-monorepo/connect'
   ],
 
-  modules: ['@nuxtjs/seo', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/seo', '@nuxtjs/i18n', '@nuxt/hints'],
   i18n: {
     vueI18n: join(currentDir, './translations/i18n.config.ts'),
     baseUrl: process.env.NUXT_APP_URL,

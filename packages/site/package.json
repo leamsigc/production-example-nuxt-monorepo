@@ -17,19 +17,20 @@
     "@local-monorepo/assets": "workspace:*",
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/bulk-scheduler": "workspace:*",
-    "@local-monorepo/content": "workspace:*",
     "@local-monorepo/connect": "workspace:*",
+    "@local-monorepo/content": "workspace:*",
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/email": "workspace:*",
     "@local-monorepo/scheduler": "workspace:*",
     "@local-monorepo/tools": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
-    "nuxt": "^4.2.0",
-    "vue": "^3.5.22",
-    "vue-router": "^4.6.3",
-    "@nuxtjs/i18n": "^10.1.2"
+    "@nuxtjs/i18n": "catalog:",
+    "nuxt": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@nuxtjs/seo": "^3.2.2"
+    "@nuxt/hints": "catalog:",
+    "@nuxtjs/seo": "catalog:"
   }
 }

@@ -17,6 +17,7 @@ export function UseUser() {
       return
     }
     sessionFetching.value = true
+    //todo: This seems to get a error from the server Invalid URL
     const { data } = await client.getSession()
     session.value = data?.session || null
 

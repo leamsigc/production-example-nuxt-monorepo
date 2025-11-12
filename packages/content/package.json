@@ -13,19 +13,19 @@
   },
   "devDependencies": {
     "@local-monorepo/ui": "workspace:*",
-    "@nuxt/content": "^3.7.1",
-    "@nuxt/eslint": "latest",
-    "@nuxtjs/seo": "3.2.2",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest",
-    "zod": "^4.1.12",
-    "@nuxtjs/i18n": "^10.1.2"
+    "@nuxt/content": "catalog:",
+    "@nuxt/eslint": "catalog:",
+    "@nuxtjs/seo": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:",
+    "zod": "catalog:",
+    "@nuxtjs/i18n": "catalog:"
   },
   "dependencies": {
-    "better-sqlite3": "^12.4.1",
-    "sass": "^1.93.2",
-    "zod-to-json-schema": "^3.24.6"
+    "better-sqlite3": "catalog:",
+    "sass": "catalog:",
+    "zod-to-json-schema": "catalog:"
   }
 }

@@ -15,15 +15,15 @@
     "db:studio": "drizzle-kit studio --config ./config/drizzle.config.ts"
   },
   "dependencies": {
-    "drizzle-orm": "^0.44.7"
+    "drizzle-orm": "catalog:"
   },
   "devDependencies": {
-    "@libsql/client": "^0.15.15",
-    "@nuxt/eslint": "latest",
-    "drizzle-kit": "^0.31.5",
-    "eslint": "^9.38.0",
-    "nuxt": "^4.2.0",
-    "typescript": "^5.9.3",
-    "vue": "latest"
+    "@libsql/client": "catalog:",
+    "@nuxt/eslint": "catalog:",
+    "drizzle-kit": "catalog:",
+    "eslint": "catalog:",
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:"
   }
 }
