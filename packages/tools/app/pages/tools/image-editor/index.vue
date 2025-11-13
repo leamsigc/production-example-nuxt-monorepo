@@ -18,6 +18,13 @@ import ImageCanvasEditorMainMenu from './components/ImageCanvasEditorMainMenu.vu
  * @todo [✔] Update the typescript.
  */
 
+const { t } = useI18n()
+useHead({
+  title: t('title'),
+  meta: [
+    { name: 'description', content: t('description') }
+  ]
+})
 </script>
 
 <template>

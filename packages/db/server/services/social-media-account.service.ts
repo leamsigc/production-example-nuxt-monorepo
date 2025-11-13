@@ -14,6 +14,7 @@ import type { SocialMediaAccount } from '#layers/BaseDB/db/socialMedia/socialMed
 import { socialMediaAccounts } from '#layers/BaseDB/db/socialMedia/socialMedia'
 import { account } from '#layers/BaseDB/db/auth/auth'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
+import { entityDetailsService } from '#layers/BaseDB/server/services/entity-details.service' // Import new service
 
 export type SocialMediaPlatform = 'facebook' | 'instagram' | 'twitter' | 'tiktok' | 'google_my_business'
 
@@ -26,6 +27,7 @@ export interface CreateSocialMediaAccountData {
   accessToken: string
   refreshToken?: string
   tokenExpiresAt?: Date
+  details?: Record<string, unknown> // Add optional details field
 }
 
 export interface UpdateSocialMediaAccountData {
@@ -35,6 +37,7 @@ export interface UpdateSocialMediaAccountData {
   tokenExpiresAt?: Date
   isActive?: boolean
   lastSyncAt?: Date
+  details?: Record<string, unknown> // Add optional details field
 }
 
 export interface TokenRefreshData {
@@ -79,6 +82,13 @@ export class SocialMediaAccountService {
       throw new Error('Failed to create social media account')
     }
 
+    if (data.details) {
+      await entityDetailsService.createDetails({
+        entityId: account.id,
+        entityType: 'social_media_account',
+        details: data.details,
+      })
+    }
 
     return account
   }
@@ -194,6 +204,23 @@ export class SocialMediaAccountService {
       .set(updateData)
       .where(eq(socialMediaAccounts.id, id))
       .returning()
+
+    if (!account) {
+      return null
+    }
+
+    if (data.details) {
+      const existingDetails = await entityDetailsService.getDetailsByEntity(account.id, 'social_media_account')
+      if (existingDetails) {
+        await entityDetailsService.updateDetails(existingDetails.id, { details: data.details })
+      } else {
+        await entityDetailsService.createDetails({
+          entityId: account.id,
+          entityType: 'social_media_account',
+          details: data.details,
+        })
+      }
+    }
 
     return account || null
   }

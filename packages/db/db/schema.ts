@@ -22,6 +22,7 @@ export * from './socialMedia/socialMedia'
 export * from './subscriptions/subscriptions'
 export * from './templates/templates'
 export * from './audit/audit'
+export * from './entityDetails/entityDetails' // Export new entityDetails table
 
 /***
 * Custom table here
