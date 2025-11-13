@@ -4,7 +4,7 @@
 ![Home-v2](./images/HomePage-2.png)
 ![App](./images/Screenshot%202025-10-17%20at%2011-20-43%20App%20%40local-monorepo_site.png)
 ![Image Editor](./images/Screenshot%202025-10-17%20at%2011-20-51%20Image%20Editor%20%40local-monorepo_site.png)
-![Blog Social magic](./images/Screenshot%202025-10-17%20at%2011-20-59%20Blog%20Social%20magic%20-%20Social%20Media%20Scheduling%20Platform%20%40local-monorepo_site.png)
+![Blog MagicSync](./images/Screenshot%202025-10-17%20at%2011-20-59%20Blog%20Social%20magic%20-%20Social%20Media%20Scheduling%20Platform%20%40local-monorepo_site.png)
 ![Web Worker Nuxt](./images/Screenshot%202025-10-17%20at%2011-21-08%20Must%20Know%20Resources%20The%20easy%20way%20of%20using%20Web%20Worker%20in%20Nuxt.%20%40local-monorepo_site.png)
 ![Upload](./images/Screenshot%202025-10-17%20at%2011-21-24%20Upload%20%40local-monorepo_site.png)
 ![Media](./images/Screenshot%202025-10-17%20at%2011-21-37%20Media%20%40local-monorepo_site.png)

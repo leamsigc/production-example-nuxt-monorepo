@@ -21,7 +21,7 @@ import UserNav from './dashboard/UserNav.vue';
     <UDashboardSidebar collapsible resizable class="bg-gray-50 dark:bg-gray-950 max-w-md" :max-size="15" :min-size="5"
       :ui="{ footer: 'p-0' }">
       <template #header="{ collapsed }">
-        <NuxtLink v-if="!collapsed" to="/" class="text-xl font-bold text-gray-900 dark:text-white">Social Magic
+        <NuxtLink v-if="!collapsed" to="/" class="text-xl font-bold text-gray-900 dark:text-white">MagicSync
         </NuxtLink>
         <UIcon v-else name="i-simple-icons-nuxtdotjs" class="size-5 text-primary mx-auto" />
       </template>

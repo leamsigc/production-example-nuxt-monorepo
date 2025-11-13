@@ -88,7 +88,7 @@ const items = computed<NavigationMenuItem[]>(() => [
     <template #left>
       <UTooltip text="Home" :kbds="['meta', 'H']">
         <UButton color="neutral" variant="ghost" to="/" icon="fxemoji:flaginhole" aria-label="Home">
-          SocialMagic
+          MagicSync
         </UButton>
       </UTooltip>
     </template>

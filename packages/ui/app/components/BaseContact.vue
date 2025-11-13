@@ -31,7 +31,7 @@ const invalidUiInputForm = ref<boolean>(false);
 const handleSubmit = () => {
   const { firstName, lastName, email, subject, message } = contactForm;
 
-  const mailToLink = `mailto:socialMagic@leamsigc.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
+  const mailToLink = `mailto:MagicSync@leamsigc.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
 
   window.location.href = mailToLink;
 };
