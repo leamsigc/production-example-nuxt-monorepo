@@ -30,7 +30,7 @@ const colorMode = useColorMode();
 
 const { signOut, user, fetchSession } = UseUser();
 
-fetchSession();
+await fetchSession();
 // Reactive state for appearance preference
 const currentAppearance = ref('system');
 

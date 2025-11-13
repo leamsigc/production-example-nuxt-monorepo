@@ -81,7 +81,7 @@ const HandleConnectTo = async (page: unknown) => {
 <template>
   <UPageCard :ui="{ body: 'flex-col', root: 'size-56' }">
     <section class="relative flex flex-col items-center justify-center p-4">
-      <UAvatar :src="props.image" class="w-12 h-12 border-4 border-primary relative" />
+      <UAvatar :src="props.image" class="w-12 h-12 border border-primary relative" />
       <div v-if="props.icon" class="">
         <UAvatar :icon="props.icon" size="2xl" class="bg-white dark:bg-gray-900" />
       </div>
@@ -107,7 +107,7 @@ const HandleConnectTo = async (page: unknown) => {
           :ui="{ body: 'sm:p-0 p-0', root: 'sm:p-0 p-0 cursor-pointer', wrapper: 'p-0', container: 'p-0 sm:p-0' }"
           v-for="page in facebookPages" :key="page.id" @click="HandleConnectTo(page)">
           <section class="relative flex flex-col items-center justify-center p-4">
-            <UAvatar :src="page.picture.data.url" class="size-20 border-1 border-primary relative" />
+            <UAvatar :src="page.picture.data.url" class="size-20 border border-primary relative" />
             <section class="text-center">
               <h3 class="text-lg font-semibold">{{ page.name }}</h3>
               <p class="text-sm text-gray-500 dark:text-gray-400">Id: {{ page.id }}</p>

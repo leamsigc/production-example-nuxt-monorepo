@@ -15,6 +15,7 @@ interface Connection {
 const connectionList = ref<Connection[]>([]);
 
 export const useConnectionManager = () => {
+  const toast = useToast();
   const allConnections = ref<SocialMediaAccount[]>([]);
   const pagesList = ref<SocialMediaAccount[]>([]);
   const facebookPages = ref<FacebookPage[]>([]);
@@ -53,7 +54,6 @@ export const useConnectionManager = () => {
       const response = await $fetch<Promise<SocialMediaAccount[]>>('/api/v1/social-accounts?platformId=' + connectionId);
 
       if (connectionId === 'facebook') {
-
         facebookPages.value = (response as unknown as FacebookPage[])
       }
       pagesList.value = response
@@ -69,8 +69,23 @@ export const useConnectionManager = () => {
         method: 'POST',
         body: { ...page, platformId: 'facebook', businessId: activeBusinessId.value },
       });
+      console.log(res);
+
+      toast.add({
+        title: 'Success',
+        description: 'Successfully connected to Facebook page ' + page.name,
+        icon: 'i-heroicons-check-circle',
+        color: 'success',
+      });
+
     } catch (error) {
       console.error('Error adding business:', error);
+      toast.add({
+        title: 'Error',
+        description: 'Failed to connect to Facebook page ' + page.name,
+        icon: 'i-heroicons-x-circle',
+        color: 'error',
+      });
       throw error;
     }
   }

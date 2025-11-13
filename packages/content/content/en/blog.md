@@ -26,6 +26,15 @@ head:
       content: summary_large_image
     - name: twitter:description
       content: Explore articles and insights about MagicSync, a social media scheduling platform built with Nuxt layers, enabling users to manage business profiles, connect social media accounts, and schedule posts across platforms.
+
+ogImage:
+  component: BlogOgImage
+  props:
+    title: Blog MagicSync
+    description: Explore articles and insights about MagicSync, a social media scheduling platform built with Nuxt layers
+    headline: MagicSync
+    imageUrl: "/img/home-dark.png"
+
 ---
 
 

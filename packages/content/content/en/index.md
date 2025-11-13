@@ -8,7 +8,8 @@ ogImage:
   props:
     title: Social Media Success
     description: Streamline your social media, Google My Business, and content creation with our all-in-one platform for small businesses.
-    heading: Social Media Success
+    headline: Social Media Success
+    imageUrl: "/img/home-dark.png"
 
 head:
   htmlAttrs:

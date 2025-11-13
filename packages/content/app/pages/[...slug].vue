@@ -43,9 +43,7 @@ const { data: page } = await useAsyncData(`page-${slug.value}`, async () => {
 // }
 useHead(page.value?.meta || {})
 useSeoMeta(page.value?.seo || {})
-// if (page.value?.ogImage) {
-//   defineOgImage(page.value.ogImage)
-// }
+defineOgImage(page.value?.ogImage)
 </script>
 
 <template>

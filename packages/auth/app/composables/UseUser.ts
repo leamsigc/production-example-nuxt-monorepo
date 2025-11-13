@@ -12,6 +12,8 @@ export function UseUser() {
   const session = useState('auth:session', () => null as any)
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)
 
+  const listAccounts = useState('auth:listAccounts', () => null as any)
+
   const fetchSession = async () => {
     if (sessionFetching.value) {
       return
@@ -45,6 +47,11 @@ export function UseUser() {
     })
   }
 
+  const getUserAccountList = async () => {
+    const data = await client.listAccounts()
+    listAccounts.value = data
+  }
+
   return {
     session,
     user,
@@ -71,6 +78,8 @@ export function UseUser() {
       })
     },
     fetchSession,
-    client
+    client,
+    getUserAccountList,
+    listAccounts
   }
 }

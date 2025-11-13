@@ -1,7 +1,6 @@
 import { socialMediaAccountService, type CreateSocialMediaAccountData, type SocialMediaPlatform } from '#layers/BaseDB/server/services/social-media-account.service';
 import { H3Error, readBody } from 'h3';
 
-// Define a more generic type for the incoming body, as FacebookPage details are now optional
 interface ConnectSocialMediaAccountBody {
   id: string;
   name: string;
@@ -118,7 +117,6 @@ export default defineEventHandler(async (event) => {
           accountName: body.name,
           isActive: true,
           details: details, // Store full page details in the new 'details' column
-          updatedAt: new Date(),
         });
 
         if (!updatedAccount) {

@@ -15,10 +15,11 @@
 import ConnectIntegrationCard from './components/ConnectIntegrationCard.vue';
 import ConnectAddAccount from './components/ConnectAddAccount.vue';
 import { useConnectionManager } from './composables/useConnectionManager';
-import type { SocialMediaAccount } from '#layers/BaseDB/db/schema';
-import { listAccounts } from '#layers/BaseAuth/lib/auth-client';
+import type { User } from '#layers/BaseDB/db/schema';
 
 const { getAllConnections } = useConnectionManager();
+const { getUserAccountList, listAccounts } = UseUser();
+const user = useState<User | null>('auth:user')
 
 const { t } = useI18n();
 
@@ -28,19 +29,18 @@ useHead({
     { name: 'description', content: t('seo_description_all') }
   ]
 })
-const accounts = await listAccounts();
+await getUserAccountList();
 
 </script>
 
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <BasePageHeader :title="t('title')" :description="t('description')" />
-
     <div class="grid grid-cols-5 gap-2">
       <ConnectAddAccount />
-      <ConnectIntegrationCard v-for="connection in accounts.data" :name="connection.providerId" :key="connection.id"
-        image="https://avatars.githubusercontent.com/u/739984?v=4" :icon="`logos:${connection.providerId}`"
-        :tags="connection.scopes" :time="connection.createdAt.toLocaleDateString()" connected />
+      <ConnectIntegrationCard v-for="connection in listAccounts.data" :name="connection.providerId" :key="connection.id"
+        :image="user && user.image ? user.image : ''" :icon="`logos:${connection.providerId}`" :tags="connection.scopes"
+        :time="connection.createdAt.toLocaleDateString()" connected />
     </div>
   </div>
 </template>

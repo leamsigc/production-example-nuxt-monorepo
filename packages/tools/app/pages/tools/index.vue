@@ -37,6 +37,16 @@ useHead({
     { name: 'description', content: t('description') }
   ]
 })
+
+defineOgImage({
+  component: "BlogOgImage",
+  props: {
+    title: t('title'),
+    description: t('description'),
+    headline: "Free Tools",
+    imageUrl: "https://raw.githubusercontent.com/leamsigc/MagicSync/refs/heads/main/images/HomePage.png"
+  }
+})
 </script>
 
 <template>
