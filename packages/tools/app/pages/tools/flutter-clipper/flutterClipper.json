@@ -1,6 +1,32 @@
 {
   "en": {
     "title": "Flutter Clipper",
-    "description": "Flutter Clipper"
+    "description": "Flutter Clipper",
+    "menu": {
+      "main": {
+        "new": "New",
+        "copy": "Copy"
+      }
+    }
+  },
+  "de": {
+    "title": "Flutter Clipper",
+    "description": "Flutter Clipper",
+    "menu": {
+      "main": {
+        "new": "Neu",
+        "copy": "Kopieren"
+      }
+    }
+  },
+  "fr": {
+    "title": "Flutter Clipper",
+    "description": "Flutter Clipper",
+    "menu": {
+      "main": {
+        "new": "Nouveau",
+        "copy": "Copier"
+      }
+    }
   }
 }
