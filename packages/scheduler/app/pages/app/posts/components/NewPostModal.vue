@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, watch } from 'vue';
 import { usePostManager } from '../composables/UsePostManager';
-import type { PostCreateBase } from '#layers/BaseDB/db/schema';
+import { useAssetManager } from '../../composables/useAssetManager';
+import type { PostCreateBase, Asset } from '#layers/BaseDB/db/schema';
 
 // Dynamically import preview components
 const FacebookPreview = defineAsyncComponent(() => import('./FacebookPreview.vue'));
@@ -31,10 +32,7 @@ const DefaultPreview = defineAsyncComponent(() => import('./DefaultPreview.vue')
 const { t } = useI18n();
 const { createPost } = usePostManager();
 const { getAllSocialMediaAccounts, pagesList } = useSocialMediaManager();
-
-onMounted(async () => {
-  await getAllSocialMediaAccounts();
-})
+const { getAssetsByIds } = useAssetManager();
 
 const isOpen = ref(false);
 const postToCreate = ref<PostCreateBase>({
@@ -45,8 +43,9 @@ const postToCreate = ref<PostCreateBase>({
   targetPlatforms: [],
   status: 'draft',
   comment: []
-})
+});
 
+const postMediaAssets = ref<Asset[]>([]);
 const postHasError = ref(false);
 
 const explicitPreviewPlatform = ref('default');
@@ -65,12 +64,33 @@ const previewsMap = {
   bluesky: BlueskyPreview,
 };
 
+onMounted(async () => {
+  await getAllSocialMediaAccounts();
+});
+
+watch(() => postToCreate.value.mediaAssets, async (newAssetIds) => {
+  if (newAssetIds && newAssetIds.length > 0) {
+    postMediaAssets.value = await getAssetsByIds(newAssetIds);
+  } else {
+    postMediaAssets.value = [];
+  }
+}, { immediate: true });
+
 const currentPreviewPlatform = computed(() => {
   if (explicitPreviewPlatform.value !== 'default') {
     return explicitPreviewPlatform.value;
   }
   return 'default';
 });
+
+const formatPostContent = (content: string, platform: string): string => {
+  // Example: Twitter character limit
+  if (platform === 'twitter' && content.length > 280) {
+    return content.substring(0, 277) + '...';
+  }
+  // Add other platform-specific formatting rules here
+  return content;
+};
 
 const previewComponent = computed(() => {
   const component = previewsMap[currentPreviewPlatform.value as keyof typeof previewsMap];
@@ -122,8 +142,10 @@ const handleCreatePost = async () => {
     return;
   }
   postHasError.value = false;
+  console.log(postToCreate.value);
 
-  await createPost(postToCreate.value)
+
+  // await createPost(postToCreate.value)
   isOpen.value = false;
 }
 const ResetToBase = () => {
@@ -248,7 +270,8 @@ const ResetToBase = () => {
                 <h4 class="text-sm font-semibold">Preview</h4>
                 <USelect v-model="explicitPreviewPlatform" :items="previewSelectOptions" class="w-40" />
               </div>
-              <component :is="previewComponent" :post-content="postToCreate.content"
+              <component :is="previewComponent"
+                :post="{ ...postToCreate, content: formatPostContent(postToCreate.content, currentPreviewPlatform), mediaAssets: postMediaAssets }"
                 :platform="currentPreviewPlatform" />
             </div>
           </div>

@@ -10,8 +10,10 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+import type { PostCreateBase, Asset } from '#layers/BaseDB/db/schema';
+
 const props = defineProps<{
-  postContent: string;
+  post: PostCreateBase & { mediaAssets: Asset[] };
 }>();
 </script>
 
@@ -24,11 +26,23 @@ const props = defineProps<{
         <p class="text-xs text-gray-500 dark:text-gray-400">Just now</p>
       </div>
     </div>
-    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ postContent }}</p>
-    <div v-if="postContent.length > 0"
+    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ props.post.content }}</p>
+    <div v-if="props.post.mediaAssets && props.post.mediaAssets.length > 0" class="grid grid-cols-1 gap-2 mb-3">
+      <img v-for="asset in props.post.mediaAssets" :key="asset.id" :src="asset.url" alt="Post media"
+        class="rounded-lg w-full" />
+    </div>
+    <div v-if="props.post.content.length > 0 || (props.post.mediaAssets && props.post.mediaAssets.length > 0)"
       class="border-t border-gray-200 dark:border-gray-700 pt-3 flex justify-around text-gray-500 dark:text-gray-400 text-sm">
       <span>Save</span>
       <span>Comment</span>
+    </div>
+    <div v-if="props.post.comment && props.post.comment.length > 0"
+      class="mt-4 border-t border-gray-200 dark:border-gray-700 pt-3">
+      <p class="font-semibold text-gray-900 dark:text-white mb-2">Comments:</p>
+      <div v-for="(comment, index) in props.post.comment" :key="index"
+        class="text-gray-800 dark:text-gray-200 text-sm mb-1">
+        {{ comment }}
+      </div>
     </div>
   </div>
 </template>
