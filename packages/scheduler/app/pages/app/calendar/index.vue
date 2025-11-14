@@ -3,6 +3,7 @@
 <script lang="ts" setup>
 import type { DateClickArg } from '@fullcalendar/interaction/index.js';
 import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
+import type { EventClickArg } from '@fullcalendar/core/index.js';
 
 /**
  *
@@ -50,11 +51,18 @@ const HandleDateClicked = (event: DateClickArg) => {
     color: 'success'
   })
 }
+const HandleEventClicked = (event: EventClickArg) => {
+  toast.add({
+    title: 'Date Clicked',
+    description: ` Date clicked: ${event.event.title}`,
+    color: 'success'
+  })
+}
 </script>
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <SchedulerPageHeader />
-    <ScheduleCalendar :events="events" @dateClick="HandleDateClicked" />
+    <ScheduleCalendar :events="events" @date-clicked="HandleDateClicked" @event-clicked="HandleEventClicked" />
   </div>
 </template>
 

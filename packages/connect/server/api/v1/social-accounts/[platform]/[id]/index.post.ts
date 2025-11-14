@@ -74,7 +74,7 @@ export default defineEventHandler(async (event) => {
       ipAddress: event.node.req.socket.remoteAddress,
       userAgent: event.node.req.headers['user-agent'],
       status: 'success',
-      details: JSON.stringify(pageDetails),
+      details: JSON.stringify({ ...pageDetails, access_token: '***' }),
     })
 
 
@@ -87,13 +87,11 @@ export default defineEventHandler(async (event) => {
       platformId: platform,
     });
 
-    console.log("Social media account created:", socialMediaAccount);
 
 
     return socialMediaAccount;
 
   } catch (error) {
-    console.error('Error connecting social media account:', error);
 
     if (error instanceof H3Error) {
       throw error;

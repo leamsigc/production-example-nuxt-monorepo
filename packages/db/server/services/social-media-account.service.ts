@@ -28,7 +28,7 @@ export interface CreateSocialMediaAccountData {
   accessToken: string
   refreshToken?: string
   tokenExpiresAt?: Date
-  entityDetailsId?: string
+  entityDetailId?: string
 }
 
 export interface UpdateSocialMediaAccountData {
@@ -82,8 +82,6 @@ export class SocialMediaAccountService {
     if (!account) {
       throw new Error('Failed to create social media account')
     }
-    console.log("Created:", account);
-
 
     return account
   }
@@ -228,7 +226,6 @@ export class SocialMediaAccountService {
     platformId: SocialMediaPlatform
   }) {
     const account = await this.getAccountByAccountId(id);
-    console.log("Exist:", account);
 
     // If we have a account just update the account
     let socialMediaAccount;
@@ -246,7 +243,6 @@ export class SocialMediaAccountService {
 
 
     if (account) {
-      console.log("Entity to attach ", entityDetails);
 
       socialMediaAccount = this.updateAccount(
         account.id,
@@ -267,7 +263,7 @@ export class SocialMediaAccountService {
         accountId: id,
         accountName: name,
         accessToken: access_token,
-        entityDetailsId: entityDetails?.id
+        entityDetailId: entityDetails?.id
       });
     }
 

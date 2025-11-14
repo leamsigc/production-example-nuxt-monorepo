@@ -15,12 +15,14 @@ import { useConnectionManager } from './composables/useConnectionManager';
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+import dayjs from "dayjs";
 import ConnectIntegrationCard from './components/ConnectIntegrationCard.vue';
 
 const { getAllSocialMediaAccounts, pagesList } = useConnectionManager();
 
-getAllSocialMediaAccounts();
-
+onMounted(async () => {
+  await getAllSocialMediaAccounts();
+})
 
 const { t } = useI18n();
 useHead({
@@ -38,7 +40,8 @@ useHead({
     <div class="grid grid-cols-5 gap-2">
       <ConnectIntegrationCard v-for="social in pagesList" :name="social.accountName" :key="social.id"
         :image="social.entityDetail.details.picture" :icon="`logos:${social.platform}`"
-        :tags="[social.entityDetail.entityType]" :time="social.createdAt.toLocaleDateString()" connected />
+        :tags="[social.entityDetail.entityType]"
+        :time="dayjs(social.createdAt as unknown as string).format('YYYY-MM-DD')" connected :show-pages="false" />
     </div>
   </div>
 </template>

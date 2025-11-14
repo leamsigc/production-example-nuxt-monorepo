@@ -3,6 +3,7 @@
 <script lang="ts" setup>
 import type { DateClickArg } from '@fullcalendar/interaction/index.js';
 import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
+import type { EventClickArg } from '@fullcalendar/core/index.js';
 
 /**
  *
@@ -28,11 +29,6 @@ const toast = useToast()
 const date = useDateFormat(useNow(), "YYYY-MM-DD");
 const events = [
   {
-    title: "Attend Data Protection Act Webinar",
-    date: date.value,
-    url: "https://ui-thing.behonbaker.com/",
-  },
-  {
     title: "Travel to Kingston for Manager's Meeting",
     date: date.value,
   },
@@ -51,11 +47,19 @@ const HandleDateClicked = (event: DateClickArg) => {
     color: 'success'
   })
 }
+const HandleEventClicked = (event: EventClickArg) => {
+  toast.add({
+    title: 'Date Clicked',
+    description: ` Date clicked: ${event.event.title}`,
+    color: 'success'
+  })
+}
 </script>
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <SchedulerPageHeader />
-    <ScheduleCalendar active-view="timeGridDay" :events="events" @dateClick="HandleDateClicked" />
+    <ScheduleCalendar active-view="timeGridDay" :events="events" @date-clicked="HandleDateClicked"
+      @event-clicked="HandleEventClicked" />
   </div>
 </template>
 

@@ -50,7 +50,6 @@ const viewMode = ref<'grid' | 'list'>('grid')
 const selectedBusinessId = ref<string>()
 const hasSelectedBusiness = computed(() => !!selectedBusinessId.value)
 const storageUsage = computed(() => getStorageUsage())
-const hasAssets = computed(() => assets.value.length > 0)
 
 const filteredAssets = computed(() => {
   let filtered = assets.value
@@ -127,21 +126,6 @@ const handleDeleteSelected = async () => {
   }
 }
 
-const handleEditAsset = (asset: Asset) => {
-  selectedAssetForEdit.value = asset
-  showEditor.value = true
-}
-
-const handleEditorClose = () => {
-  showEditor.value = false
-  selectedAssetForEdit.value = null
-}
-
-const handleEditorSave = () => {
-  showEditor.value = false
-  selectedAssetForEdit.value = null
-  loadAssets() // Refresh assets
-}
 
 // Initialize
 onMounted(async () => {
@@ -157,14 +141,6 @@ watch(selectedBusinessId, async (newBusinessId) => {
     await loadAssets()
   }
 })
-
-// Filter options
-const filterOptions = [
-  { value: 'all', label: 'All Files', icon: 'lucide:files' },
-  { value: 'image', label: 'Images', icon: 'lucide:image' },
-  { value: 'video', label: 'Videos', icon: 'lucide:video' },
-  { value: 'document', label: 'Documents', icon: 'lucide:file' }
-]
 
 const handleOpenEditModal = (asset: Asset) => {
   selectedAssetForEdit.value = asset
@@ -196,7 +172,6 @@ const handleDeleteAsset = (asset: Asset[]) => {
         <NuxtLink to="/app/businesses" class="underline ml-2">{{ t('alerts.select_business.link_text') }}</NuxtLink>
       </template>
     </UAlert>
-
     <!-- Error Alert -->
     <UAlert v-if="error" color="error" variant="soft" icon="lucide:triangle-alert">
       <template #title>

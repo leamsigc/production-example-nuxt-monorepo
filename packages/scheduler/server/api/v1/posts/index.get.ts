@@ -6,7 +6,6 @@
  */
 
 import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
-import type { User } from "#layers/BaseDB/db/schema"
 import { postService } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {

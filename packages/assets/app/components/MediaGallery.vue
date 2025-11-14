@@ -296,40 +296,31 @@ const handleDeleteAsset = (asset: Asset) => {
 <template>
   <div class="w-full">
     <!-- Premium Header with Glass Morphism -->
-    <div class="glass-card p-6 mb-8 animate-fade-in-up">
+    <div class="glass-card  mb-8 animate-fade-in-up">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-4">
-          <div class="relative">
-            <h2 class="text-3xl font-bold ">
-              {{ t('title') }}
-            </h2>
-            <div class="absolute -bottom-1 left-0 w-12 h-0.5 bg-gradient-to-r from-primary to-transparent rounded-full">
-            </div>
+          <div class="flex items-center gap-2">
+            <UButton variant="outline" size="sm" @click="selectAllAssets">
+              {{ t('toolbar.select_all') }}
+            </UButton>
+            <UButton variant="outline" size="sm" @click="deselectAllAssets" :disabled="!hasSelectedAssets">
+              {{ t('toolbar.deselect_all') }}
+            </UButton>
+            <span class="text-sm text-muted-foreground">
+              {{ t('file_count_badge', { count: selectedAssets.length }) }}
+            </span>
           </div>
-          <UBadge variant="outline" color="neutral" class="glass-badge animate-scale-in animate-stagger-1">
-            <Icon name="lucide:image" class="w-3 h-3 mr-1" />
-            {{ t('file_count_badge', { count: storageUsage.count, size: storageUsage.formattedSize }) }}
-          </UBadge>
+
+          <div class="flex items-center gap-2" v-if="hasSelectedAssets">
+            <UButton variant="outline" color="error" size="sm" :disabled="!hasSelectedAssets"
+              @click="handleDeleteSelected">
+              <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
+              {{ t('toolbar.delete_selected') }}
+            </UButton>
+          </div>
         </div>
 
         <div class="flex items-center gap-3">
-          <!-- Advanced Search -->
-          <UInput v-model="searchQuery" :placeholder="t('search_assets')" trailing-icon="i-lucide-search"
-            class="w-64" />
-
-          <!-- Filters Toggle -->
-          <UButton variant="outline" size="sm" class="glass-button" color="neutral"
-            :class="{ 'bg-primary/10 border-primary': showFilters }" @click="showFilters = !showFilters">
-            <Icon name="lucide:filter" class="w-4 h-4 mr-2" />
-            {{ t('filters') }}
-          </UButton>
-
-          <!-- Optimize Button -->
-          <UButton variant="outline" size="sm" class="glass-button" color="neutral" @click="handleOptimizeAssets">
-            <Icon name="lucide:sparkles" class="w-4 h-4 mr-2" />
-            {{ t('optimize') }}
-          </UButton>
-
           <!-- View Mode Toggle -->
           <div class="flex border rounded-lg glass-button-group">
             <UButton variant="ghost" size="sm" class="glass-button-item hover-scale-105"
@@ -350,98 +341,8 @@ const handleDeleteAsset = (asset: Asset) => {
           </div>
         </div>
       </div>
-
-      <!-- Advanced Filters Panel -->
-      <div v-if="showFilters" class="border-t pt-4 animate-slide-down">
-        <div class="flex flex-wrap items-center gap-4">
-          <!-- Sort Options -->
-          <div class="flex items-center gap-2">
-            <label class="text-sm font-medium">{{ t('sort_by') }}</label>
-            <USelect v-model="sortBy" class="w-32" :items="sortItems" />
-            <UButton variant="ghost" size="sm" class="glass-button hover-rotate-3"
-              @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'">
-              <Icon :name="sortOrder === 'asc' ? 'lucide:arrow-up' : 'lucide:arrow-down'" class="w-4 h-4" />
-            </UButton>
-          </div>
-
-          <!-- Tag Filters -->
-          <div v-if="allTags.length > 0" class="flex items-center gap-2">
-            <label class="text-sm font-medium">{{ t('tags') }}</label>
-            <div class="flex flex-wrap gap-1">
-              <UBadge v-for="tag in allTags.slice(0, 5)" :key="tag" variant="outline" color="neutral"
-                class="cursor-pointer glass-badge hover-scale-105 transition-all duration-200"
-                :class="{ 'bg-primary text-primary-foreground': selectedTags.includes(tag) }" @click="toggleTag(tag)">
-                {{ tag }}
-              </UBadge>
-            </div>
-          </div>
-
-          <!-- Clear Filters -->
-          <UButton v-if="selectedTags.length > 0 || searchQuery" variant="ghost" size="sm"
-            class="glass-button text-muted-foreground hover:text-foreground" @click="clearFilters">
-            <Icon name="lucide:x" class="w-4 h-4 mr-1" />
-            {{ t('clear_filters') }}
-          </UButton>
-        </div>
-      </div>
     </div>
 
-    <!-- Folder Navigation -->
-    <div class="mb-6 glass-card p-4 rounded-lg animate-fade-in-up animate-stagger-1">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="text-sm font-medium flex items-center gap-1">
-          <Icon name="lucide:folder" class="w-4 h-4 text-primary" />
-          {{ t('folders') }}
-        </h3>
-        <UButton variant="ghost" size="sm" class="glass-button hover-scale-105" @click="showFolderDialog = true">
-          <Icon name="lucide:folder-plus" class="w-4 h-4 mr-1" />
-          {{ t('new_folder') }}
-        </UButton>
-      </div>
-
-      <div class="flex flex-wrap gap-2">
-        <UButton v-for="folder in folders" :key="folder" variant="outline" size="sm" color="neutral"
-          class="glass-button hover-translate-y-1 transition-all duration-300"
-          :class="{ 'bg-primary/10 border-primary text-primary': currentFolder === folder }"
-          @click="currentFolder = folder">
-          <Icon :name="folder === 'all' ? 'lucide:layers' :
-            folder === 'favorites' ? 'lucide:star' : 'lucide:folder'" class="w-4 h-4 mr-2" />
-          {{ folder.charAt(0).toUpperCase() + folder.slice(1) }}
-        </UButton>
-      </div>
-    </div>
-
-    <!-- Toolbar -->
-    <div v-if="props.selectable" class="flex items-center justify-between mb-4 p-3 bg-muted rounded-lg">
-      <div class="flex items-center gap-2">
-        <UButton variant="outline" size="sm" @click="selectAllAssets">
-          {{ t('toolbar.select_all') }}
-        </UButton>
-        <UButton variant="outline" size="sm" @click="deselectAllAssets" :disabled="!hasSelectedAssets">
-          {{ t('toolbar.deselect_all') }}
-        </UButton>
-        <span class="text-sm text-muted-foreground">
-          {{ t('file_count_badge', { count: selectedAssets.length }) }}
-        </span>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <UButton variant="outline" color="error" size="sm" :disabled="!hasSelectedAssets" @click="handleDeleteSelected">
-          <Icon name="lucide:trash-2" class="w-4 h-4 mr-2" />
-          {{ t('toolbar.delete_selected') }}
-        </UButton>
-      </div>
-    </div>
-
-    <!-- Uploader -->
-    <!-- Upload Modal -->
-    <UModal v-model:open="props.showUploader" :title="t('upload_dialog.title')"
-      :description="t('upload_dialog.description', { business: 'Business' })">
-      <!-- v-if="selectedBusinessId" -->
-      <div class="mb-6">
-        <MediaUploader :business-id="props.businessId" />
-      </div>
-    </UModal>
 
     <!-- Loading State -->
     <div v-if="isLoading && assets.length === 0" class="flex items-center justify-center py-12">
@@ -614,7 +515,7 @@ const handleDeleteAsset = (asset: Asset) => {
           }">
           <!-- Asset Preview -->
           <div
-            class="aspect-square bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center relative overflow-hidden">
+            class="aspect-square bg-linear-to-br from-muted to-muted/50 flex items-center justify-center relative overflow-hidden">
             <img v-if="getAssetType(asset.mimeType) === 'image'" :src="getAssetPreviewUrl(asset)"
               :alt="getAssetDisplayName(asset)"
               class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -636,14 +537,6 @@ const handleDeleteAsset = (asset: Asset) => {
               }">
               <Icon v-if="isAssetSelected(asset)" name="lucide:check" class="text-white font-extrabold" size="32" />
             </div>
-          </div>
-
-          <!-- Asset Info -->
-          <div class="p-3">
-            <p class="text-xs font-semibold truncate mb-1 group-hover:text-primary transition-colors">
-              {{ getAssetDisplayName(asset) }}
-            </p>
-            <p class="text-xs text-muted-foreground">{{ formatFileSize(asset.size) }}</p>
           </div>
         </div>
       </div>

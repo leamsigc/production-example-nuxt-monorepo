@@ -55,5 +55,5 @@ export const socialMediaAccountManagersRelations = relations(socialMediaAccountM
 }))
 
 export type SocialMediaAccount = InferSelectModel<typeof socialMediaAccounts>
-export type SocialMediaComplete = SocialMediaAccount & { entityDetail: EntityDetails }
+export type SocialMediaComplete = SocialMediaAccount & { entityDetail: EntityDetails, createdAt: String }
 export type NewSocialMediaAccount = Omit<SocialMediaAccount, 'id' | 'createdAt' | 'updatedAt'>

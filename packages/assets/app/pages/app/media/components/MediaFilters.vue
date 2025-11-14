@@ -67,12 +67,6 @@ const filterOptions = [
         <USelect v-model="filterType" :items="filterOptions" class="w-[140px]" />
       </div>
 
-      <!-- Search -->
-      <div class="flex items-center gap-2">
-        <label class="text-sm font-medium">{{ t('sections.filters.search') }}</label>
-        <UInput v-model="searchQuery" :placeholder="t('sections.filters.search_placeholder')" class="w-64" />
-      </div>
-
       <!-- View Mode Toggle -->
       <div class="flex items-center gap-2 ml-auto" v-if="!hideViewMode">
         <label class="text-sm font-medium">{{ t('sections.filters.view') }}</label>

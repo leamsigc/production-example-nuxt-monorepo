@@ -9,6 +9,17 @@
       "not_connected": "Not connected",
       "connected": "Connected",
       "coming_soon": "More coming soon"
+    },
+    "menu": {
+      "pages": "Pages",
+      "reconnect": "Reconnect",
+      "disconnect": "Disconnect",
+      "edit": "Edit"
+    },
+    "modal": {
+      "select_page_title": "Select a page",
+      "select_page_description": "Here you can select a specific page to connect to base on the current connection",
+      "id_label": "Id: "
     }
   },
   "fr": {
@@ -21,6 +32,17 @@
       "not_connected": "Non connecté",
       "connected": "Connecté",
       "coming_soon": "Prochainement"
+    },
+    "menu": {
+      "pages": "Pages",
+      "reconnect": "Reconnecter",
+      "disconnect": "Déconnecter",
+      "edit": "Éditer"
+    },
+    "modal": {
+      "select_page_title": "Sélectionner une page",
+      "select_page_description": "Ici, vous pouvez sélectionner une page spécifique à connecter en fonction de la connexion actuelle",
+      "id_label": "Id: "
     }
   },
   "es": {
@@ -33,6 +55,17 @@
       "not_connected": "No conectado",
       "connected": "Conectado",
       "coming_soon": "Pronto"
+    },
+    "menu": {
+      "pages": "Páginas",
+      "reconnect": "Reconectar",
+      "disconnect": "Desconectar",
+      "edit": "Editar"
+    },
+    "modal": {
+      "select_page_title": "Seleccionar una página",
+      "select_page_description": "Aquí puedes seleccionar una página específica para conectar basada en la conexión actual",
+      "id_label": "Id: "
     }
   },
   "de": {
@@ -45,6 +78,17 @@
       "not_connected": "Nicht verbunden",
       "connected": "Verbunden",
       "coming_soon": "Bald"
+    },
+    "menu": {
+      "pages": "Seiten",
+      "reconnect": "Erneut verbinden",
+      "disconnect": "Trennen",
+      "edit": "Bearbeiten"
+    },
+    "modal": {
+      "select_page_title": "Seite auswählen",
+      "select_page_description": "Hier können Sie eine bestimmte Seite auswählen, die basierend auf der aktuellen Verbindung angeschlossen werden soll",
+      "id_label": "Id: "
     }
   }
 }
