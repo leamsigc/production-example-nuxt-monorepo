@@ -22,6 +22,7 @@
     "@local-monorepo/auth": "workspace:*",
     "@local-monorepo/db": "workspace:*",
     "@local-monorepo/ui": "workspace:*",
+    "@local-monorepo/connect": "workspace:*",
     "axios": "catalog:",
     "dayjs": "catalog:",
     "sharp": "catalog:"

@@ -47,7 +47,7 @@ const { t } = useI18n()
     </div>
 
     <div class="flex items-center gap-2">
-      <UButton color="neutral" variant="ghost" to="/app">
+      <UButton color="neutral" variant="ghost" to="/app/posts">
         <Icon name="lucide:layout-dashboard" class="mr-2 h-4 w-4" />
         {{ t('buttons.dashboard') }}
       </UButton>

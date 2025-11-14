@@ -8,6 +8,7 @@
 import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
 import { postService } from "#layers/BaseDB/server/services/post.service"
 
+
 export default defineEventHandler(async (event) => {
   try {
     // Get user from session
@@ -46,18 +47,7 @@ export default defineEventHandler(async (event) => {
       filters
     })
 
-    if (!result.success) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: result.error || 'Failed to fetch posts'
-      })
-    }
-
-    return {
-      success: true,
-      data: result.data,
-      pagination: result.pagination
-    }
+    return result;
   } catch (error: any) {
     if (error.statusCode) {
       throw error

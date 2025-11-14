@@ -17,7 +17,7 @@ const connectionList = ref<Connection[]>([]);
 export const useConnectionManager = () => {
   const toast = useToast();
   const allConnections = ref<SocialMediaAccount[]>([]);
-  const pagesList = ref<SocialMediaComplete[]>([]);
+  const pagesList = useState<SocialMediaComplete[]>("socialMedia:List", () => []);
   const facebookPages = ref<FacebookPage[]>([]);
   const setConnectionList = () => {
     connectionList.value = [

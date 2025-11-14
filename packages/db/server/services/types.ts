@@ -3,15 +3,14 @@
  */
 
 export interface ServiceResponse<T = any> {
-  success: boolean
   data?: T
   error?: string
   code?: string
 }
 
 export interface PaginationOptions {
-  page?: number
-  limit?: number
+  page: number
+  limit: number
   offset?: number
 }
 

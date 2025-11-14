@@ -81,25 +81,26 @@ export class PostService {
         await this.db.insert(platformPosts).values(platformPostData)
       }
 
-      return { success: true, data: post }
+      return { data: post }
     } catch (error) {
       if (error instanceof ValidationError) {
-        return { success: false, error: error.message, code: error.code }
+        return { error: error.message, code: error.code }
       }
-      return { success: false, error: 'Failed to create post' }
+      return { error: 'Failed to create post' }
     }
   }
 
   async findById(id: string, userId: string, includePlatforms: boolean = false): Promise<ServiceResponse<PostWithPlatforms>> {
     try {
-      const [post] = await this.db
-        .select()
-        .from(posts)
-        .where(and(eq(posts.id, id), eq(posts.userId, userId)))
-        .limit(1)
 
+      const post = await this.db.query.posts.findFirst({
+        where: and(eq(posts.id, id), eq(posts.userId, userId)),
+        with: includePlatforms ? {
+          platformPosts: true
+        } : {}
+      })
       if (!post) {
-        return { success: false, error: 'Post not found', code: 'NOT_FOUND' }
+        return { error: 'Post not found', code: 'NOT_FOUND' }
       }
 
       const result: PostWithPlatforms = post
@@ -113,9 +114,9 @@ export class PostService {
         result.platformPosts = platforms
       }
 
-      return { success: true, data: result }
+      return { data: result }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch post' }
+      return { error: 'Failed to fetch post' }
     }
   }
 
@@ -174,7 +175,6 @@ export class PostService {
 
 
       return {
-        success: true,
         data: postsWithPlatforms,
         pagination: {
           page: pagination.page || 1,
@@ -184,7 +184,7 @@ export class PostService {
         }
       }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch posts' }
+      return { error: 'Failed to fetch posts' }
     }
   }
 
@@ -201,9 +201,9 @@ export class PostService {
         ))
         .orderBy(posts.scheduledAt)
 
-      return { success: true, data: scheduledPosts }
+      return { data: scheduledPosts }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch scheduled posts' }
+      return { error: 'Failed to fetch scheduled posts' }
     }
   }
 
@@ -211,9 +211,7 @@ export class PostService {
     try {
       // Check if post exists and belongs to user
       const existingResult = await this.findById(id, userId)
-      if (!existingResult.success) {
-        return existingResult
-      }
+
 
       const updateData: any = {
         ...data,
@@ -255,9 +253,9 @@ export class PostService {
         }
       }
 
-      return { success: true, data: updated }
+      return { data: updated }
     } catch (error) {
-      return { success: false, error: 'Failed to update post' }
+      return { error: 'Failed to update post' }
     }
   }
 
@@ -279,12 +277,12 @@ export class PostService {
         .returning()
 
       if (!updated) {
-        return { success: false, error: 'Post not found', code: 'NOT_FOUND' }
+        return { error: 'Post not found', code: 'NOT_FOUND' }
       }
 
-      return { success: true, data: updated }
+      return { data: updated }
     } catch (error) {
-      return { success: false, error: 'Failed to update post status' }
+      return { error: 'Failed to update post status' }
     }
   }
 
@@ -292,9 +290,6 @@ export class PostService {
     try {
       // Check if post exists and belongs to user
       const existingResult = await this.findById(id, userId)
-      if (!existingResult.success) {
-        return { success: false, error: existingResult.error, code: existingResult.code }
-      }
 
       // Delete platform posts first (cascade should handle this, but being explicit)
       await this.db
@@ -306,9 +301,10 @@ export class PostService {
         .delete(posts)
         .where(and(eq(posts.id, id), eq(posts.userId, userId)))
 
-      return { success: true }
+      return {}
+
     } catch (error) {
-      return { success: false, error: 'Failed to delete post' }
+      return { error: 'Failed to delete post' }
     }
   }
 
@@ -325,12 +321,12 @@ export class PostService {
         .returning()
 
       if (!updated) {
-        return { success: false, error: 'Platform post not found', code: 'NOT_FOUND' }
+        return { error: 'Platform post not found', code: 'NOT_FOUND' }
       }
 
-      return { success: true, data: updated }
+      return { data: updated }
     } catch (error) {
-      return { success: false, error: 'Failed to update platform post' }
+      return { error: 'Failed to update platform post' }
     }
   }
 
@@ -341,9 +337,9 @@ export class PostService {
         .from(platformPosts)
         .where(eq(platformPosts.postId, postId))
 
-      return { success: true, data: platforms }
+      return { data: platforms }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch platform posts' }
+      return { error: 'Failed to fetch platform posts' }
     }
   }
 
@@ -351,16 +347,14 @@ export class PostService {
     try {
       // Get the post with platform posts
       const postResult = await this.findById(id, userId, true)
-      if (!postResult.success) {
-        return postResult
-      }
+
 
       const post = postResult.data!
 
       // Check if post can be retried
       if (post.status !== 'failed' && !post.platformPosts?.some(p => p.status === 'failed')) {
         return {
-          success: false,
+
           error: 'Post does not have any failed publishing attempts to retry',
           code: 'INVALID_STATUS'
         }
@@ -369,9 +363,6 @@ export class PostService {
       // Reset post status if it was failed
       if (post.status === 'failed') {
         const updateResult = await this.updateStatus(id, userId, 'scheduled')
-        if (!updateResult.success) {
-          return { success: false, error: updateResult.error }
-        }
       }
 
       // Reset failed platform posts to pending
@@ -389,7 +380,7 @@ export class PostService {
       // Return updated post
       return await this.findById(id, userId, true)
     } catch (error) {
-      return { success: false, error: 'Failed to retry post' }
+      return { error: 'Failed to retry post' }
     }
   }
 
@@ -400,10 +391,6 @@ export class PostService {
         pagination: { page: 1, limit: 1000 }, // Get all posts for stats
         filters
       })
-
-      if (!postsResult.success) {
-        return { success: false, error: postsResult.error }
-      }
 
       const posts = postsResult.data || []
 
@@ -485,9 +472,9 @@ export class PostService {
         )
       }
 
-      return { success: true, data: stats }
+      return { data: stats }
     } catch (error) {
-      return { success: false, error: 'Failed to calculate post statistics' }
+      return { error: 'Failed to calculate post statistics' }
     }
   }
 

@@ -14,9 +14,9 @@ const businesses = ref<PaginatedResponse<BusinessProfile>>({
   success: false
 });
 
-const activeBusinessId = ref<string>('');
-
 export const useBusinessManager = () => {
+
+  const activeBusinessId = useState<string>('business:id');
   const getAllBusinesses = async () => {
     try {
       const data = await $fetch<Promise<PaginatedResponse<BusinessProfile>>>('/api/v1/business');

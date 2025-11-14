@@ -9,7 +9,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { data } = await useFetch<ServiceResponse<BusinessProfile>>('/api/v1/business/active');
   const { data: businessesResponse } = await useFetch<PaginatedResponse<BusinessProfile>>('/api/v1/business');
-  const { activeBusinessId, businesses } = useBusinessManager();
+  const { businesses } = useBusinessManager();
+  const activeBusinessId = useState<string>('business:id');
 
 
   if (data.value?.data?.id) {

@@ -2,19 +2,22 @@ import type { Post } from "#layers/BaseDB/db/schema";
 
 
 export const useScheduleManager = () => {
-  const post = ref<Post[]>([]);
+  const post = useState<Post[]>("scheduler:posts", () => []);
 
-  const fetchPosts = async (timeFrame: "day" | "week" | "month") => {
+  const fetchPosts = async (timeFrame: "day" | "week" | "month" = "day") => {
     try {
-      const response = await fetch('/api/v1/scheduler/posts');
+      await callOnce(async () => {
+        const response = await fetch('/api/v1/scheduler/posts');
 
-      const data = await response.json();
-      post.value = data;
+        const data = await response.json();
+        post.value = data;
+      })
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
   };
   return {
-
+    post,
+    fetchPosts
   }
 };

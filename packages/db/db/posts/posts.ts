@@ -1,8 +1,8 @@
 import type { InferSelectModel } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { user } from '../auth/auth'
+import { user, type User } from '../auth/auth'
 import { businessProfiles } from '../business/business'
-import { socialMediaAccounts } from '../socialMedia/socialMedia'
+import { socialMediaAccounts, type SocialMediaAccount } from '../socialMedia/socialMedia'
 
 // Posts
 export const posts = sqliteTable('posts', {
@@ -37,3 +37,13 @@ export const platformPosts = sqliteTable('platform_posts', {
 
 export type Post = InferSelectModel<typeof posts>
 export type PlatformPost = InferSelectModel<typeof platformPosts>
+export type PostWithPlatformPosts = Post & { platformPosts: PlatformPost[], socialMediaAccount: SocialMediaAccount }
+export type PostWithAllData = Post & { platformPosts: PlatformPost[], user: User }
+
+export type PostCreate = Omit<Post, 'id' | 'createdAt' | 'updatedAt' | 'userId' | 'targetPlatforms' | 'mediaAssets' | 'publishedAt'>
+
+export type PostCreateBase = PostCreate & {
+  targetPlatforms: string[]
+  mediaAssets: string[]
+  comment: string[]
+}
