@@ -265,6 +265,15 @@
             "env": {
                 "NODE_ENV": "development"
             }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Node Process",
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
         }
     ]
 }

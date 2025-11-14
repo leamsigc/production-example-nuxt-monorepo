@@ -1,7 +1,7 @@
 import type { FacebookPage } from '#layers/BaseConnect/utils/FacebookPages';
 
 import { linkSocial } from "#layers/BaseAuth/lib/auth-client";
-import type { SocialMediaAccount } from "#layers/BaseDB/db/schema";
+import type { SocialMediaAccount, SocialMediaComplete } from "#layers/BaseDB/db/schema";
 import { useBusinessManager } from "../../business/composables/useBusinessManager";
 
 interface Connection {
@@ -17,7 +17,7 @@ const connectionList = ref<Connection[]>([]);
 export const useConnectionManager = () => {
   const toast = useToast();
   const allConnections = ref<SocialMediaAccount[]>([]);
-  const pagesList = ref<SocialMediaAccount[]>([]);
+  const pagesList = ref<SocialMediaComplete[]>([]);
   const facebookPages = ref<FacebookPage[]>([]);
   const setConnectionList = () => {
     connectionList.value = [
@@ -56,6 +56,14 @@ export const useConnectionManager = () => {
       if (connectionId === 'facebook') {
         facebookPages.value = (response as unknown as FacebookPage[])
       }
+    } catch (error) {
+      console.error('Error adding business:', error);
+      throw error;
+    }
+  }
+  const getAllSocialMediaAccounts = async () => {
+    try {
+      const response = await $fetch<Promise<SocialMediaComplete[]>>('/api/v1/social-accounts');
       pagesList.value = response
     } catch (error) {
       console.error('Error adding business:', error);
@@ -69,6 +77,7 @@ export const useConnectionManager = () => {
         method: 'POST',
         body: { ...page, platformId: 'facebook', businessId: activeBusinessId.value },
       });
+      console.log("######## Connect to Facebook #######");
       console.log(res);
 
       toast.add({
@@ -77,6 +86,8 @@ export const useConnectionManager = () => {
         icon: 'i-heroicons-check-circle',
         color: 'success',
       });
+
+      await getAllSocialMediaAccounts();
 
     } catch (error) {
       console.error('Error adding business:', error);
@@ -99,6 +110,7 @@ export const useConnectionManager = () => {
     getAllConnections,
     HandleConnectTo,
     getPagesForIntegration,
-    HandleConnectToFacebook
+    HandleConnectToFacebook,
+    getAllSocialMediaAccounts
   }
 };

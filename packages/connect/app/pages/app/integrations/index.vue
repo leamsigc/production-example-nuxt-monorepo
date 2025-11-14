@@ -15,11 +15,22 @@
 import ConnectIntegrationCard from './components/ConnectIntegrationCard.vue';
 import ConnectAddAccount from './components/ConnectAddAccount.vue';
 import { useConnectionManager } from './composables/useConnectionManager';
-import type { User } from '#layers/BaseDB/db/schema';
+import { authClient } from '#layers/BaseAuth/lib/auth-client';
+import type { Account } from '#layers/BaseDB/db/schema';
 
-const { getAllConnections } = useConnectionManager();
-const { getUserAccountList, listAccounts } = UseUser();
-const user = useState<User | null>('auth:user')
+
+
+const listAccounts = useState<Account[] | null>('auth:listAccounts', () => ([]))
+
+
+onMounted(async () => {
+  const { data } = await authClient.listAccounts()
+
+  listAccounts.value = data as unknown as Account[]
+})
+
+
+const { user } = UseUser();
 
 const { t } = useI18n();
 
@@ -29,8 +40,6 @@ useHead({
     { name: 'description', content: t('seo_description_all') }
   ]
 })
-await getUserAccountList();
-
 </script>
 
 <template>
@@ -38,8 +47,8 @@ await getUserAccountList();
     <BasePageHeader :title="t('title')" :description="t('description')" />
     <div class="grid grid-cols-5 gap-2">
       <ConnectAddAccount />
-      <ConnectIntegrationCard v-for="connection in listAccounts.data" :name="connection.providerId" :key="connection.id"
-        :image="user && user.image ? user.image : ''" :icon="`logos:${connection.providerId}`" :tags="connection.scopes"
+      <ConnectIntegrationCard v-for="connection in listAccounts" :name="connection.providerId" :key="connection.id"
+        :image="user && user.image ? user.image : ''" :icon="`logos:${connection.providerId}`" :tags="[]"
         :time="connection.createdAt.toLocaleDateString()" connected />
     </div>
   </div>

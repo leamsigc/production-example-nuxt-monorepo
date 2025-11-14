@@ -263,6 +263,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
     accessToken: string
   ): Promise<AuthTokenDetails> {
     const information = await this.fetchPageInformation(
+      this,
       accessToken,
       requiredId
     );
@@ -390,7 +391,6 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
   }
 
   async pages(_: any, accessToken: string) {
-    // console.log("Token", accessToken);
 
     const url = this._getGraphApiUrl(`/me/accounts?fields=id,username,name,picture.type(large)&access_token=${accessToken}`);
     const { data } = await (
@@ -404,7 +404,15 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
     return data;
   }
 
-  async fetchPageInformation(accessToken: string, pageId: string) {
+  async fetchPageInformation(_: FacebookPlugin, pageId: string, accessToken: string,): Promise<{
+    id: string;
+    name: string;
+    access_token: string;
+    picture: string;
+    username: string;
+  }> {
+    console.log(pageId, accessToken);
+
     const url = this._getGraphApiUrl(`/${pageId}?fields=username,access_token,name,picture.type(large)&access_token=${accessToken}`);
     const {
       id,

@@ -27,7 +27,11 @@ export default defineEventHandler(async (event) => {
     // Get query parameters for filtering
     const query = getQuery(event)
     const platform = query.platformId as string;
-    console.log(platform);
+
+    if (!platform) {
+      // Get social media accounts for the current user
+      return socialMediaAccountService.getAccountsByUserId(user.id)
+    }
 
 
     // Get social media accounts with filters

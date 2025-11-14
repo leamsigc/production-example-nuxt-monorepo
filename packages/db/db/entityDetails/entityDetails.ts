@@ -10,4 +10,5 @@ export const entityDetails = sqliteTable('entity_details', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()).notNull()
 })
 
-export type EntityDetails = InferSelectModel<typeof entityDetails>
+export type EntityDetails = InferSelectModel<typeof entityDetails> & { details: { username: string; picture: string; } }
+export type NewEntityDetails = Omit<EntityDetails, 'id' | 'createdAt' | 'updatedAt'>

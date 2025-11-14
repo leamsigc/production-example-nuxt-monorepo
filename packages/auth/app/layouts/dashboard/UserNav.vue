@@ -1,6 +1,8 @@
 <i18n src="./Menu.json"></i18n>
 
 <script lang="ts" setup>
+import type { User } from '#layers/BaseDB/db/auth/auth';
+
 /**
  *
  * Component Description: User navigation dropdown for the dashboard header with complex menu structure including themes, templates, and account management.
@@ -28,13 +30,10 @@ const props = withDefaults(defineProps<Props>(), {
 const { t } = useI18n();
 const colorMode = useColorMode();
 
-const { signOut, user, fetchSession } = UseUser();
+const { signOut, user } = UseUser();
 
-await fetchSession();
-// Reactive state for appearance preference
 const currentAppearance = ref('system');
 
-// Computed items structure for the complex dropdown menu
 const items = computed(() => [
   [
     {
@@ -169,7 +168,6 @@ const items = computed(() => [
   ]
 ]);
 
-// Appearance management function
 const setAppearance = (mode: string) => {
 
   currentAppearance.value = mode;

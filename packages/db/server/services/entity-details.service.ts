@@ -8,14 +8,9 @@
  */
 
 import { eq, and } from 'drizzle-orm'
-import { entityDetails, type EntityDetails } from '#layers/BaseDB/db/entityDetails/entityDetails'
+import { entityDetails, type EntityDetails, type NewEntityDetails } from '#layers/BaseDB/db/entityDetails/entityDetails'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 
-export interface CreateEntityDetailsData {
-  entityId: string
-  entityType: string
-  details: Record<string, unknown>
-}
 
 export interface UpdateEntityDetailsData {
   details?: Record<string, unknown>
@@ -30,7 +25,7 @@ export class EntityDetailsService {
   /**
    * Create new entity details
    */
-  async createDetails(data: CreateEntityDetailsData): Promise<EntityDetails> {
+  async createDetails(data: NewEntityDetails): Promise<EntityDetails> {
     const detailsData = {
       id: crypto.randomUUID(),
       ...data,

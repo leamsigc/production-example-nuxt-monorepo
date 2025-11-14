@@ -75,6 +75,7 @@ const HandleConnectTo = async (page: unknown) => {
   if (props.name === 'facebook')
     await HandleConnectToFacebook(page as FacebookPage);
 
+  toggleModal();
 };
 </script>
 

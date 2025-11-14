@@ -1,7 +1,7 @@
 import { createClient } from '@libsql/client'
 import { drizzle } from 'drizzle-orm/libsql'
 import { tursoConfig } from '../../config/turso.config'
-import * as schema from '../../db/schema'
+import * as schema from '#layers/BaseDB/db/schema'
 
 const tursoClient = createClient({
   url: tursoConfig.url,
@@ -9,7 +9,7 @@ const tursoClient = createClient({
 })
 
 export const useDrizzle = () => {
-  return drizzle(tursoClient)
+  return drizzle(tursoClient, { schema })
 }
 
 export const tables = schema

@@ -1,3 +1,4 @@
+import { entityDetails } from '#layers/BaseDB/db/entityDetails/entityDetails';
 
 /**
  * Social Media Account Service
@@ -12,7 +13,7 @@
 import { eq, and, desc } from 'drizzle-orm'
 import type { SocialMediaAccount } from '#layers/BaseDB/db/socialMedia/socialMedia'
 import { socialMediaAccounts } from '#layers/BaseDB/db/socialMedia/socialMedia'
-import { account } from '#layers/BaseDB/db/auth/auth'
+import { account, type User } from '#layers/BaseDB/db/auth/auth'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import { entityDetailsService } from '#layers/BaseDB/server/services/entity-details.service' // Import new service
 
@@ -27,7 +28,7 @@ export interface CreateSocialMediaAccountData {
   accessToken: string
   refreshToken?: string
   tokenExpiresAt?: Date
-  details?: Record<string, unknown> // Add optional details field
+  entityDetailsId?: string
 }
 
 export interface UpdateSocialMediaAccountData {
@@ -37,7 +38,7 @@ export interface UpdateSocialMediaAccountData {
   tokenExpiresAt?: Date
   isActive?: boolean
   lastSyncAt?: Date
-  details?: Record<string, unknown> // Add optional details field
+  entityDetailId?: string
 }
 
 export interface TokenRefreshData {
@@ -81,14 +82,8 @@ export class SocialMediaAccountService {
     if (!account) {
       throw new Error('Failed to create social media account')
     }
+    console.log("Created:", account);
 
-    if (data.details) {
-      await entityDetailsService.createDetails({
-        entityId: account.id,
-        entityType: 'social_media_account',
-        details: data.details,
-      })
-    }
 
     return account
   }
@@ -128,15 +123,22 @@ export class SocialMediaAccountService {
       conditions.push(eq(socialMediaAccounts.isActive, filters.isActive))
     }
 
-    const baseQuery = this.db.select().from(socialMediaAccounts)
+    const baseQuery = this.db.query.socialMediaAccounts
 
     if (conditions.length > 0) {
-      return await baseQuery
-        .where(and(...conditions))
-        .orderBy(desc(socialMediaAccounts.createdAt))
+      return await baseQuery.findMany({
+        where: and(...conditions),
+        with: {
+          entityDetail: true
+        },
+      })
     }
 
-    return await baseQuery.orderBy(desc(socialMediaAccounts.createdAt))
+    return await baseQuery.findMany({
+      with: {
+        entityDetail: true
+      },
+    });
   }
 
   /**
@@ -209,20 +211,75 @@ export class SocialMediaAccountService {
       return null
     }
 
-    if (data.details) {
-      const existingDetails = await entityDetailsService.getDetailsByEntity(account.id, 'social_media_account')
-      if (existingDetails) {
-        await entityDetailsService.updateDetails(existingDetails.id, { details: data.details })
-      } else {
-        await entityDetailsService.createDetails({
-          entityId: account.id,
-          entityType: 'social_media_account',
-          details: data.details,
-        })
-      }
+    return account || null
+  }
+
+  /**
+   * Create or update social media account
+   */
+  async createOrUpdateAccount({ id, name, access_token, picture, username, user, businessId, platformId }: {
+    id: string;
+    name: string;
+    access_token: string;
+    picture: string;
+    username: string;
+    user: User,
+    businessId: string
+    platformId: SocialMediaPlatform
+  }) {
+    const account = await this.getAccountByAccountId(id);
+    console.log("Exist:", account);
+
+    // If we have a account just update the account
+    let socialMediaAccount;
+    let entityDetails;
+
+    if (account && account.entityDetail?.id) {
+      entityDetails = await entityDetailsService.updateDetails(account.entityDetail.id, { details: { username, picture } });
+    } else {
+      entityDetails = await entityDetailsService.createDetails({
+        entityId: id,
+        entityType: 'social_media_account',
+        details: { username, picture },
+      });
     }
 
-    return account || null
+
+    if (account) {
+      console.log("Entity to attach ", entityDetails);
+
+      socialMediaAccount = this.updateAccount(
+        account.id,
+        {
+          accountName: name,
+          accessToken: access_token,
+          lastSyncAt: new Date(),
+          isActive: true,
+          entityDetailId: entityDetails?.id
+        }
+      );
+    } else {
+      // create account
+      socialMediaAccount = this.createAccount({
+        userId: user.id,
+        businessId: businessId,
+        platform: platformId,
+        accountId: id,
+        accountName: name,
+        accessToken: access_token,
+        entityDetailsId: entityDetails?.id
+      });
+    }
+
+    return socialMediaAccount;
+  }
+  async getAccountByAccountId(id: string) {
+    return this.db.query.socialMediaAccounts.findFirst({
+      where: eq(socialMediaAccounts.accountId, id),
+      with: {
+        entityDetail: true
+      },
+    });
   }
 
   /**

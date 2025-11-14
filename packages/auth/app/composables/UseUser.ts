@@ -1,55 +1,26 @@
 import type { RouteLocationRaw } from 'vue-router'
 import { authClient } from '#layers/BaseAuth/lib/auth-client'
 import type { User } from '#layers/BaseDB/db/schema'
+import type { Session } from 'better-auth'
 
 
+
+const client = authClient
 
 export function UseUser() {
-  const client = authClient
 
   // Todo: Move to store and pinia
-  const user = useState<User | null>('auth:user', () => null)
-  const session = useState('auth:session', () => null as any)
+  const user = useState<User | null>('auth:user')
+  const session = useState<Session>('auth:session')
   const sessionFetching = import.meta.server ? ref(false) : useState('auth:sessionFetching', () => false)
 
-  const listAccounts = useState('auth:listAccounts', () => null as any)
+  const listAccounts = useState('auth:listAccounts')
 
-  const fetchSession = async () => {
-    if (sessionFetching.value) {
-      return
-    }
-    sessionFetching.value = true
-    //todo: This seems to get a error from the server Invalid URL
-    const { data } = await client.getSession()
-    session.value = data?.session || null
 
-    const userDefaults = {
-      image: null,
-      role: 'user' as const,
-      banReason: null,
-      banned: false,
-      banExpires: null,
-      firstName: null,
-      lastName: null
-    }
-    user.value = data?.user
-      ? Object.assign({}, userDefaults, data.user)
-      : null
-    sessionFetching.value = false
-    return data
-  }
-
-  if (import.meta.client) {
-    client.$store.listen('$sessionSignal', async (signal) => {
-      if (!signal)
-        return
-      await fetchSession()
-    })
-  }
 
   const getUserAccountList = async () => {
     const data = await client.listAccounts()
-    listAccounts.value = data
+    listAccounts.value = data.data
   }
 
   return {
@@ -77,7 +48,6 @@ export function UseUser() {
         }
       })
     },
-    fetchSession,
     client,
     getUserAccountList,
     listAccounts

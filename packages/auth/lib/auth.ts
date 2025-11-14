@@ -132,7 +132,7 @@ export const auth = betterAuth({
             status: 'success'
           })
         } else {
-          await await logAuditService.logAuditEvent({
+          await logAuditService.logAuditEvent({
             userId: ctx.context.session?.user.id,
             category: 'auth',
             action: ctx.path,

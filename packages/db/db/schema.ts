@@ -5,9 +5,10 @@ import { assets } from './assets/assets'
 import { user } from './auth/auth'
 // Import tables for relations
 import { businessProfiles } from './business/business'
+import { entityDetails } from './entityDetails/entityDetails'
 import { platformPosts, posts } from './posts/posts'
 import { reviews } from './reviews/reviews'
-import { socialMediaAccounts } from './socialMedia/socialMedia'
+import { socialMediaAccountManagers, socialMediaAccounts } from './socialMedia/socialMedia'
 import { subscriptions } from './subscriptions/subscriptions'
 
 export * from './assets/assets'
@@ -22,7 +23,8 @@ export * from './socialMedia/socialMedia'
 export * from './subscriptions/subscriptions'
 export * from './templates/templates'
 export * from './audit/audit'
-export * from './entityDetails/entityDetails' // Export new entityDetails table
+export * from './entityDetails/entityDetails'
+export * from './socialMedia/socialMedia'
 
 /***
 * Custom table here
@@ -46,6 +48,7 @@ export const tools = sqliteTable('tool', {
 export const userRelations = relations(user, ({ many }) => ({
   businessProfiles: many(businessProfiles),
   socialMediaAccounts: many(socialMediaAccounts),
+  socialMediaAccountManagers: many(socialMediaAccountManagers),
   assets: many(assets),
   posts: many(posts),
   subscriptions: many(subscriptions)
@@ -72,6 +75,10 @@ export const socialMediaAccountsRelations = relations(socialMediaAccounts, ({ on
   businessProfile: one(businessProfiles, {
     fields: [socialMediaAccounts.businessId],
     references: [businessProfiles.id]
+  }),
+  entityDetail: one(entityDetails, {
+    fields: [socialMediaAccounts.entityDetailId],
+    references: [entityDetails.id]
   }),
   platformPosts: many(platformPosts)
 }))
