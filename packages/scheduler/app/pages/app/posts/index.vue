@@ -37,7 +37,10 @@ useHead({
       </template>
     </BasePageHeader>
     <!-- List of all posts -->
-    {{ postList }}
+    <pre>
+
+  {{ postList }}
+</pre>
   </div>
 </template>
 <style scoped></style>

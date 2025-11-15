@@ -4,6 +4,11 @@
     "description": "All the social media post for the next weeks are here",
     "seo_title_all": "All Posts",
     "seo_description_all": "All the social media post for the next weeks are here",
+    "buttons": {
+      "schedule_post": "Schedule Post",
+      "new_post": "New Post",
+      "edit_post": "Edit Post"
+    },
     "newPostModal": {
       "defaultPreview": "Default Preview",
       "editorTab": "Editor",

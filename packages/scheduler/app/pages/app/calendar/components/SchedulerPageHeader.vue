@@ -2,6 +2,7 @@
 <i18n src="../calendar.json"></i18n>
 
 <script lang="ts" setup>
+import NewPostModal from '../../posts/components/NewPostModal.vue'
 /**
  * Component Description: Asset Page Header with Navigation and Actions
  *
@@ -60,10 +61,7 @@ const { t } = useI18n()
         {{ t('buttons.month') }}
       </UButton>
 
-      <UButton @click="emit('createNewPost')" color="neutral" variant="solid">
-        <Icon name="lucide:edit" class="mr-2 h-4 w-4" />
-        {{ t('buttons.schedule_post') }}
-      </UButton>
+      <NewPostModal />
     </div>
   </div>
 </template>

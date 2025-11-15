@@ -89,14 +89,14 @@ export class SocialMediaAccountService {
   /**
    * Get social media account by ID
    */
-  async getAccountById(id: string): Promise<SocialMediaAccount | null> {
-    const [account] = await this.db
-      .select()
-      .from(socialMediaAccounts)
-      .where(eq(socialMediaAccounts.id, id))
-      .limit(1)
-
-    return account || null
+  async getAccountById(id: string) {
+    return await this.db.query.socialMediaAccounts.findFirst({
+      where: eq(socialMediaAccounts.id, id),
+      with: {
+        entityDetail: true,
+        user: true
+      },
+    });
   }
 
   /**

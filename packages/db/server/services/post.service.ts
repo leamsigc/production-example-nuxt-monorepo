@@ -1,4 +1,4 @@
-import type { PlatformPost, Post } from '#layers/BaseDB/db/schema'
+import type { PlatformPost, Post, PostCreate, PostCreateBase } from '#layers/BaseDB/db/schema'
 import type {
   PaginatedResponse,
   QueryOptions,
@@ -10,14 +10,8 @@ import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import {
   ValidationError
 } from './types'
+import { socialMediaAccountService } from './social-media-account.service'
 
-export interface CreatePostData {
-  businessId: string
-  content: string
-  mediaAssets?: string[]
-  scheduledAt?: Date
-  targetPlatforms: string[] // Array of social account IDs
-}
 
 export interface UpdatePostData {
   content?: string
@@ -42,7 +36,7 @@ export interface CreatePlatformPostData {
 export class PostService {
   private db = useDrizzle()
 
-  async create(userId: string, data: CreatePostData): Promise<ServiceResponse<Post>> {
+  async create(userId: string, data: PostCreateBase): Promise<ServiceResponse<Post>> {
     try {
       this.validateCreateData(data)
 
@@ -70,17 +64,24 @@ export class PostService {
 
       // Create platform post entries
       if (data.targetPlatforms.length > 0) {
-        const platformPostData = data.targetPlatforms.map(accountId => ({
-          id: crypto.randomUUID(),
-          postId: id,
-          socialAccountId: accountId,
-          status: 'pending' as const,
-          createdAt: now
-        }))
+        const platformPostData = data.targetPlatforms.map(async (accountId) => {
+          // Get the social media account by ID
+          const account = await socialMediaAccountService.getAccountById(accountId)
 
-        await this.db.insert(platformPosts).values(platformPostData)
+          const data = {
+            id: crypto.randomUUID(),
+            postId: id,
+            socialAccountId: accountId,
+            status: 'pending' as const,
+            createdAt: now,
+            platformPostId: account ? account.platform : null
+          }
+          await this.db.insert(platformPosts).values(data).returning()
+        })
+        await Promise.all(platformPostData).catch((error) => {
+          console.error('Error creating platform posts:', error)
+        })
       }
-
       return { data: post }
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -478,7 +479,7 @@ export class PostService {
     }
   }
 
-  private validateCreateData(data: CreatePostData): void {
+  private validateCreateData(data: PostCreateBase): void {
     if (!data.businessId || data.businessId.trim().length === 0) {
       throw new ValidationError('Business ID is required', 'businessId')
     }
@@ -495,7 +496,7 @@ export class PostService {
       throw new ValidationError('At least one target platform is required', 'targetPlatforms')
     }
 
-    if (data.scheduledAt && data.scheduledAt <= new Date()) {
+    if ((data.status === 'scheduled' || data.status === 'draft') && (data.scheduledAt && data.scheduledAt <= new Date())) {
       throw new ValidationError('Scheduled time must be in the future', 'scheduledAt')
     }
   }

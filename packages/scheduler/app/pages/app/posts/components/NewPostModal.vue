@@ -53,7 +53,7 @@ const postToCreate = ref<PostCreateBaseExtended>({
   status: 'draft',
   comment: []
 });
-
+const activeBusinessId = useState<string>('business:id');
 const postMediaAssets = ref<Asset[]>([]);
 const postHasError = ref(false);
 const validationErrors = ref<{ platform: string; message: string }[]>([]);
@@ -79,13 +79,6 @@ onMounted(async () => {
   await getAllSocialMediaAccounts();
 });
 
-watch(() => postToCreate.value.mediaAssets, async (newAssetIds) => {
-  if (newAssetIds && newAssetIds.length > 0) {
-    postMediaAssets.value = await getAssetsByIds(newAssetIds);
-  } else {
-    postMediaAssets.value = [];
-  }
-}, { immediate: true });
 
 function addComment() {
   postToCreate.value.comment.push('');
@@ -155,7 +148,7 @@ function toggleSocialAccount(accountId: string) {
   }
 }
 
-const handleCreatePost = async () => {
+const handleCreatePost = async (status: 'draft' | 'scheduled' | 'published' | 'failed') => {
   validationErrors.value = [];
   postHasError.value = false;
 
@@ -198,7 +191,13 @@ const handleCreatePost = async () => {
   }
 
   console.log(postToCreate.value);
-  // await createPost(postToCreate.value)
+  await createPost({
+    ...postToCreate.value,
+    status: status,
+    targetPlatforms: postToCreate.value.targetPlatforms.map(platform => platform.accountId),
+    businessId: activeBusinessId.value,
+    mediaAssets: postMediaAssets.value.map(asset => asset.id)
+  });
   isOpen.value = false;
 }
 
@@ -219,14 +218,22 @@ const ResetToBase = () => {
 }
 
 const HandleAssetsSelected = (assets: Asset[]) => {
-  postMediaAssets.value = assets;
+  // postMediaAssets.value = assets;
   postToCreate.value.mediaAssets = assets.map(asset => asset.id);
 }
+
+const haveAtLeastOneAccountSelected = computed(() => {
+  return postToCreate.value.targetPlatforms.length == 0;
+})
 </script>
 
 <template>
-  <UModal v-model:open="isOpen" :ui="{ content: 'min-w-6xl overflow-y-auto', }" @after:enter="ResetToBase">
-    <UButton label="Open New Post Modal" />
+  <UModal v-model:open="isOpen" :ui="{ content: 'min-w-6xl overflow-y-auto', }" @after:enter="ResetToBase"
+    :dismissible="false">
+    <UButton color="neutral" variant="solid">
+      <Icon name="lucide:edit" class="mr-2 h-4 w-4" />
+      {{ t('buttons.schedule_post') }}
+    </UButton>
     <template #content>
       <section class="min-w-4xl">
         <UCard>
@@ -324,7 +331,7 @@ const HandleAssetsSelected = (assets: Asset[]) => {
                 </template>
                 <template #media>
                   <p>{{ t('newPostModal.mediaLibraryContent') }}</p>
-                  <MediaGalleryForUser @select="HandleAssetsSelected" @deselect="HandleAssetsSelected" />
+                  <MediaGalleryForUser v-model:selected="postMediaAssets" />
                 </template>
 
               </UTabs>
@@ -354,13 +361,16 @@ const HandleAssetsSelected = (assets: Asset[]) => {
 
           <template #footer>
             <div class="flex justify-end gap-2">
-              <UButton color="secondary" variant="outline" @click="isOpen = false">
+              <UButton :disabled="haveAtLeastOneAccountSelected" color="secondary" variant="outline"
+                @click="handleCreatePost('draft')">
                 {{ t('newPostModal.saveDraft') }}
               </UButton>
-              <UButton color="primary" variant="outline" @click="handleCreatePost">
+              <UButton color="primary" variant="outline" @click="handleCreatePost('published')"
+                :disabled="haveAtLeastOneAccountSelected">
                 {{ t('newPostModal.postNow') }}
               </UButton>
-              <UButton color="warning" variant="ghost" @click="handleCreatePost">
+              <UButton color="warning" variant="ghost" @click="handleCreatePost('scheduled')"
+                :disabled="haveAtLeastOneAccountSelected">
                 {{ t('newPostModal.schedule') }}
               </UButton>
             </div>

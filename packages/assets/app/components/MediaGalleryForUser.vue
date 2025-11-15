@@ -19,10 +19,13 @@ const $emit = defineEmits({
   deselect: (asset: Asset[]) => true
 })
 
-const selected = ref<Asset[]>([])
+const selected = defineModel<Asset[]>('selected', {
+  type: Array,
+  default: () => [],
+})
 const HandleSelect = (asset: Asset) => {
   if (selected.value.includes(asset)) {
-    selected.value = selected.value.filter(item => item !== asset)
+    selected.value = selected.value.filter(item => item.id !== asset.id)
     $emit('deselect', selected.value)
 
   } else {
@@ -53,7 +56,7 @@ const showUploader = ref(false)
           <section class="text-muted-foreground">
             <div
               class="absolute inset-0 bg-primary-950/95  rounded-lg  transition-opacity duration-500 z-50 grid place-content-center font-black"
-              v-if="selected.includes(asset)">
+              v-if="selected.find(item => item.id === asset.id)">
               Selected
             </div>
             <img :src="asset.url" :alt="asset.originalName"

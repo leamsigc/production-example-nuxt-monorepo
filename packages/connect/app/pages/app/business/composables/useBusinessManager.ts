@@ -10,8 +10,7 @@ const businesses = ref<PaginatedResponse<BusinessProfile>>({
     limit: 10,
     total: 1,
     totalPages: 1
-  },
-  success: false
+  }
 });
 
 export const useBusinessManager = () => {

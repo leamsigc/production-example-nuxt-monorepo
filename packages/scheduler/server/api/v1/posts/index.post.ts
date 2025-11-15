@@ -1,5 +1,6 @@
 import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
-import { postService, type CreatePostData } from "#layers/BaseDB/server/services/post.service"
+import type { PostCreateBase } from "#layers/BaseDB/db/schema"
+import { postService } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -32,11 +33,15 @@ export default defineEventHandler(async (event) => {
     }
 
     // Prepare post data
-    const postData: CreatePostData = {
+    const postData: PostCreateBase = {
       businessId: body.businessId,
       content: body.content,
       mediaAssets: body.mediaAssets || [],
-      targetPlatforms: body.targetPlatforms
+      targetPlatforms: body.targetPlatforms,
+      scheduledAt: body.scheduledAt || new Date(),
+      status: body.status || 'draft',
+      comment: body.comment || []
+
     }
 
     // Handle scheduled date
@@ -54,10 +59,10 @@ export default defineEventHandler(async (event) => {
     // Create post
     const result = await postService.create(user.id, postData)
 
-    if (!result.success) {
+    if (!result) {
       throw createError({
         statusCode: 400,
-        statusMessage: result.error || 'Failed to create post'
+        statusMessage: 'Failed to create post'
       })
     }
 
