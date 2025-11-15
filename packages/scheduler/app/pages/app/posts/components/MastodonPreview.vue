@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 /**
  *
  * Mastodon Preview Component
@@ -10,18 +11,27 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+import type { PostCreateBase, Asset, User } from '#layers/BaseDB/db/schema';
+import type { SocialMediaPlatformConfigurations } from '../composables/usePlatformConfiguration';
+import dayjs from 'dayjs';
+
+
+const user = useState<User | null>('auth:user')
 const props = defineProps<{
   postContent: string;
+  mediaAssets: Asset[];
+  platform: keyof SocialMediaPlatformConfigurations | 'default';
+  post: PostCreateBase
 }>();
 </script>
 
 <template>
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 max-w-md mx-auto">
     <div class="flex items-center mb-3">
-      <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="User" size="md" />
+      <UAvatar :src="user?.image || ''" :alt="user?.name" size="md" />
       <div class="ml-3">
-        <p class="font-semibold text-gray-900 dark:text-white">User Name</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400">Just now</p>
+        <p class="font-semibold text-gray-900 dark:text-white">{{ user?.name }}</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ dayjs(new Date()).format('h:mm A') }}</p>
       </div>
     </div>
     <p class="text-gray-800 dark:text-gray-200 mb-3">{{ postContent }}</p>
@@ -30,6 +40,12 @@ const props = defineProps<{
       <span>Favorite</span>
       <span>Boost</span>
       <span>Reply</span>
+    </div>
+    <div v-if="post.comment && post.comment.length > 0" class="mt-4 border-t border-gray-200 dark:border-gray-700 pt-3">
+      <p class="font-semibold text-gray-900 dark:text-white mb-2">Comments:</p>
+      <div v-for="(comment, index) in post.comment" :key="index" class="text-gray-800 dark:text-gray-200 text-sm mb-1">
+        {{ comment }}
+      </div>
     </div>
   </div>
 </template>

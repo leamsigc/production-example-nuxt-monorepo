@@ -10,28 +10,35 @@
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
-import type { PostCreateBase, Asset } from '#layers/BaseDB/db/schema';
+import type { PostCreateBase, Asset, User } from '#layers/BaseDB/db/schema';
+import type { SocialMediaPlatformConfigurations } from '../composables/usePlatformConfiguration';
+import dayjs from 'dayjs';
+
+
+const user = useState<User | null>('auth:user')
 
 const props = defineProps<{
-  post: PostCreateBase & { mediaAssets: Asset[] };
+  postContent: string;
+  mediaAssets: Asset[];
+  platform: keyof SocialMediaPlatformConfigurations | 'default';
+  post: PostCreateBase
 }>();
 </script>
 
 <template>
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 max-w-md mx-auto">
     <div class="flex items-center mb-3">
-      <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" alt="User" size="md" />
+      <UAvatar :src="user?.image || ''" :alt="user?.name" size="md" />
       <div class="ml-3">
-        <p class="font-semibold text-gray-900 dark:text-white">User Name</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400">Just now</p>
+        <p class="font-semibold text-gray-900 dark:text-white">{{ user?.name }}</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">{{ dayjs(new Date()).format('h:mm A') }}</p>
       </div>
     </div>
-    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ props.post.content }}</p>
-    <div v-if="props.post.mediaAssets && props.post.mediaAssets.length > 0" class="grid grid-cols-1 gap-2 mb-3">
-      <img v-for="asset in props.post.mediaAssets" :key="asset.id" :src="asset.url" alt="Post media"
-        class="rounded-lg w-full" />
+    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ postContent }}</p>
+    <div v-if="mediaAssets && mediaAssets.length > 0" class="grid grid-cols-1 gap-2 mb-3">
+      <img v-for="asset in mediaAssets" :key="asset.id" :src="asset.url" alt="Post media" class="rounded-lg w-full" />
     </div>
-    <div v-if="props.post.content.length > 0 || (props.post.mediaAssets && props.post.mediaAssets.length > 0)"
+    <div v-if="postContent.length > 0 || (mediaAssets && mediaAssets.length > 0)"
       class="border-t border-gray-200 dark:border-gray-700 pt-3 flex justify-around text-gray-500 dark:text-gray-400 text-sm">
       <span>Like</span>
       <span>Repost</span>

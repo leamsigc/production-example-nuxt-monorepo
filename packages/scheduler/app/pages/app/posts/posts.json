@@ -3,18 +3,134 @@
     "title": "Social media posts",
     "description": "All the social media post for the next weeks are here",
     "seo_title_all": "All Posts",
-    "seo_description_all": "All the social media post for the next weeks are here"
+    "seo_description_all": "All the social media post for the next weeks are here",
+    "newPostModal": {
+      "defaultPreview": "Default Preview",
+      "editorTab": "Editor",
+      "editorDescription": "Edit your post content",
+      "mediaTab": "Media",
+      "mediaDescription": "Manage your media assets",
+      "postPlaceholder": "What's on your mind?",
+      "insertMedia": "Insert Media",
+      "designMedia": "Design Media",
+      "aiImage": "AI Image",
+      "commentsTitle": "Comments",
+      "commentPlaceholder": "Add a comment {index}",
+      "addComment": "Add Comment",
+      "mediaLibraryContent": "Your media library content will appear here.",
+      "previewTitle": "Preview",
+      "saveDraft": "Save Draft",
+      "postNow": "Post Now",
+      "schedule": "Schedule",
+      "noMoreAccounts": "No more accounts to add"
+    },
+    "validation": {
+      "emptyPostOrNoPlatform": "Post content or media assets are required, and at least one platform must be selected.",
+      "emptyPost": "Post content or media assets are required.",
+      "noPlatformSelected": "At least one platform must be selected.",
+      "unknownError": "An unknown error occurred during validation.",
+      "postInvalidForPlatform": "Post is invalid for {platform}",
+      "previewErrors": "Validation Errors:",
+      "platformError": "{platform}: {message}"
+    }
   },
   "es": {
     "title": "Posts",
-    "description": "Posts"
+    "description": "Posts",
+    "newPostModal": {
+      "defaultPreview": "Vista previa predeterminada",
+      "editorTab": "Editor",
+      "editorDescription": "Edita el contenido de tu publicación",
+      "mediaTab": "Medios",
+      "mediaDescription": "Gestiona tus activos multimedia",
+      "postPlaceholder": "¿Qué tienes en mente?",
+      "insertMedia": "Insertar medios",
+      "designMedia": "Diseñar medios",
+      "aiImage": "Imagen de IA",
+      "commentsTitle": "Comentarios",
+      "commentPlaceholder": "Añadir un comentario {index}",
+      "addComment": "Añadir comentario",
+      "mediaLibraryContent": "El contenido de tu biblioteca de medios aparecerá aquí.",
+      "previewTitle": "Vista previa",
+      "saveDraft": "Guardar borrador",
+      "postNow": "Publicar ahora",
+      "schedule": "Programar",
+      "noMoreAccounts": "No hay más cuentas para añadir"
+    },
+    "validation": {
+      "emptyPostOrNoPlatform": "Se requiere contenido de la publicación o activos multimedia, y se debe seleccionar al menos una plataforma.",
+      "emptyPost": "Se requiere contenido de la publicación o activos multimedia.",
+      "noPlatformSelected": "Se debe seleccionar al menos una plataforma.",
+      "unknownError": "Ocurrió un error desconocido durante la validación.",
+      "postInvalidForPlatform": "La publicación no es válida para {platform}",
+      "previewErrors": "Errores de validación:",
+      "platformError": "{platform}: {message}"
+    }
   },
   "fr": {
     "title": "Posts",
-    "description": "Posts"
+    "description": "Posts",
+    "newPostModal": {
+      "defaultPreview": "Aperçu par défaut",
+      "editorTab": "Éditeur",
+      "editorDescription": "Modifiez le contenu de votre publication",
+      "mediaTab": "Médias",
+      "mediaDescription": "Gérez vos actifs multimédias",
+      "postPlaceholder": "À quoi pensez-vous ?",
+      "insertMedia": "Insérer un média",
+      "designMedia": "Concevoir un média",
+      "aiImage": "Image IA",
+      "commentsTitle": "Commentaires",
+      "commentPlaceholder": "Ajouter un commentaire {index}",
+      "addComment": "Ajouter un commentaire",
+      "mediaLibraryContent": "Le contenu de votre bibliothèque de médias apparaîtra ici.",
+      "previewTitle": "Aperçu",
+      "saveDraft": "Enregistrer le brouillon",
+      "postNow": "Publier maintenant",
+      "schedule": "Planifier",
+      "noMoreAccounts": "Plus de comptes à ajouter"
+    },
+    "validation": {
+      "emptyPostOrNoPlatform": "Le contenu de la publication ou les actifs multimédias sont requis, et au moins une plateforme doit être sélectionnée.",
+      "emptyPost": "Le contenu de la publication ou les actifs multimédias sont requis.",
+      "noPlatformSelected": "Au moins une plateforme doit être sélectionnée.",
+      "unknownError": "Une erreur inconnue est survenue lors de la validation.",
+      "postInvalidForPlatform": "La publication est invalide pour {platform}",
+      "previewErrors": "Erreurs de validation :",
+      "platformError": "{platform} : {message}"
+    }
   },
   "de": {
     "title": "Posts",
-    "description": "Posts"
+    "description": "Posts",
+    "newPostModal": {
+      "defaultPreview": "Standardvorschau",
+      "editorTab": "Editor",
+      "editorDescription": "Bearbeiten Sie Ihren Beitragsinhalt",
+      "mediaTab": "Medien",
+      "mediaDescription": "Verwalten Sie Ihre Medieninhalte",
+      "postPlaceholder": "Was denken Sie?",
+      "insertMedia": "Medien einfügen",
+      "designMedia": "Medien gestalten",
+      "aiImage": "KI-Bild",
+      "commentsTitle": "Kommentare",
+      "commentPlaceholder": "Kommentar hinzufügen {index}",
+      "addComment": "Kommentar hinzufügen",
+      "mediaLibraryContent": "Ihre Medienbibliotheksinhalte werden hier angezeigt.",
+      "previewTitle": "Vorschau",
+      "saveDraft": "Entwurf speichern",
+      "postNow": "Jetzt posten",
+      "schedule": "Planen",
+      "noMoreAccounts": "Keine weiteren Konten zum Hinzufügen"
+    },
+    "validation": {
+      "emptyPostOrNoPlatform": "Beitragsinhalt oder Medieninhalte sind erforderlich, und mindestens eine Plattform muss ausgewählt werden.",
+      "emptyPost": "Beitragsinhalt oder Medieninhalte sind erforderlich.",
+      "noPlatformSelected": "Mindestens eine Plattform muss ausgewählt werden.",
+      "unknownError": "Während der Validierung ist ein unbekannter Fehler aufgetreten.",
+      "postInvalidForPlatform": "Beitrag ist ungültig für {platform}",
+      "previewErrors": "Validierungsfehler:",
+      "platformError": "{platform}: {message}"
+    }
   }
 }

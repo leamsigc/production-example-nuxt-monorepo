@@ -63,6 +63,14 @@ export const useAssetManagement = () => {
   const clearError = () => {
     error.value = null
   }
+  const fetUserAssets = async () => {
+    try {
+      const response = await $fetch<Asset[]>('/api/v1/assets?own=true')
+      assets.value = response
+    } catch (err: any) {
+      error.value = err.data?.message || err.message || 'Failed to fetch assets'
+    }
+  }
 
   const fetchAssets = async (businessId: string, options?: {
     page?: number
@@ -390,6 +398,7 @@ export const useAssetManagement = () => {
     getAssetsByType,
     getStorageUsage,
     searchAssets,
-    filterAssetsByMimeType
+    filterAssetsByMimeType,
+    fetUserAssets
   }
 }

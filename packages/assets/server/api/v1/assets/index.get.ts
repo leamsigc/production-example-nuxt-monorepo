@@ -4,18 +4,8 @@ import { auth } from "#layers/BaseAuth/lib/auth"
 
 export default defineEventHandler(async (event) => {
   try {
-    // Get authenticated user
-    const headers = getHeaders(event)
-    const session = await auth.api.getSession({
-      headers: new Headers(headers as Record<string, string>)
-    })
-
-    if (!session?.user?.id) {
-      throw createError({
-        statusCode: 401,
-        statusMessage: 'Unauthorized'
-      })
-    }
+    // Get user from session
+    const user = await checkUserIsLogin(event)
 
     // Get query parameters
     const query = getQuery(event)
@@ -23,6 +13,11 @@ export default defineEventHandler(async (event) => {
     const page = parseInt(query.page as string) || 1
     const limit = parseInt(query.limit as string) || 20
     const mimeType = query.mimeType as string
+
+    const own = query.own as string
+    if (own === 'true') {
+      return await assetService.findByUserId(user.id, { pagination: { page, limit }, filters: mimeType ? { mimeType } : {} })
+    }
 
 
 
@@ -33,7 +28,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // Fetch assets for the business
-    const result = await assetService.findByBusinessId(businessId, session.user.id, options)
+    const result = await assetService.findByBusinessId(businessId, user.id, options)
 
     if (!result.success) {
       throw createError({

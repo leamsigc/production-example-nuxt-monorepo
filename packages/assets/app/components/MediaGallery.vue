@@ -724,7 +724,7 @@ const handleDeleteAsset = (asset: Asset) => {
       <template #footer="{ close }">
         <div class="flex justify-end gap-2 p-6 border-t">
           <UButton variant="outline" @click="close">{{ t('folder_dialog.cancel') }}</UButton>
-          <UButton class="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+          <UButton class="bg-linear-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
             :disabled="!newFolderName.trim()" @click="createNewFolder">
             <Icon name="lucide:folder-plus" class="w-4 h-4 mr-2" />
             {{ t('folder_dialog.create') }}
@@ -754,7 +754,7 @@ const handleDeleteAsset = (asset: Asset) => {
                 <span class="text-sm text-primary font-medium">{{ optimizationProgress }}%</span>
               </div>
               <div class="h-2 bg-muted rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-300"
+                <div class="h-full bg-linear-to-r from-primary to-primary/60 rounded-full transition-all duration-300"
                   :style="{ width: `${optimizationProgress}%` }">
                   <div class="h-full bg-white/20 animate-shimmer"></div>
                 </div>

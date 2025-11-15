@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   $meta: {
     name: 'BaseScheduler',
   },
-  extends: ['@local-monorepo/db', '@local-monorepo/ui', '@local-monorepo/auth', "@local-monorepo/connect"],
+  extends: ['@local-monorepo/db', '@local-monorepo/ui', '@local-monorepo/auth', "@local-monorepo/connect", "@local-monorepo/assets"],
   modules: ['@nuxtjs/i18n'],
   i18n: {
     vueI18n: join(currentDir, './translations/i18n.config.ts'),

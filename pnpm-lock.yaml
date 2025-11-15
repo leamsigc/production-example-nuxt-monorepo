@@ -472,6 +472,9 @@ importers:
       '@fullcalendar/timegrid':
         specifier: 'catalog:'
         version: 6.1.19(@fullcalendar/core@6.1.19)
+      '@local-monorepo/assets':
+        specifier: workspace:*
+        version: link:../assets
       '@local-monorepo/auth':
         specifier: workspace:*
         version: link:../auth

@@ -18,6 +18,7 @@ interface Props {
   maxSize?: number // in MB
   multiple?: boolean
   disabled?: boolean
+  withPadding?: boolean
 }
 
 interface Emits {
@@ -29,7 +30,8 @@ const props = withDefaults(defineProps<Props>(), {
   accept: 'image/*,video/*',
   maxSize: 10, // 10MB default
   multiple: true,
-  disabled: false
+  disabled: false,
+  withPadding: true
 })
 
 const emit = defineEmits<Emits>()
@@ -141,34 +143,34 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="asset-uploader grid content-center relative px-6">
+  <div class="asset-uploader grid content-center relative " :class="{ 'px-6': withPadding }">
     <!-- Main UFileUpload Component with Custom Slot -->
     <UFileUpload ref="uploadRef" v-model="uploadValue" :accept="accept" :multiple="multiple"
       :disabled="disabled || isUploading" variant="area" layout="list" :dropzone="true" :interactive="true" class="grid"
       @update:modelValue="handleFilesUpload">
       <template #default="{ open, removeFile }">
         <div
-          class="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80 backdrop-blur-xl">
+          class="absolute inset-0 bg-linear-to-br from-background/80 via-background/60 to-background/80 backdrop-blur-xl">
         </div>
 
         <!-- Animated Gradient Overlay -->
         <div
-          class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          class="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         </div>
 
         <!-- Premium Shimmer Effect -->
         <div class="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-700">
           <div
-            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-shimmer">
+            class="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -skew-x-12 animate-shimmer">
           </div>
         </div>
 
         <!-- Enhanced Floating Particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-          <div class="floating-particle particle-1 bg-gradient-to-br from-primary/30 to-primary/10"></div>
-          <div class="floating-particle particle-2 bg-gradient-to-br from-primary/25 to-primary/5"></div>
-          <div class="floating-particle particle-3 bg-gradient-to-br from-primary/20 to-transparent"></div>
-          <div class="floating-particle particle-4 bg-gradient-to-br from-primary/15 to-transparent"></div>
+          <div class="floating-particle particle-1 bg-linear-to-br from-primary/30 to-primary/10"></div>
+          <div class="floating-particle particle-2 bg-linear-to-br from-primary/25 to-primary/5"></div>
+          <div class="floating-particle particle-3 bg-linear-to-br from-primary/20 to-transparent"></div>
+          <div class="floating-particle particle-4 bg-linear-to-br from-primary/15 to-transparent"></div>
         </div>
 
         <!-- Drag Over Ripple Effect -->
@@ -178,17 +180,15 @@ watchEffect(() => {
           <!-- Premium Upload Icon with Enhanced Animation -->
           <div class="mx-auto w-24 h-24 relative">
             <!-- Pulsing Background Ring -->
-            <div
-              class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full animate-pulse-slow">
+            <div class="absolute inset-0 bg-linear-to-br from-primary/20 to-primary/5 rounded-full animate-pulse-slow">
             </div>
-            <div
-              class="absolute inset-2 bg-gradient-to-br from-primary/10 to-transparent rounded-full animate-pulse-slow"
+            <div class="absolute inset-2 bg-linear-to-br from-primary/10 to-transparent rounded-full animate-pulse-slow"
               style="animation-delay: 0.5s;"></div>
 
             <!-- Icon Container -->
             <div class="relative flex items-center justify-center w-full h-full">
               <div
-                class="absolute inset-0 bg-gradient-to-br from-background/50 to-background/30 rounded-full backdrop-blur-sm border border-border/30">
+                class="absolute inset-0 bg-linear-to-br from-background/50 to-background/30 rounded-full backdrop-blur-sm border border-border/30">
               </div>
               <Icon v-if="isUploading" name="lucide:loader-2"
                 class="w-12 h-12 text-primary animate-spin relative z-10" />
@@ -204,7 +204,7 @@ watchEffect(() => {
           <!-- Elegant Upload Text with Enhanced Typography -->
           <div class="space-y-4 text-center">
             <h3
-              class="text-3xl font-bold bg-gradient-to-r from-foreground via-primary to-foreground/10 bg-clip-text text-transparent leading-tight">
+              class="text-3xl font-bold bg-linear-to-r from-foreground via-primary to-foreground/10 bg-clip-text text-transparent leading-tight">
               {{ isUploading ? 'Processing Your Assets...' : 'Drop Your Premium Assets Here' }}
             </h3>
             <p class="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
@@ -249,10 +249,10 @@ watchEffect(() => {
             </div>
             <div class="h-2 bg-muted/50 rounded-full overflow-hidden backdrop-blur-sm">
               <div
-                class="h-full bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-full transition-all duration-500 relative overflow-hidden"
+                class="h-full bg-linear-to-r from-primary via-primary/80 to-primary/60 rounded-full transition-all duration-500 relative overflow-hidden"
                 :style="{ width: `${(uploadQueue.filter(item => item.status === 'completed').length / uploadQueue.length) * 100}%` }">
                 <div
-                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer">
+                  class="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent animate-shimmer">
                 </div>
               </div>
             </div>
@@ -302,8 +302,7 @@ watchEffect(() => {
     <!-- Elegant Upload Queue -->
     <div v-if="uploadQueue.length > 0" class="mt-8 space-y-4">
       <div class="flex items-center justify-between">
-        <h4
-          class="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+        <h4 class="text-lg font-semibold bg-linear-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
           Upload Progress
         </h4>
         <UBadge variant="outline" class="glass-badge">
@@ -319,7 +318,7 @@ watchEffect(() => {
             <div class="relative flex-shrink-0">
               <!-- Status Icon with Animation -->
               <div
-                class="w-12 h-12 rounded-lg bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center relative overflow-hidden">
+                class="w-12 h-12 rounded-lg bg-linear-to-br from-muted to-muted/50 flex items-center justify-center relative overflow-hidden">
                 <Icon v-if="item.status === 'completed'" name="lucide:check-circle"
                   class="w-6 h-6 text-green-500 animate-scale-in" />
                 <Icon v-else-if="item.status === 'error'" name="lucide:x-circle"
@@ -358,7 +357,7 @@ watchEffect(() => {
                 </div>
                 <div class="h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    class="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full transition-all duration-300 ease-out"
+                    class="h-full bg-linear-to-r from-primary to-primary/60 rounded-full transition-all duration-300 ease-out"
                     :style="{ width: `${item.progress.percentage}%` }">
                     <div class="h-full bg-white/20 animate-shimmer"></div>
                   </div>

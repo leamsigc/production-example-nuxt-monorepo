@@ -42,6 +42,14 @@ export interface ProcessedFile {
 export class AssetService {
   private db = useDrizzle();
 
+  async findByUserId(id: string, { pagination }: { pagination: { page: number; limit: number; }; filters: { mimeType: string; } | {}; }) {
+    return await this.db.query.assets.findMany({
+      where: and(eq(assets.userId, id)),
+      orderBy: sql`${assets.createdAt} DESC`,
+      limit: pagination.limit,
+      offset: (pagination.page - 1) * pagination.limit,
+    });
+  }
   async create(userId: string, data: CreateAssetData): Promise<ServiceResponse<Asset>> {
     try {
       this.validateCreateData(data);

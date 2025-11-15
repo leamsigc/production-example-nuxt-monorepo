@@ -11,9 +11,13 @@
  * @todo [✔] Update the typescript.
  */
 import type { PostCreateBase, Asset } from '#layers/BaseDB/db/schema';
+import type { SocialMediaPlatformConfigurations } from '../composables/usePlatformConfiguration';
 
 const props = defineProps<{
-  post: PostCreateBase & { mediaAssets: Asset[] };
+  postContent: string;
+  mediaAssets: Asset[];
+  platform: keyof SocialMediaPlatformConfigurations | 'default';
+  post: PostCreateBase
 }>();
 </script>
 
@@ -26,12 +30,12 @@ const props = defineProps<{
         <p class="text-xs text-gray-500 dark:text-gray-400">Just now</p>
       </div>
     </div>
-    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ props.post.content }}</p>
-    <div v-if="props.post.mediaAssets && props.post.mediaAssets.length > 0" class="grid grid-cols-1 gap-2 mb-3">
-      <img v-for="asset in props.post.mediaAssets" :key="asset.id" :src="asset.url" alt="Post media"
+    <p class="text-gray-800 dark:text-gray-200 mb-3">{{ props.postContent }}</p>
+    <div v-if="props.mediaAssets && props.mediaAssets.length > 0" class="grid grid-cols-1 gap-2 mb-3">
+      <img v-for="asset in props.mediaAssets" :key="asset.id" :src="asset.url" alt="Post media"
         class="rounded-lg w-full" />
     </div>
-    <div v-if="props.post.content.length > 0 || (props.post.mediaAssets && props.post.mediaAssets.length > 0)"
+    <div v-if="props.postContent.length > 0 || (props.mediaAssets && props.mediaAssets.length > 0)"
       class="border-t border-gray-200 dark:border-gray-700 pt-3 flex justify-around text-gray-500 dark:text-gray-400 text-sm">
       <span>Preview for Email/Password</span>
     </div>
