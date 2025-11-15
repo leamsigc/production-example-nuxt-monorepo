@@ -49,7 +49,6 @@ const props = defineProps<{
         {{ comment }}
       </div>
     </div>
-
   </div>
 </template>
 

@@ -4,6 +4,7 @@
 import type { DateClickArg } from '@fullcalendar/interaction/index.js';
 import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
 import type { EventClickArg } from '@fullcalendar/core/index.js';
+import { usePostManager } from '../posts/composables/UsePostManager';
 
 /**
  *
@@ -16,6 +17,13 @@ import type { EventClickArg } from '@fullcalendar/core/index.js';
  * @todo [ ] Integration test.
  * @todo [✔] Update the typescript.
  */
+
+
+const activeBusinessId = useState<string>('business:id');
+
+const { getPosts, postList } = usePostManager();
+await getPosts(activeBusinessId.value);
+
 const { t } = useI18n()
 useHead({
   title: t('seo_title_all'),
@@ -25,24 +33,17 @@ useHead({
 })
 const toast = useToast()
 const date = useDateFormat(useNow(), "YYYY-MM-DD");
-const events = [
-  {
-    title: "Attend Data Protection Act Webinar",
-    date: date.value,
-    url: "https://ui-thing.behonbaker.com/",
-  },
-  {
-    title: "Travel to Kingston for Manager's Meeting",
-    date: date.value,
-  },
-  {
-    title: "Vacation in Montego Bay",
-    allDay: true,
-    color: "green",
-    date: `${useDateFormat("2025-09-31", "YYYY-MM-DD").value}`,
-    end: `${useDateFormat("2025-11-31", "YYYY-MM-DD").value}`,
-  },
-]
+const events = postList.value.map(post => {
+  return {
+    post,
+    id: post.id,
+    title: post.content.slice(0, 50),
+    date: post.scheduledAt,
+    extendedProps: {
+      post
+    }
+  }
+})
 
 const HandleDateClicked = (event: DateClickArg) => {
   toast.add({

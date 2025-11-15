@@ -14,11 +14,16 @@ import interactionPlugin, { type DateClickArg } from "@fullcalendar/interaction"
 import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import FullCalendar from "@fullcalendar/vue3";
-import type { CalendarOptions, EventClickArg, EventSourceInput } from "@fullcalendar/core";
-
+import type { CalendarOptions, EventClickArg, EventInput, EventSourceInput } from "@fullcalendar/core";
+import type { PostWithAllData } from "#layers/BaseDB/db/schema";
+import PostCalendarPreview from "./PostCalendarPreview.vue";
 interface Props {
   activeView?: "timeGridWeek" | 'timeGridDay' | "dayGridMonth"
-  events: EventSourceInput
+  events: EventInput & {
+    extendedProps: {
+      post: PostWithAllData
+    }
+  }[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -60,7 +65,12 @@ const calendarOptions: CalendarOptions = {
 };
 </script>
 <template>
-  <FullCalendar :options="calendarOptions" />
+  <FullCalendar :options="calendarOptions">
+    <template v-slot:eventContent='arg'>
+      <PostCalendarPreview :post="arg.event.extendedProps.post" />
+    </template>
+
+  </FullCalendar>
 </template>
 
 <style></style>
