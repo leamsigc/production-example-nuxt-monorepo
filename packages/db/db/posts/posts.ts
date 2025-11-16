@@ -3,6 +3,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { user, type User } from '../auth/auth'
 import { businessProfiles } from '../business/business'
 import { socialMediaAccounts, type SocialMediaAccount } from '../socialMedia/socialMedia'
+import type { Asset } from '../schema'
 
 // Posts
 export const posts = sqliteTable('posts', {
@@ -38,7 +39,7 @@ export const platformPosts = sqliteTable('platform_posts', {
 export type Post = InferSelectModel<typeof posts>
 export type PlatformPost = InferSelectModel<typeof platformPosts>
 export type PostWithPlatformPosts = Post & { platformPosts: PlatformPost[], socialMediaAccount: SocialMediaAccount }
-export type PostWithAllData = Post & { platformPosts: PlatformPost[], user: User }
+export type PostWithAllData = Post & { platformPosts: PlatformPost[], user: User, assets: Asset[], }
 
 export type PostCreate = Omit<Post, 'id' | 'createdAt' | 'updatedAt' | 'userId' | 'targetPlatforms' | 'mediaAssets' | 'publishedAt'>
 

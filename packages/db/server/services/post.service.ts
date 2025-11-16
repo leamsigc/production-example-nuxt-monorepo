@@ -1,11 +1,12 @@
-import type { PlatformPost, Post, PostCreate, PostCreateBase } from '#layers/BaseDB/db/schema'
+import { assetService } from './asset.service';
+import type { Asset, PlatformPost, Post, PostCreate, PostCreateBase, PostWithAllData } from '#layers/BaseDB/db/schema'
 import type {
   PaginatedResponse,
   QueryOptions,
   ServiceResponse
 } from './types'
-import { and, eq, gte, lte, sql } from 'drizzle-orm'
-import { platformPosts, posts } from '#layers/BaseDB/db/schema'
+import { and, eq, gte, inArray, lte, sql } from 'drizzle-orm'
+import { assets, platformPosts, posts, user } from '#layers/BaseDB/db/schema'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import {
   ValidationError
@@ -19,10 +20,6 @@ export interface UpdatePostData {
   scheduledAt?: Date
   targetPlatforms?: string[]
   status?: 'draft' | 'scheduled' | 'published' | 'failed'
-}
-
-export interface PostWithPlatforms extends Post {
-  platformPosts?: PlatformPost[]
 }
 
 export interface CreatePlatformPostData {
@@ -91,7 +88,7 @@ export class PostService {
     }
   }
 
-  async findById(id: string, userId: string, includePlatforms: boolean = false): Promise<ServiceResponse<PostWithPlatforms>> {
+  async findById(id: string, userId: string, includePlatforms: boolean = false): Promise<ServiceResponse<PostWithAllData | Post>> {
     try {
 
       const post = await this.db.query.posts.findFirst({
@@ -104,16 +101,7 @@ export class PostService {
         return { error: 'Post not found', code: 'NOT_FOUND' }
       }
 
-      const result: PostWithPlatforms = post
-
-      if (includePlatforms) {
-        const platforms = await this.db
-          .select()
-          .from(platformPosts)
-          .where(eq(platformPosts.postId, id))
-
-        result.platformPosts = platforms
-      }
+      const result = post
 
       return { data: result }
     } catch (error) {
@@ -121,7 +109,7 @@ export class PostService {
     }
   }
 
-  async findByBusinessId(businessId: string, userId: string, options: QueryOptions = {}): Promise<PaginatedResponse<PostWithPlatforms>> {
+  async findByBusinessId(businessId: string, userId: string, options: QueryOptions = {}): Promise<PaginatedResponse<PostWithAllData>> {
     try {
       const { pagination = { page: 1, limit: 10 }, filters = {} } = options
       const offset = ((pagination.page || 1) - 1) * (pagination.limit || 10)
@@ -143,29 +131,30 @@ export class PostService {
       if (filters.endDate) {
         whereConditions = and(whereConditions, lte(posts.createdAt, new Date(filters.endDate)))
       }
+      const postList = await this.db.query.posts.findMany({
+        where: whereConditions,
+        with: {
+          platformPosts: true,
+          user: true,
+        },
+        limit: pagination.limit || 10,
+        offset,
+        orderBy: sql`${posts.createdAt} DESC`,
+      })
 
-      const postList = await this.db
-        .select()
-        .from(posts)
-        .where(whereConditions)
-        .limit(pagination.limit || 10)
-        .offset(offset)
-        .orderBy(sql`${posts.createdAt} DESC`)
+      const postWithAssetsPromises = postList.map(async (post) => {
+        const assetsIds: string[] = post.mediaAssets ? JSON.parse(post.mediaAssets) : []
 
-      // Get platform posts for each post
-      const postsWithPlatforms: PostWithPlatforms[] = []
-      for (const post of postList) {
-        const platforms = await this.db
-          .select()
-          .from(platformPosts)
-          .where(eq(platformPosts.postId, post.id))
-
-        postsWithPlatforms.push({
+        const assetResult = await this.db.query.assets.findMany({
+          where: inArray(assets.id, assetsIds),
+        });
+        return {
           ...post,
-          platformPosts: platforms
-        })
-      }
+          assets: assetResult, // Ensure assets is always an array
+        }
+      })
 
+      const postWithAssets = await Promise.all(postWithAssetsPromises)
       // Get total count for pagination
       const result = await this.db
         .select({ count: sql<number>`count(*)` })
@@ -176,7 +165,7 @@ export class PostService {
 
 
       return {
-        data: postsWithPlatforms,
+        data: postWithAssets,
         pagination: {
           page: pagination.page || 1,
           limit: pagination.limit || 10,
@@ -344,16 +333,16 @@ export class PostService {
     }
   }
 
-  async retryFailedPost(id: string, userId: string): Promise<ServiceResponse<PostWithPlatforms>> {
+  async retryFailedPost(id: string, userId: string): Promise<ServiceResponse<PostWithAllData>> {
     try {
       // Get the post with platform posts
       const postResult = await this.findById(id, userId, true)
 
 
-      const post = postResult.data!
+      const post = postResult.data as PostWithAllData
 
       // Check if post can be retried
-      if (post.status !== 'failed' && !post.platformPosts?.some(p => p.status === 'failed')) {
+      if (post.status !== 'failed' && !post.platformPosts.some(p => p.status === 'failed')) {
         return {
 
           error: 'Post does not have any failed publishing attempts to retry',
@@ -377,9 +366,9 @@ export class PostService {
           }
         }
       }
-
-      // Return updated post
-      return await this.findById(id, userId, true)
+      const item = await this.findById(id, userId, true);
+      // Return updated item
+      return item as ServiceResponse<PostWithAllData>
     } catch (error) {
       return { error: 'Failed to retry post' }
     }

@@ -62,12 +62,12 @@ export class AssetService {
         createdAt: now,
       }).returning();
 
-      return { success: true, data: asset };
+      return { data: asset };
     } catch (error) {
       if (error instanceof ValidationError) {
-        return { success: false, error: error.message, code: error.code };
+        return { error: error.message, code: error.code };
       }
-      return { success: false, error: 'Failed to create asset' };
+      return { error: 'Failed to create asset' };
     }
   }
 
@@ -80,12 +80,12 @@ export class AssetService {
         .limit(1);
 
       if (!asset) {
-        return { success: false, error: 'Asset not found', code: 'NOT_FOUND' };
+        return { error: 'Asset not found', code: 'NOT_FOUND' };
       }
 
-      return { success: true, data: asset };
+      return { data: asset };
     } catch (error) {
-      return { success: false, error: 'Failed to fetch asset' };
+      return { error: 'Failed to fetch asset' };
     }
   }
 
@@ -126,7 +126,7 @@ export class AssetService {
       const count = result[0]?.count ?? 0;
 
       return {
-        success: true,
+
         data: assetList,
         pagination: {
           page: pagination.page || 1,
@@ -136,14 +136,14 @@ export class AssetService {
         },
       };
     } catch (error) {
-      return { success: false, error: 'Failed to fetch assets' };
+      return { error: 'Failed to fetch assets' };
     }
   }
 
   async findByIds(ids: string[], userId: string): Promise<ServiceResponse<Asset[]>> {
     try {
       if (ids.length === 0) {
-        return { success: true, data: [] };
+        return { data: [] };
       }
 
       const assetList = await this.db
@@ -154,9 +154,9 @@ export class AssetService {
           eq(assets.userId, userId)
         ));
 
-      return { success: true, data: assetList };
+      return { data: assetList };
     } catch (error) {
-      return { success: false, error: 'Failed to fetch assets' };
+      return { error: 'Failed to fetch assets' };
     }
   }
 
@@ -170,9 +170,9 @@ export class AssetService {
         .from(assets)
         .where(eq(assets.userId, userId));
 
-      return { success: true, data: result };
+      return { data: result };
     } catch (error) {
-      return { success: false, error: 'Failed to get storage usage' };
+      return { error: 'Failed to get storage usage' };
     }
   }
 
@@ -189,9 +189,9 @@ export class AssetService {
           eq(assets.userId, userId)
         ));
 
-      return { success: true, data: result };
+      return { data: result };
     } catch (error) {
-      return { success: false, error: 'Failed to get storage usage' };
+      return { error: 'Failed to get storage usage' };
     }
   }
 
@@ -199,9 +199,6 @@ export class AssetService {
     try {
       // Check if asset exists and belongs to user
       const existingResult = await this.findById(id, userId);
-      if (!existingResult.success) {
-        return existingResult;
-      }
       const storagePath = existingResult.data?.metadata ? JSON.parse(existingResult.data?.metadata).storagePath : '';
       const [deleted] = await this.db
         .delete(assets)
@@ -217,16 +214,16 @@ export class AssetService {
         // await deleteFile(storagePath);
       }
 
-      return { success: true, data: deleted };
+      return { data: deleted };
     } catch (error) {
-      return { success: false, error: 'Failed to delete asset' };
+      return { error: 'Failed to delete asset' };
     }
   }
 
   async deleteMultiple(ids: string[], userId: string): Promise<ServiceResponse<Asset[]>> {
     try {
       if (ids.length === 0) {
-        return { success: true, data: [] };
+        return { data: [] };
       }
 
       const deleted = await this.db
@@ -237,9 +234,9 @@ export class AssetService {
         ))
         .returning();
 
-      return { success: true, data: deleted };
+      return { data: deleted };
     } catch (error) {
-      return { success: false, error: 'Failed to delete assets' };
+      return { error: 'Failed to delete assets' };
     }
   }
 
@@ -254,12 +251,12 @@ export class AssetService {
         .returning();
 
       if (!updated) {
-        return { success: false, error: 'Asset not found', code: 'NOT_FOUND' };
+        return { error: 'Asset not found', code: 'NOT_FOUND' };
       }
 
-      return { success: true, data: updated };
+      return { data: updated };
     } catch (error) {
-      return { success: false, error: 'Failed to update asset metadata' };
+      return { error: 'Failed to update asset metadata' };
     }
   }
 

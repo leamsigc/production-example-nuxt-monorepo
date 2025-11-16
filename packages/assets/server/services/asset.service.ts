@@ -1,5 +1,5 @@
 import { assets, type Asset } from '#layers/BaseDB/db/schema';
-import { eq, and, sql, or } from 'drizzle-orm';
+import { eq, and, sql, or, inArray } from 'drizzle-orm';
 import { ValidationError, type PaginatedResponse, type QueryOptions, type ServiceResponse } from "#layers/BaseAssets/server/shared/assetsTypes"
 
 export interface CreateAssetData {
@@ -145,21 +145,23 @@ export class AssetService {
   }
 
   async findByIds(ids: string[], userId: string): Promise<ServiceResponse<Asset[]>> {
+
     try {
       if (ids.length === 0) {
         return { success: true, data: [] };
       }
 
-      const assetList = await this.db
-        .select()
-        .from(assets)
-        .where(and(
-          sql`${assets.id} IN (${ids.map(id => `'${id}'`).join(',')})`,
+      const assetList = await this.db.query.assets.findMany({
+        where: and(
+          inArray(assets.id, ids),
           eq(assets.userId, userId)
-        ));
+        ),
+      });
 
       return { success: true, data: assetList };
     } catch (error) {
+      console.log(error);
+
       return { success: false, error: 'Failed to fetch assets' };
     }
   }

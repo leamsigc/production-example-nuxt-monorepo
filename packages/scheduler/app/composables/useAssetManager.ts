@@ -10,6 +10,7 @@ import type { Asset } from '#layers/BaseDB/db/schema';
 export const useAssetManager = () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
+  const businessId = useState<string>('business:id');
 
   /**
    * Fetches details for a list of asset IDs.
@@ -21,10 +22,10 @@ export const useAssetManager = () => {
       if (assetIds.length === 0) {
         return [];
       }
-      const query = new URLSearchParams();
-      assetIds.forEach(id => query.append('ids', id));
-      const response = await $fetch<Asset[]>(`/api/v1/assets?${query.toString()}`);
-      return response;
+      const query = new URLSearchParams(assetIds.map(id => ['assetIds', id]));
+      query.append('businessId', businessId.value);
+      const response = await $fetch<{ data: Asset[] }>(`/api/v1/assets/search?${query.toString()}`);
+      return response.data;
     } catch (err: any) {
       error.value = err.data?.message || err.message || 'Failed to fetch assets';
       throw err;

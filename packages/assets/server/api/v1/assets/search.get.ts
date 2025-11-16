@@ -20,22 +20,17 @@ export default defineEventHandler(async (event) => {
     // Get query parameters
     const query = getQuery(event)
     const businessId = query.businessId as string
-    const assetIds = query.assetIds as string
+    const assetIds = query.assetIds as string[];
+
 
     // Handle asset IDs search
-    if (assetIds) {
-      const ids = assetIds.split(',').filter(id => id.trim().length > 0)
-
-      if (ids.length === 0) {
-        throw createError({
-          statusCode: 400,
-          statusMessage: 'At least one asset ID is required'
-        })
-      }
-
+    if (assetIds && assetIds.length > 0) {
+      const ids = typeof assetIds === 'string' ? [assetIds] : assetIds
       const result = await assetService.findByIds(ids, session.user.id)
 
       if (!result.success) {
+        console.log(result);
+
         throw createError({
           statusCode: 500,
           statusMessage: result.error

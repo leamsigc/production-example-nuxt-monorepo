@@ -75,6 +75,30 @@ export const usePostManager = () => {
   }
 
   /**
+   * Update an existing post
+   */
+  const updatePost = async (postId: string, postData: PostCreateBase) => {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      const response = await $fetch<ApiResponse<Post>>(`/api/v1/posts/${postId}`, {
+        method: 'PUT',
+        body: {
+          ...postData,
+          scheduledAt: postData.scheduledAt?.toISOString()
+        }
+      });
+      return response;
+    } catch (err: any) {
+      error.value = err.data?.message || err.message || 'Failed to update post';
+      throw err;
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  /**
    * Get scheduled posts
    */
   const getScheduledPosts = async (beforeDate?: Date) => {
@@ -159,6 +183,7 @@ export const usePostManager = () => {
     // Methods
     getPosts,
     createPost,
+    updatePost,
     getScheduledPosts,
     getPostStats,
     validatePostContent,

@@ -5,6 +5,8 @@ import type { DateClickArg } from '@fullcalendar/interaction/index.js';
 import SchedulerPageHeader from './components/SchedulerPageHeader.vue';
 import type { EventClickArg } from '@fullcalendar/core/index.js';
 import { usePostManager } from '../posts/composables/UsePostManager';
+import UpdatePostModal from '../posts/components/UpdatePostModal.vue';
+import type { Post } from '#layers/BaseDB/db/schema';
 
 /**
  *
@@ -52,18 +54,26 @@ const HandleDateClicked = (event: DateClickArg) => {
     color: 'success'
   })
 }
+
+const updatePostModalRef = ref<InstanceType<typeof UpdatePostModal> | null>(null);
+
 const HandleEventClicked = (event: EventClickArg) => {
   toast.add({
-    title: 'Date Clicked',
+    title: 'event Clicked',
     description: ` Date clicked: ${event.event.title}`,
     color: 'success'
   })
+
+  if (event.event.extendedProps?.post) {
+    updatePostModalRef.value?.openModal(event.event.extendedProps.post as Post);
+  }
 }
 </script>
 <template>
   <div class="container mx-auto py-6 space-y-6">
     <SchedulerPageHeader />
     <ScheduleCalendar :events="events" @date-clicked="HandleDateClicked" @event-clicked="HandleEventClicked" />
+    <UpdatePostModal ref="updatePostModalRef" />
   </div>
 </template>
 
