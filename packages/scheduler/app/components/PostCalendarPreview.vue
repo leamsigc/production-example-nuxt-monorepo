@@ -115,4 +115,8 @@ const postToCreate = ref<PostCreateBase & { comment: string[] }>({
     </template>
   </UPopover>
 </template>
-<style scoped></style>
+<style scoped>
+.fc-h-event {
+  background: transparent;
+}
+</style>

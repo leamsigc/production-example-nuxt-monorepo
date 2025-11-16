@@ -38,7 +38,7 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
   --fc-event-resizer-dot-border-width: 1px;
 
   --fc-non-business-color: rgba(215, 215, 215, 0.3);
-  --fc-bg-event-color: rgb(143, 223, 130);
+  --fc-bg-event-color: transparent;
   --fc-bg-event-opacity: 0.3;
   --fc-highlight-color: --alpha(var(--colors-primary) / 10%);
   --fc-today-bg-color: --alpha(var(--colors-primary) / 10%);
@@ -90,6 +90,9 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
 .fc-list-day-text,
 .fc-list-day-side-text {
   @apply text-base leading-7 font-semibold;
+}
+.fc-h-event{
+  @apply bg-transparent border-0;
 }
 .fc-h-event .fc-event-main-frame {
   @apply items-center;
