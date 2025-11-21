@@ -79,9 +79,9 @@ const postToCreate = ref<PostCreateBase & { comment: string[] }>({
     side: 'left',
     sideOffset: 8
   }">
-    <UButton color="neutral" variant="ghost" class="p-2">
-      <div class="rounded-lg border p-2 shadow-sm">
-        <p class="text-sm font-medium text-gray-900 dark:text-white text-wrap">
+    <UButton color="neutral" variant="outline" class="p-2 w-full">
+      <div class="rounded-lg  shadow-sm w-full">
+        <p class="text-sm  text-wrap text-left">
           {{ post.content.slice(0, 15) }}...
         </p>
         <div class="mt-2 flex items-center justify-between">

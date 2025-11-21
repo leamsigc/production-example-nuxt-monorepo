@@ -16,10 +16,10 @@
  */
 import { ref, computed, defineAsyncComponent, watch, onMounted } from 'vue';
 import { usePlatformConfiguration, type PlatformConfig, type SocialMediaPlatformConfigurations } from '../composables/usePlatformConfiguration';
-import type { PostCreateBase, Asset, Post } from '#layers/BaseDB/db/schema';
-import { usePostManager } from '../composables/UsePostManager';
+import type { PostCreateBase, Asset, Post, PostWithAllData } from '#layers/BaseDB/db/schema';
 import { useSocialMediaManager } from '#imports';
 import { useAssetManager } from '#imports';
+import dayjs from 'dayjs';
 
 const FacebookPreview = defineAsyncComponent(() => import('./FacebookPreview.vue'));
 const InstagramPreview = defineAsyncComponent(() => import('./InstagramPreview.vue'));
@@ -34,6 +34,8 @@ const PinterestPreview = defineAsyncComponent(() => import('./PinterestPreview.v
 const MastodonPreview = defineAsyncComponent(() => import('./MastodonPreview.vue'));
 const BlueskyPreview = defineAsyncComponent(() => import('./BlueskyPreview.vue'));
 const DefaultPreview = defineAsyncComponent(() => import('./DefaultPreview.vue'));
+import { CalendarDate } from '@internationalized/date'
+import type { DateValue } from '@internationalized/date'
 
 interface TargetPlatform {
   accountId: string;
@@ -56,7 +58,7 @@ interface PostForm extends Omit<PostCreateBase, 'targetPlatforms' | 'mediaAssets
 }
 
 const props = defineProps<{
-  initialPost?: Post;
+  initialPost?: PostWithAllData;
 }>();
 
 const emit = defineEmits(['save', 'update', 'close']);
@@ -76,6 +78,27 @@ const postForm = ref<PostForm>({
   status: 'draft',
   comment: []
 });
+const now = new Date();
+const selectedDate = shallowRef(
+  new CalendarDate(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    now.getDate()
+  )
+)
+const isDateUnavailable = (date: DateValue) => {
+  // Check if the selected date is in the past
+  return dayjs(date.toString()).isBefore(dayjs().add(-1, 'day'));
+}
+const selectedTime = ref(dayjs(postForm.value.scheduledAt).format('HH:mm'));
+
+watch([selectedDate, selectedTime], () => {
+  postForm.value.scheduledAt = dayjs(`${selectedDate.value}T${selectedTime.value}`).toDate();
+});
+
+const formattedScheduledAt = computed(() =>
+  dayjs(postForm.value.scheduledAt).format('DD/MM/YYYY HH:mm')
+);
 const activeBusinessId = useState<string>('business:id');
 const postMediaAssets = ref<Asset[]>([]);
 const postHasError = ref(false);
@@ -101,21 +124,18 @@ const previewsMap = {
 onMounted(async () => {
   await getAllSocialMediaAccounts();
   if (props.initialPost) {
-    const initialTargetPlatformsRaw = props.initialPost.targetPlatforms;
-    const processedTargetPlatforms: TargetPlatform[] = [];
-    if (initialTargetPlatformsRaw) {
-      const platformIds = Array.isArray(initialTargetPlatformsRaw) ? initialTargetPlatformsRaw : [initialTargetPlatformsRaw];
-      for (const accountId of platformIds) {
-        const account = pagesList.value.find(p => p.id === accountId);
-        if (account) {
-          processedTargetPlatforms.push({
-            accountId,
-            platformType: account.platform as keyof SocialMediaPlatformConfigurations,
-          });
-        }
-      }
-    }
+    const platformPosts = props.initialPost.platformPosts;
 
+    if (platformPosts && platformPosts.length > 0) {
+      const firstPlatformPost = platformPosts[0];
+      explicitPreviewPlatform.value = firstPlatformPost?.platformPostId as keyof typeof previewsMap || 'default';
+    }
+    console.log("#####", platformPosts);
+
+    const processedTargetPlatforms: TargetPlatform[] = platformPosts.map(p => ({
+      accountId: p.socialAccountId,
+      platformType: p.platformPostId as keyof SocialMediaPlatformConfigurations,
+    }));
     const initialCommentsRaw = (props.initialPost as { comment?: string | string[] }).comment;
     const processedComments: string[] = Array.isArray(initialCommentsRaw)
       ? initialCommentsRaw
@@ -133,6 +153,15 @@ onMounted(async () => {
       comment: processedComments,
     } as PostForm;
 
+    const scheduleAt = dayjs(postForm.value.scheduledAt).toDate();
+    selectedTime.value = dayjs(postForm.value.scheduledAt).format('HH:mm');
+
+
+    selectedDate.value = new CalendarDate(
+      scheduleAt.getFullYear(),
+      scheduleAt.getMonth() + 1,
+      scheduleAt.getDate()
+    );
 
     if (processedMediaAssetsIds.length > 0) {
       postMediaAssets.value = await getAssetsByIds(processedMediaAssetsIds);
@@ -199,6 +228,8 @@ function toggleSocialAccount(accountId: string) {
     postForm.value.targetPlatforms.splice(existingIndex, 1);
   } else {
     const account = pagesList.value.find((page) => page.id === accountId);
+    const platform = account?.platform as keyof SocialMediaPlatformConfigurations || 'default';
+    explicitPreviewPlatform.value = platform;
     if (account) {
       postForm.value.targetPlatforms.push({
         accountId: account.id,
@@ -250,6 +281,12 @@ const handleSavePost = async (status: 'draft' | 'scheduled' | 'published' | 'fai
     return;
   }
 
+  if (status === 'scheduled' && dayjs(postForm.value.scheduledAt).isBefore(dayjs())) {
+    postHasError.value = true;
+    toast.add({ title: t('validation.pastScheduledTime'), icon: 'i-heroicons-exclamation-triangle', color: 'error' });
+    return;
+  }
+
   const postData = {
     ...postForm.value,
     status: status,
@@ -275,6 +312,12 @@ const ResetToBase = () => {
     status: 'draft',
     comment: []
   }
+  selectedDate.value = new CalendarDate(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    now.getDate()
+  );
+  selectedTime.value = dayjs(postForm.value.scheduledAt).format('HH:mm');
   postMediaAssets.value = [];
   postHasError.value = false;
   validationErrors.value = [];
@@ -322,12 +365,12 @@ defineExpose({
               <template #content>
                 <UCard>
                   <section class="grid grid-cols-2 gap-2">
-                    <div v-for="account in pagesList" :key="account.id" class="flex flex-col items-center">
+                    <div v-for="account in pagesList" :key="account.id" class="flex flex-col items-center"
+                      @click="toggleSocialAccount(account.id)">
                       <template v-if="!postForm.targetPlatforms.some(target => target.accountId === account.id)">
                         <UAvatar :src="account.entityDetail.details.picture" :alt="account.accountName" size="3xl"
                           class="cursor-pointer ring-2 ring-white dark:ring-gray-900"
-                          :class="{ 'border border-primary': postForm.targetPlatforms.some(target => target.accountId === account.id) }"
-                          @click="toggleSocialAccount(account.id)" />
+                          :class="{ 'border border-primary': postForm.targetPlatforms.some(target => target.accountId === account.id) }" />
                         <p class="mt-2 text-sm font-medium">{{ account.accountName }}</p>
                       </template>
                     </div>
@@ -403,16 +446,23 @@ defineExpose({
           <component :is="previewComponent" :postContent="formatPostContent(postForm.content, currentPreviewPlatform)"
             :mediaAssets="postMediaAssets" :platform="currentPreviewPlatform"
             :post="postForm as unknown as PostCreateBase" />
-          <div v-if="validationErrors.length > 0"
-            class="mt-4 p-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded">
-            <p class="font-semibold">{{ t('validation.previewErrors') }}</p>
-            <ul>
-              <li v-for="(error, index) in validationErrors" :key="index">
-                {{ t('validation.platformError', { platform: error.platform, message: error.message }) }}
-              </li>
-            </ul>
-          </div>
         </div>
+      </div>
+
+      <div class="border-t border-gray-200 dark:border-gray-800 pt-4 flex justify-center">
+        <UPopover>
+          <UButton icon="i-heroicons-calendar" variant="ghost">
+            <span class="text-sm cursor-pointer hover:text-primary">
+              {{ formattedScheduledAt }}
+            </span>
+          </UButton>
+          <template #content>
+            <div class="p-4 space-y-4">
+              <UCalendar v-model="selectedDate" :is-date-unavailable="isDateUnavailable" />
+              <UInput v-model="selectedTime" type="time" />
+            </div>
+          </template>
+        </UPopover>
       </div>
 
       <template #footer>

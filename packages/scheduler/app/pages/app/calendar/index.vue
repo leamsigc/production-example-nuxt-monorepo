@@ -7,7 +7,6 @@ import type { EventClickArg } from '@fullcalendar/core/index.js';
 import { usePostManager } from '../posts/composables/UsePostManager';
 import UpdatePostModal from '../posts/components/UpdatePostModal.vue';
 import type { Post } from '#layers/BaseDB/db/schema';
-import { all } from 'axios';
 
 /**
  *
@@ -29,13 +28,12 @@ await getPosts(activeBusinessId.value);
 
 const { t } = useI18n()
 useHead({
-  title: t('seo_title_all'),
+  title: t('seo_title_month'),
   meta: [
-    { name: 'description', content: t('seo_description_all') }
+    { name: 'description', content: t('seo_description_month') }
   ]
 })
 const toast = useToast()
-const date = useDateFormat(useNow(), "YYYY-MM-DD");
 const events = postList.value.map(post => {
   return {
     post,
@@ -66,7 +64,7 @@ const HandleEventClicked = (event: EventClickArg) => {
   })
 
   if (event.event.extendedProps?.post) {
-    updatePostModalRef.value?.openModal(event.event.extendedProps.post as Post);
+    updatePostModalRef.value?.openModal(event.event.extendedProps.post);
   }
 }
 </script>

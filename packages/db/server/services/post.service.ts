@@ -230,17 +230,23 @@ export class PostService {
           .where(eq(platformPosts.postId, id))
 
         // Create new platform posts
-        if (data.targetPlatforms.length > 0) {
-          const platformPostData = data.targetPlatforms.map(accountId => ({
+        const platformPostData = data.targetPlatforms.map(async (accountId) => {
+          // Get the social media account by ID
+          const account = await socialMediaAccountService.getAccountById(accountId)
+
+          const data = {
             id: crypto.randomUUID(),
             postId: id,
             socialAccountId: accountId,
             status: 'pending' as const,
-            createdAt: new Date()
-          }))
-
-          await this.db.insert(platformPosts).values(platformPostData)
-        }
+            createdAt: updateData.updatedAt,
+            platformPostId: account ? account.platform : null
+          }
+          await this.db.insert(platformPosts).values(data).returning()
+        })
+        await Promise.all(platformPostData).catch((error) => {
+          console.error('Error Updating platform posts:', error)
+        })
       }
 
       return { data: updated }
@@ -469,6 +475,7 @@ export class PostService {
   }
 
   private validateCreateData(data: PostCreateBase): void {
+
     if (!data.businessId || data.businessId.trim().length === 0) {
       throw new ValidationError('Business ID is required', 'businessId')
     }

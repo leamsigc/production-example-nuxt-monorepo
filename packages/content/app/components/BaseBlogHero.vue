@@ -51,7 +51,7 @@ const { data } = await useAsyncData(`${path}-blog-hero`, () =>
         </div>
       </div>
     </div>
-    <div class="mx-auto max-w-5xl px-8 my-10 pb-10">
+    <div class="mx-auto max-w-7xl my-10 pb-10">
       <div class="object-contain bg-[#26303B] aspect-video rounded-xl overflow-hidden flex items-center justify-center">
         <NuxtPicture :alt="data.title" loading="eager" width="1080" height="900" class="w-full h-full"
           style="color: transparent;" :src="data.image.src" />

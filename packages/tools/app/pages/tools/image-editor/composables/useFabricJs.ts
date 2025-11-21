@@ -11,9 +11,6 @@ export const useFabricJs = () => {
 
   const run = (elementRef: Ref<HTMLCanvasElement | null>) => {
     editor.value = new FabricEditor(elementRef);
-
-    // Start the image transformer if needed
-    start();
   };
 
   const triggerRemoveBackground = () => {

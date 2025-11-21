@@ -11,14 +11,16 @@
  * @todo [✔] Update the typescript.
  */
 import type { NavigationMenuItem } from '@nuxt/ui'
+const appConfig = useAppConfig()
 
+const companyName = appConfig.BaseUiLayer.footer.companyName
 const route = useRoute()
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Dev docs',
-    to: '/docs/',
-    active: route.path.startsWith('/docs')
+    to: '/ui-preview',
+    active: route.path.startsWith('/ui-preview')
   },
   {
     label: 'Blogs',
@@ -79,7 +81,6 @@ const items = computed<NavigationMenuItem[]>(() => [
     to: '/playground',
     active: route.path.startsWith('/playground')
   }
-
 ])
 </script>
 
@@ -88,7 +89,7 @@ const items = computed<NavigationMenuItem[]>(() => [
     <template #left>
       <UTooltip text="Home" :kbds="['meta', 'H']">
         <UButton color="neutral" variant="ghost" to="/" icon="fxemoji:flaginhole" aria-label="Home">
-          MagicSync
+          {{ companyName }}
         </UButton>
       </UTooltip>
     </template>

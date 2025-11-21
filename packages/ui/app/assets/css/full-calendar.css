@@ -12,13 +12,13 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
 
 :root {
   --fc-small-font-size: var(--text-sm);
-  --fc-page-bg-color: var(--color-background);
+  --fc-page-bg-color: var(--ui-bg);
   --fc-neutral-bg-color: var(--color-muted);
   --fc-neutral-text-color: var(--color-foreground);
   --fc-border-color: var(--color-border);
 
   --fc-button-text-color: var(--color-foreground);
-  --fc-button-bg-color: var(--color-background);
+  --fc-button-bg-color: var(--ui-bg);
   --fc-button-border-color: var(--color-input);
   --fc-button-hover-bg-color: var(--color-accent);
   --fc-button-hover-border-color: var(--color-input);
@@ -131,4 +131,10 @@ NOTE: for old browsers, will need to restart watcher after changing a variable
   .fc-popover-title {
     @apply text-base leading-10 font-bold tracking-tight;
   }
+}
+.fc-day-past .fc-daygrid-day-bg{
+  @apply bg-primary/10;
+}
+.fc-day-future .fc-daygrid-day-bg {
+
 }

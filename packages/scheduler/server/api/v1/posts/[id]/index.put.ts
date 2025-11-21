@@ -77,24 +77,15 @@ export default defineEventHandler(async (event) => {
     // Update post
     const result = await postService.update(postId, user.id, updateData)
 
-    if (!result.success) {
-      if (result.code === 'NOT_FOUND') {
-        throw createError({
-          statusCode: 404,
-          statusMessage: 'Post not found'
-        })
-      }
+    if (!result) {
 
       throw createError({
         statusCode: 400,
-        statusMessage: result.error || 'Failed to update post'
+        statusMessage: result || 'Failed to update post'
       })
     }
 
-    return {
-      success: true,
-      data: result.data
-    }
+    return result.data;
   } catch (error: any) {
     if (error.statusCode) {
       throw error

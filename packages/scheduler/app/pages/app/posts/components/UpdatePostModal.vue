@@ -17,13 +17,13 @@
 import { ref } from 'vue';
 import { usePostManager } from '../composables/UsePostManager';
 import PostModalContent from './PostModalContent.vue';
-import type { Post, PostCreateBase } from '#layers/BaseDB/db/schema';
+import type { Post, PostCreateBase, PostWithAllData } from '#layers/BaseDB/db/schema';
 
 const { t } = useI18n();
 const { updatePost } = usePostManager();
 
 const isOpen = ref(false);
-const postToUpdate = ref<Post | undefined>(undefined);
+const postToUpdate = ref<PostWithAllData | undefined>(undefined);
 const postModalContentRef = ref<InstanceType<typeof PostModalContent> | null>(null);
 
 const handleUpdate = async (postData: PostCreateBase) => {
@@ -37,7 +37,7 @@ const handleClose = () => {
   isOpen.value = false;
 };
 
-const openModal = (post: Post) => {
+const openModal = (post: PostWithAllData) => {
   postToUpdate.value = post;
   isOpen.value = true;
 };

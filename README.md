@@ -238,12 +238,12 @@ Example :
 ## Todos:
 - [x] Set up the UI Layer using Nuxt UI
     - [x] Create the components that will be used in the Home page
-    - [ ] Create the components that will be used in the About page
-    - [ ] Create the components that will be used in the Contact page
-    - [ ] Create the components that will be used in the Privacy policy page
-    - [ ] Create the components that will be used in the Terms of service page
-    - [x] Create the components that will be used in the Blog page
-    - [x] Create the components that will be used in the Blog post page
+    - [x]  About page
+    - [x]  Contact page
+    - [x]  Privacy policy page
+    - [x]  Terms of service page
+    - [x]  Blog page
+    - [x]   Blog post page
 
 
 - [x] Create the static content layer
@@ -258,7 +258,7 @@ Example :
     - [ ] Create the tools for social media preview generator
     - [ ] Create the tools for email preview generator
     - [ ] Create the tools for transcription
-    - [ ] Create the tools for Text over image
+    - [x] Create the tools for Text over image
 
 
 - [x] Set up the Database Layer

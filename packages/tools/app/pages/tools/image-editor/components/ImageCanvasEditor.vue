@@ -19,17 +19,21 @@ import { useFabricJs } from '../composables/useFabricJs';
  * @todo [✔] Update the typescript.
  */
 const { run, addImageLayer, addImageLayerFromUrl, getCanvasPlugin, editor } = useFabricJs();
+const { start } = useImageTransformer();
 const canvas = useTemplateRef('canvas');
 
 const files = ref<File>();
 
 const route = useRoute();
 
-run(canvas);
 
+run(canvas);
 
 onMounted(async () => {
   if (editor.value) {
+
+    // Start the image transformer if needed
+    start();
     editor.value.use(CorePlugin);
     editor.value.use(ToolsPlugin);
     editor.value.use(HistoryPlugin);
@@ -74,7 +78,7 @@ const onFileDrop = async (f: File | File[] | null | undefined) => {
       <canvas ref="canvas" class="m-auto editor" :class="{ 'opacity-0': !files }" />
     </div>
   </div>
-  <section v-show="!files" class="w-full h-full absolute inset-0 bg-background/10 grid place-content-center">
+  <section v-show="!files" class="w-screen h-screen absolute inset-0 bg-background/10 grid place-content-center">
     <!-- Step 1 Select Image -->
     <UFileUpload @update:model-value="onFileDrop" color="error" variant="area" label="Drop your image here"
       description="SVG, PNG, JPG or GIF (max. 2MB)" class="w-96 min-h-48 " />

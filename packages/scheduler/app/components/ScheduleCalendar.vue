@@ -17,6 +17,7 @@ import FullCalendar from "@fullcalendar/vue3";
 import type { CalendarOptions, EventClickArg, EventInput, EventSourceInput } from "@fullcalendar/core";
 import type { PostWithAllData } from "#layers/BaseDB/db/schema";
 import PostCalendarPreview from "./PostCalendarPreview.vue";
+import dayjs from "dayjs";
 interface Props {
   activeView?: "timeGridWeek" | 'timeGridDay' | "dayGridMonth"
   events: EventInput & {
@@ -42,13 +43,18 @@ const { locale } = useI18n()
 const calendarOptions: CalendarOptions = {
   plugins: [timeGridPlugin, interactionPlugin, dayGridPlugin],
   initialView: activeView.value,
-  editable: true,
+  editable: false,
   nowIndicator: true,
   locale: locale.value,
-  expandRows: true,
-  validRange: {
-    start: new Date(),
+  expandRows: false,
+  eventOverlap: false,
+  selectAllow: function (selectInfo) {
+    return dayjs().diff(selectInfo.start) <= 0
   },
+
+  dayMaxEvents: 1,
+  moreLinkText: "Posts",
+  moreLinkHint: "show more",
   dateClick(arg: DateClickArg) {
     $emit('date-clicked', arg)
   },
@@ -61,11 +67,17 @@ const calendarOptions: CalendarOptions = {
     center: "title",
     right: "timeGridDay,timeGridWeek,dayGridMonth",
   },
+  views: {
+    dayGrid: {
+      // options apply to dayGridMonth, dayGridWeek, and dayGridDay views
+      eventLimit: 2,
+    }
+  },
   events: events.value,
 };
 </script>
 <template>
-  <FullCalendar :options="calendarOptions">
+  <FullCalendar :options="calendarOptions" :event-limit="true">
     <template v-slot:eventContent='arg'>
       <PostCalendarPreview :post="arg.event.extendedProps.post" />
     </template>

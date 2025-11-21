@@ -19,6 +19,7 @@
   <main class="default relative">
     <BaseHeader />
     <slot />
+    <LazyBaseFooter />
   </main>
 </template>
 
