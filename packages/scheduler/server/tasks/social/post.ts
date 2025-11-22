@@ -1,0 +1,25 @@
+import { postService } from '#layers/BaseDB/server/services/post.service';
+import { AutoPostService } from '../../services/AutoPost.service';
+export default defineTask({
+  meta: {
+    name: "social:post",
+    description: "Trigger social media post that are scheduled",
+  },
+  async run({ payload, context }) {
+    const listOfPostToProcess = await postService.getPostsToProcessNow();
+    const autoScheduler = new AutoPostService();
+
+    const postToProcess = listOfPostToProcess.map((post) => {
+      autoScheduler.triggerSocialMediaPost(post);
+    });
+
+
+
+
+    console.log("##############");
+    console.log(listOfPostToProcess);
+    console.log("##############");
+
+    return { result: "Success" };
+  },
+});

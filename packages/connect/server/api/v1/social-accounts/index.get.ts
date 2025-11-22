@@ -50,7 +50,7 @@ export default defineEventHandler(async (event) => {
     }
 
     const scheduler = new SchedulerPost({
-      accounts: [account]
+      accounts: account
     });
     scheduler.use(matcher[platform]);
 

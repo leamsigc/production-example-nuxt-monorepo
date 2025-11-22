@@ -635,16 +635,25 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
           ? await this._uploadPhotos(integration.accountId, accessToken, postDetails.media)
           : [];
 
-        const { id: postId, permalink_url } = await this._createFeedPost(
-          integration.accountId,
+        console.log({
+          id,
           accessToken,
-          postDetails.message,
-          uploadPhotos,
-          (postDetails.settings as FacebookDto)?.url
-        );
+          postDetails,
+          comments,
+          integration
+        });
 
-        finalUrl = permalink_url;
-        finalId = postId;
+
+        // const { id: postId, permalink_url } = await this._createFeedPost(
+        //   integration.accountId,
+        //   accessToken,
+        //   postDetails.message,
+        //   uploadPhotos,
+        //   (postDetails.settings as FacebookDto)?.url
+        // );
+
+        // finalUrl = permalink_url;
+        // finalId = postId;
       }
 
       const response: PostResponse = {

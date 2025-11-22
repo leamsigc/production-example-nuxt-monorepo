@@ -5,7 +5,7 @@ import type {
   QueryOptions,
   ServiceResponse
 } from './types'
-import { and, eq, gte, inArray, lte, sql } from 'drizzle-orm'
+import { and, eq, gte, inArray, lte, sql, notExists, exists, or, not, between } from 'drizzle-orm'
 import { assets, platformPosts, posts, user } from '#layers/BaseDB/db/schema'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import {
@@ -186,7 +186,7 @@ export class PostService {
         .select()
         .from(posts)
         .where(and(
-          eq(posts.status, 'scheduled'),
+          inArray(posts.status, ['scheduled', 'draft']),
           lte(posts.scheduledAt, cutoffDate)
         ))
         .orderBy(posts.scheduledAt)
@@ -474,6 +474,27 @@ export class PostService {
     }
   }
 
+  async getPostsToProcessNow() {
+    const now = new Date()
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+    const list = await this.db.query.posts.findMany({
+      where: and(
+        or(
+          eq(posts.status, 'scheduled'),
+          eq(posts.status, 'draft')
+        ),
+        between(posts.scheduledAt, startOfToday, now)
+      ),
+      with: {
+        platformPosts: true,
+        user: true
+      }
+    })
+    return list
+  }
+
   private validateCreateData(data: PostCreateBase): void {
 
     if (!data.businessId || data.businessId.trim().length === 0) {
@@ -496,6 +517,8 @@ export class PostService {
       throw new ValidationError('Scheduled time must be in the future', 'scheduledAt')
     }
   }
+
+
 }
 
 export const postService = new PostService()

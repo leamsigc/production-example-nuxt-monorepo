@@ -13,7 +13,7 @@ import { entityDetails } from '#layers/BaseDB/db/entityDetails/entityDetails';
 import { eq, and, desc } from 'drizzle-orm'
 import type { SocialMediaAccount } from '#layers/BaseDB/db/socialMedia/socialMedia'
 import { socialMediaAccounts } from '#layers/BaseDB/db/socialMedia/socialMedia'
-import { account, type User } from '#layers/BaseDB/db/auth/auth'
+import { account, type Account, type User } from '#layers/BaseDB/db/auth/auth'
 import { useDrizzle } from '#layers/BaseDB/server/utils/drizzle'
 import { entityDetailsService } from '#layers/BaseDB/server/services/entity-details.service' // Import new service
 
@@ -156,7 +156,7 @@ export class SocialMediaAccountService {
   /**
    * Get accounts by platform
    */
-  async getAccountsForPlatform(platform: string, userId: string) {
+  async getAccountsForPlatform(platform: string, userId: string): Promise<Account[]> {
 
     const userAccount = await this.db.select()
       .from(account)
@@ -164,7 +164,9 @@ export class SocialMediaAccountService {
       .all();
 
 
-    return userAccount.find(account => account.providerId === platform);
+    const accounts = userAccount.filter(account => account.providerId === platform);
+
+    return accounts;
   }
 
   /**

@@ -18,6 +18,11 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       openAPI: true,
+      tasks: true,
+    },
+    scheduledTasks: {
+      // Run `cms:update` task every minute
+      '* * * * *': ['social:post']
     }
   },
   $meta: {

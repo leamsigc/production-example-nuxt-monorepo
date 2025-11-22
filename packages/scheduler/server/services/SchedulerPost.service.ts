@@ -1,4 +1,3 @@
-import { account } from './../../../db/db/auth/auth';
 import { type Post, type SocialMediaAccount as Integration, type Account } from '#layers/BaseDB/db/schema';
 import { EventEmitter } from 'events';
 
