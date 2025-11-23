@@ -2,10 +2,22 @@
 <i18n src="../posts.json"></i18n>
 
 <script lang="ts" setup>
+/**
+ *
+ * Component Description: Modal for updating an existing social media post.
+ * It uses the shared PostModalContent component to display and handle post data.
+ *
+ * @author Ismael Garcia <leamsigc@leamsigc.com>
+ * @version 0.0.1
+ *>
+ * @todo [ ] Test the component
+ * @todo [ ] Integration test.
+ * @todo [✔] Update the typescript.
+ */
 import { ref } from 'vue';
 import { usePostManager } from '../composables/UsePostManager';
 import PostModalContent from './PostModalContent.vue';
-import type { PostCreateBase } from '#layers/BaseDB/db/schema';
+import type { Post, PostCreateBase, PostWithAllData } from '#layers/BaseDB/db/schema';
 
 const { t } = useI18n();
 const { createPost } = usePostManager();
@@ -22,20 +34,23 @@ const handleClose = () => {
   isOpen.value = false;
 };
 
-const openModal = () => {
+const openModal = (date: Date) => {
   isOpen.value = true;
+  // delay 2 seconds
+  const id = setTimeout(() => {
+    postModalContentRef.value?.setScheduleDateAt(date);
+    clearTimeout(id);
+  }, 200);
 };
 
+defineExpose({
+  openModal,
+});
 </script>
 
 <template>
-
   <UModal v-model:open="isOpen" :ui="{ content: 'min-w-6xl overflow-y-auto', }"
-    @after:enter="postModalContentRef?.ResetToBase()" :dismissible="false">
-    <UButton color="neutral" variant="solid" @click="openModal">
-      <Icon name="lucide:edit" class="mr-2 h-4 w-4" />
-      {{ t('buttons.schedule_post') }}
-    </UButton>
+    @after:leave="postModalContentRef?.ResetToBase()" :dismissible="false">
     <template #content>
       <PostModalContent ref="postModalContentRef" @save="handleSave" @close="handleClose" />
     </template>

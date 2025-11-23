@@ -1,5 +1,6 @@
-import { postService } from '#layers/BaseDB/server/services/post.service';
-import { AutoPostService } from '../../services/AutoPost.service';
+import { postService } from "#layers/BaseDB/server/services/post.service";
+import { AutoPostService } from "#layers/BaseScheduler/server/services/AutoPost.service";
+
 export default defineTask({
   meta: {
     name: "social:post",

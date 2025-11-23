@@ -332,9 +332,20 @@ const HandleAssetsSelected = (assets: Asset[]) => {
 const haveAtLeastOneAccountSelected = computed(() => {
   return postForm.value.targetPlatforms.length === 0;
 })
+const setScheduleDateAt = (date: Date) => {
+
+  postForm.value.scheduledAt = date;
+  selectedDate.value = new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate()
+  );
+  selectedTime.value = dayjs(postForm.value.scheduledAt).format('HH:mm');
+}
 
 defineExpose({
   ResetToBase,
+  setScheduleDateAt
 });
 </script>
 

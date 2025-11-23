@@ -634,6 +634,8 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
         const uploadPhotos = postDetails.media?.length
           ? await this._uploadPhotos(integration.accountId, accessToken, postDetails.media)
           : [];
+        console.log("########FACEBOOK########");
+
 
         console.log({
           id,
@@ -643,6 +645,7 @@ export class FacebookPlugin extends BaseSchedulerPlugin {
           integration
         });
 
+        console.log("########FACEBOOK########");
 
         // const { id: postId, permalink_url } = await this._createFeedPost(
         //   integration.accountId,

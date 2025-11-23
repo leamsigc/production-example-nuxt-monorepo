@@ -1,9 +1,8 @@
-import { FacebookPlugin } from './plugins/facebook.plugin';
-import { socialMediaAccountService, SocialMediaPlatform } from './../../../db/server/services/social-media-account.service';
-import { account } from './../../../db/db/auth/auth';
-import { auth } from './../../../auth/lib/auth';
-import { PostWithAllData } from './../../../db/db/posts/posts';
-import { SchedulerPluginConstructor, SchedulerPost } from './SchedulerPost.service';
+import type { PostWithAllData } from '#layers/BaseDB/db/schema';
+import { socialMediaAccountService, type SocialMediaPlatform } from '#layers/BaseDB/server/services/social-media-account.service';
+import { SchedulerPost } from '#layers/BaseScheduler/server/services/SchedulerPost.service';
+import type { SchedulerPluginConstructor } from '#layers/BaseScheduler/server/services/SchedulerPost.service';
+import { FacebookPlugin } from '#layers/BaseScheduler/server/services/plugins/facebook.plugin';
 export class AutoPostService {
 
   private matcher: Record<string, SchedulerPluginConstructor> = {
@@ -39,14 +38,15 @@ export class AutoPostService {
       if (!socialMediaAccount) {
         throw new Error(`No access token found for platform ${platform}`);
       }
-
+      //@ts-ignore
       scheduler.use(this.matcher[platform]);
+
       const response = await scheduler.publish(
         post.id,
         socialMediaAccount.accessToken,
         post,
         [],
-        account
+        account as any
       );
       console.log(response);
 

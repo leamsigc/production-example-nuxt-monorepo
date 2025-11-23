@@ -1,5 +1,6 @@
+import { AutoPostService } from '#layers/BaseScheduler/server/services/AutoPost.service';
 import { checkUserIsLogin } from "#layers/BaseAuth/server/utils/AuthHelpers"
-import type { PostCreateBase } from "#layers/BaseDB/db/schema"
+import type { PostCreateBase, PostWithAllData } from "#layers/BaseDB/db/schema"
 import { postService } from "#layers/BaseDB/server/services/post.service"
 
 export default defineEventHandler(async (event) => {
@@ -65,6 +66,24 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Failed to create post'
       })
     }
+
+
+    // If the status is scheduled
+    console.log("Status", body.status);
+
+    if (body.status === 'published' && result.data) {
+      const fullPost = await postService.findById(result.data.id, user.id, true);
+      if (!fullPost || !fullPost.data) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: 'Failed to find post'
+        })
+      }
+      // Schedule post
+      const trigger = new AutoPostService()
+      trigger.triggerSocialMediaPost(fullPost.data as PostWithAllData);
+    }
+
 
     return {
       success: true,

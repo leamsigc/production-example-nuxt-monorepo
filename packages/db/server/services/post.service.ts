@@ -1,5 +1,5 @@
 import { assetService } from './asset.service';
-import type { Asset, PlatformPost, Post, PostCreate, PostCreateBase, PostWithAllData } from '#layers/BaseDB/db/schema'
+import type { PlatformPost, Post, PostCreateBase, PostWithAllData } from '#layers/BaseDB/db/schema'
 import type {
   PaginatedResponse,
   QueryOptions,
@@ -61,7 +61,7 @@ export class PostService {
 
       // Create platform post entries
       if (data.targetPlatforms.length > 0) {
-        const platformPostData = data.targetPlatforms.map(async (accountId) => {
+        const platformPostData = data.targetPlatforms.map(async (accountId: string) => {
           // Get the social media account by ID
           const account = await socialMediaAccountService.getAccountById(accountId)
 
@@ -79,6 +79,7 @@ export class PostService {
           console.error('Error creating platform posts:', error)
         })
       }
+
       return { data: post }
     } catch (error) {
       if (error instanceof ValidationError) {
